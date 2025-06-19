@@ -2,8 +2,12 @@ package com.cleancode.ecommerce.customer.domain;
 
 import java.util.Objects;
 
+import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
+
 public abstract class Address {
 
+	protected static final int LENGTH_MAX = 255;
+	
 	protected String receiver;
 	protected String street;
 	protected String number;
@@ -19,11 +23,15 @@ public abstract class Address {
 	
 	public Address(String receiver, String street, String number, String neighborhood, String zipCode, String observation,
 			String streetType, String typeResidence, String city, String state, String country) {
-		super();
+		
+		validateInput(receiver, street, number, neighborhood,
+					  zipCode, observation, streetType, typeResidence,
+					  city,  state,  country);
+		
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
-		this.neighborhood = neighborhood;
+		this.neighborhood = neighborhood; 
 		this.zipCode = zipCode;
 		this.observation = observation;
 		this.streetType = streetType;
@@ -31,6 +39,36 @@ public abstract class Address {
 		this.city = city;
 		this.state = state;
 		this.country = country;
+	}
+
+	private void validateInput(String receiver, String street, String number, String neighborhood, String zipCode,
+			String observation, String streetType, String typeResidence, String city, String state,
+			String country) {
+		
+		if(isValid(receiver)) throw new IllegalDomainException("Receiver is requerid");
+		if(isValid(street)) throw new IllegalDomainException("Street is requerid");
+		if(isValid(number)) throw new IllegalDomainException("Number is requerid");
+		if(isValid(neighborhood)) throw new IllegalDomainException("Neighborhood is requerid");
+		if(isZipCode(zipCode)) throw new IllegalDomainException("Zip code must be in the format xxxxx-xxx");
+		if(inputSize(observation) || isValid(observation)) throw new IllegalDomainException("Observation needs max length 400 caracters");
+		if(isValid(streetType)) throw new IllegalDomainException("Street type is requerid");
+		if(isValid(typeResidence)) throw new IllegalDomainException("Type Residence is requerid");
+		if(isValid(city)) throw new IllegalDomainException("City is requerid");
+		if(isValid(state)) throw new IllegalDomainException("State is requerid");
+		if(isValid(country)) throw new IllegalDomainException("Country is requerid");
+	}
+
+	protected boolean inputSize(String value) {
+		return value.length() > LENGTH_MAX;
+	}
+
+	protected boolean isZipCode(String zipCode) {
+	    String zipCodeRegex = "^\\d{5}-\\d{3}$"; 
+		return !zipCode.matches(zipCodeRegex);
+	}
+
+	protected boolean isValid(String value) {
+		return value == null || value.trim().isEmpty();
 	}
 
 	public String getReceiver() {

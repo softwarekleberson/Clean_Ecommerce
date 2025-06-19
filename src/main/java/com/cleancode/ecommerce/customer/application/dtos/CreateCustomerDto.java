@@ -13,36 +13,16 @@ import com.cleancode.ecommerce.customer.domain.Password;
 import com.cleancode.ecommerce.customer.domain.Phone;
 import com.cleancode.ecommerce.customer.shared.domain.Cpf;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
 public class CreateCustomerDto {
 
-	@NotBlank(message = "Name is requered")
-	private String name;
-	
-	@NotNull(message = "Gender is requerid")
-	private Gender gender;
-	
-	@NotNull(message = "Birth is requerid")
-	private LocalDate birth;
-	
-	@NotBlank(message = "Cpf is requerid")
-	private String cpf;
-	
-	@NotBlank(message = "DDD is requerid")
-	private String ddd;
-	
-	@NotBlank(message = "Phone is requerid")
-	private String phone;
-	
-	@NotBlank(message = "Email is requerid")
-	private String email;
-	
-	@NotBlank(message = "Password is requerid")
+	private String name;	
+	private Gender gender;	
+	private LocalDate birth;	
+	private String cpf;	
+	private String ddd;	
+	private String phone;	
+	private String email;	
 	private String password;
-	
-	@NotBlank(message = "Confirm Password")
 	private String confirmPassword;
 	
 	public CreateCustomerDto(String name, Gender gender, LocalDate birth, String cpf, String ddd, String phone,
