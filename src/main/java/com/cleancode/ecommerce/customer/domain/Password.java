@@ -9,6 +9,10 @@ public class Password {
 	}
 	
 	private void validateFormatPassword(String password) {
+		if(password == null || password.trim().isEmpty()) {
+			 throw new IllegalArgumentException("Password not be empty");
+		}
+		
 		if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{16}$")) {
 		    throw new IllegalArgumentException("Senha inválida");
 		}

@@ -5,7 +5,7 @@ public class Name {
 	private String name;
 	
 	public Name(String name) {
-		if(name == null) {
+		if(name == null || name.trim().isEmpty()) {
 			throw new IllegalArgumentException("Name not be null");
 		}
 		this.name = name;

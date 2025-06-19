@@ -11,6 +11,7 @@ import com.cleancode.ecommerce.customer.domain.Gender;
 import com.cleancode.ecommerce.customer.domain.Name;
 import com.cleancode.ecommerce.customer.domain.Password;
 import com.cleancode.ecommerce.customer.domain.Phone;
+import com.cleancode.ecommerce.customer.domain.TypePhone;
 import com.cleancode.ecommerce.customer.shared.domain.Cpf;
 
 public class CreateCustomerDto {
@@ -20,13 +21,14 @@ public class CreateCustomerDto {
 	private LocalDate birth;	
 	private String cpf;	
 	private String ddd;	
-	private String phone;	
+	private String phone;
+	private TypePhone typePhone;
 	private String email;	
 	private String password;
 	private String confirmPassword;
 	
 	public CreateCustomerDto(String name, Gender gender, LocalDate birth, String cpf, String ddd, String phone,
-			String email, String password, String confirmPassword) {
+			TypePhone typePhone, String email, String password, String confirmPassword) {
 		
 		this.name = name;
 		this.gender = gender;
@@ -34,6 +36,7 @@ public class CreateCustomerDto {
 		this.cpf = cpf;
 		this.ddd = ddd;
 		this.phone = phone;
+		this.typePhone = typePhone;
 		this.email = email;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
@@ -57,7 +60,7 @@ public class CreateCustomerDto {
 			   gender, 
 			   new Birth(birth),
 			   new Cpf(cpf),
-			   new Contact(new Phone(ddd, phone),
+			   new Contact(new Phone(ddd, phone, typePhone),
 			   new Email(email)),
 			   new Password(encryptedPassword));
 	}

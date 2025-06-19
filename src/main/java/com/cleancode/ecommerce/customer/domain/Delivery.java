@@ -10,8 +10,7 @@ public class Delivery extends Address{
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 		super(receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city, state, country);
 		
-		if(isValid(deliveryPhrase)) throw new IllegalDomainException("Delivery Phrase is requerid");
-		
+		if(isValid(deliveryPhrase) || inputSize(deliveryPhrase)) throw new IllegalDomainException("Delivery Phrase is requerid");
 		this.deliveryPhrase = deliveryPhrase;
 	}
 	
