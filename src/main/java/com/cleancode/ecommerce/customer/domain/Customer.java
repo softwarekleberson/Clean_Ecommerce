@@ -7,6 +7,8 @@ import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.shared.domain.Cpf;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public class Customer {
 
@@ -47,6 +49,9 @@ public class Customer {
 	}
 	
 	public void insertNewDelivery(Delivery delivery) {
+		if(deliverys.stream().anyMatch(d -> d.equals(delivery))) {
+			throw new IllegalDomainException("This address was previously registered");
+		}
 		this.deliverys.add(delivery);
 	}
 	
@@ -58,10 +63,13 @@ public class Customer {
 	}
 	
 	public void removeDelivery(UUID id) {
-		this.deliverys.removeIf(d ->d.getId().equals(id));
+		this.deliverys.removeIf(d -> d.getId().equals(id));
 	}
 	
 	public void insertNewCharge(Charge charge) {
+		if(charges.stream().anyMatch(c->c.equals(charge))) {
+			throw new IllegalDomainException("This address was previously registered");
+		}
 		this.charges.add(charge);
 	}
 	
@@ -105,10 +113,10 @@ public class Customer {
 	}
 
 	public List<Delivery> getDeliverys() {
-		return deliverys;
+		return Collections.unmodifiableList(this.deliverys);
 	}
 
 	public List<Charge> getCharges() {
-		return charges;
+		return Collections.unmodifiableList(this.charges);
 	}
 }
