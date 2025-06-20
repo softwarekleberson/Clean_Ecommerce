@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.customer.domain;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
 
@@ -8,6 +9,7 @@ public abstract class Address {
 
 	protected static final int LENGTH_MAX = 255;
 	
+	protected final UUID id;
 	protected String receiver;
 	protected String street;
 	protected String number;
@@ -28,6 +30,7 @@ public abstract class Address {
 					  zipCode, observation, streetType, typeResidence,
 					  city,  state,  country);
 		
+		this.id = UUID.randomUUID();
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -71,6 +74,10 @@ public abstract class Address {
 		return value == null || value.trim().isEmpty();
 	}
 
+	public UUID getId() {
+		return id;
+	}
+	
 	public String getReceiver() {
 		return receiver;
 	}

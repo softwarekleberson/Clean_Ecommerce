@@ -1,7 +1,9 @@
 package com.cleancode.ecommerce.customer.domain;
 
 import java.util.List;
+import java.util.UUID;
 
+import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.shared.domain.Cpf;
 
 import java.util.ArrayList;
@@ -48,30 +50,30 @@ public class Customer {
 		this.deliverys.add(delivery);
 	}
 	
-	public Delivery getDeliveryIndex(int index) {
-		int position = deliverys.size() - 1;
-		position -= index;
-
-		if(position < 0 || position >= deliverys.size()) {
-			throw new IndexOutOfBoundsException("Invalid Index : " + index);
-		}
-		
-		return this.deliverys.get(position);
+	public Delivery getDelivery(UUID id) {
+		return deliverys.stream()
+			   .filter(d -> d.getId().equals(id))
+			   .findFirst()
+			   .orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
+	}
+	
+	public void removeDelivery(UUID id) {
+		this.deliverys.removeIf(d ->d.getId().equals(id));
 	}
 	
 	public void insertNewCharge(Charge charge) {
 		this.charges.add(charge);
 	}
 	
-	public Charge getChargeIndex(int index) {
-		int position = charges.size() - 1;
-		position -= index;
-		
-		if(position < 0 || position >= charges.size()) {
-			throw new IndexOutOfBoundsException("Invalid Index : " + index);
-		}
-		
-		return this.charges.get(position);
+	public Charge getCharge(UUID id) {
+		return charges.stream()
+				.filter(c -> c.getId().equals(id))
+				.findFirst()
+				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
+	}
+	
+	public void removeCharge(UUID id) {
+		this.charges.removeIf(c -> c.getId().equals(id));
 	}
 
 	public boolean isActive() {
