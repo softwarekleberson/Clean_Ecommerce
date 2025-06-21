@@ -13,18 +13,9 @@ public class Password {
 			 throw new IllegalArgumentException("Password not be empty");
 		}
 		
-		if (!password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{16}$")) {
-		    throw new IllegalArgumentException("Senha inválida");
-		}
-		
-		passwordStrengthValidation(password);
-	}
-	
-	private void passwordStrengthValidation(String password) {
-		
 		this.password = password;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}

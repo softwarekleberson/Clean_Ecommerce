@@ -7,7 +7,6 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 import com.cleancode.ecommerce.customer.shared.domain.Cpf;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class Customer {
