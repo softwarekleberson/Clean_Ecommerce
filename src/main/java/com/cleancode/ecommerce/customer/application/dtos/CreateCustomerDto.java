@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.customer.domain.customer.Id;
 import com.cleancode.ecommerce.customer.domain.customer.Email;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.Name;
@@ -54,7 +54,7 @@ public class CreateCustomerDto {
 		return email;
 	}
 	
-	public Customer createCustomer(CustomerId id, String encryptedPassword) {
+	public Customer createCustomer(Id id, String encryptedPassword) {
 		return new Customer(id,
 			   new Name(name),
 			   gender, 

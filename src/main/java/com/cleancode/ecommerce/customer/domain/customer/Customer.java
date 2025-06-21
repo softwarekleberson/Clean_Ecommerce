@@ -11,7 +11,7 @@ import java.util.Collections;
 
 public class Customer {
 
-	private CustomerId id;
+	private Id id;
 	private boolean active = false;
 	private Name name;
 	private Gender gender;
@@ -22,7 +22,7 @@ public class Customer {
 	private List<Delivery> deliverys = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
 	
-	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+	public Customer(Id id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
@@ -87,7 +87,7 @@ public class Customer {
 		return active;
 	}
 	
-    public CustomerId getId() {
+    public Id getId() {
         return id;
     }
 

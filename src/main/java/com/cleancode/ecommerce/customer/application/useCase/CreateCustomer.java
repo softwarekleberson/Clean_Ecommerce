@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.application.dtos.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.customer.domain.customer.Id;
 import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
@@ -28,7 +28,7 @@ public class CreateCustomer {
 		checkPassword(dto.getPassword(), dto.getConfirmPassword());
 		String encryptedPassword = passwordEncryptor.encryptPassword(dto.getPassword());
 		
-		Customer customer = dto.createCustomer(new CustomerId(UUID.randomUUID()), encryptedPassword);
+		Customer customer = dto.createCustomer(new Id(UUID.randomUUID()), encryptedPassword);
 		repository.save(customer);
 		
 		EventNewCustomer event = new EventNewCustomer(customer.getCpf(), customer.getName());

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +13,7 @@ import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.customer.domain.customer.Id;
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Email;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
@@ -33,7 +32,7 @@ public class CustomerTest {
 
 	@BeforeEach
 	void testCustomer() {
-		this.customer = new Customer(new CustomerId(UUID.randomUUID()), new Name("jose"), Gender.MASCULINO,
+		this.customer = new Customer(new Id(UUID.randomUUID()), new Name("jose"), Gender.MASCULINO,
 				new Birth(LocalDate.of(1994, 10, 10)), new Cpf("478.034.785-40"),
 				new Contact(new Phone("11", "159741236", TypePhone.CELULAR), new Email("josesilva@gmail.com")),
 				new Password("qIx3N@yqfwrno@sp9ke4"));
@@ -104,5 +103,20 @@ public class CustomerTest {
 			this.customer.insertNewCharge(charge);
 			this.customer.insertNewCharge(charge);
 		});
+	}
+	
+	@Test
+	void shoudGetDelivery() {
+		this.customer.insertNewDelivery(delivery);
+		Delivery getDelivery = this.customer.getDeliverys().get(0);
+		assertEquals(getDelivery.toString(), this.customer.getDelivery(getDelivery.getId()).toString());
+	}
+	
+
+	@Test
+	void shoudGetCharge() {
+		this.customer.insertNewCharge(charge);
+		Charge getCharge = this.customer.getCharges().get(0);
+		assertEquals(getCharge.toString(), this.customer.getCharge(getCharge.getId()).toString());
 	}
 }
