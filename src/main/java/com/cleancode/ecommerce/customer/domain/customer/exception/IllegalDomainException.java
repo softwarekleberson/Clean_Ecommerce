@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.domain.exception;
+package com.cleancode.ecommerce.customer.domain.customer.exception;
 
 public class IllegalDomainException extends RuntimeException{
 

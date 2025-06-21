@@ -7,8 +7,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.customer.domain.Birth;
-import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
+import com.cleancode.ecommerce.customer.domain.customer.Birth;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 class BirthTest {
 

@@ -2,16 +2,16 @@ package com.cleancode.ecommerce.customer.application.dtos;
 
 import java.time.LocalDate;
 
-import com.cleancode.ecommerce.customer.domain.Birth;
-import com.cleancode.ecommerce.customer.domain.Contact;
-import com.cleancode.ecommerce.customer.domain.Customer;
-import com.cleancode.ecommerce.customer.domain.CustomerId;
-import com.cleancode.ecommerce.customer.domain.Email;
-import com.cleancode.ecommerce.customer.domain.Gender;
-import com.cleancode.ecommerce.customer.domain.Name;
-import com.cleancode.ecommerce.customer.domain.Password;
-import com.cleancode.ecommerce.customer.domain.Phone;
-import com.cleancode.ecommerce.customer.domain.TypePhone;
+import com.cleancode.ecommerce.customer.domain.customer.Birth;
+import com.cleancode.ecommerce.customer.domain.customer.Contact;
+import com.cleancode.ecommerce.customer.domain.customer.Customer;
+import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.customer.domain.customer.Email;
+import com.cleancode.ecommerce.customer.domain.customer.Gender;
+import com.cleancode.ecommerce.customer.domain.customer.Name;
+import com.cleancode.ecommerce.customer.domain.customer.Password;
+import com.cleancode.ecommerce.customer.domain.customer.Phone;
+import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
 import com.cleancode.ecommerce.customer.shared.domain.Cpf;
 
 public class CreateCustomerDto {

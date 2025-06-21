@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.domain;
+package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.util.UUID;
 

@@ -1,16 +1,21 @@
-package com.cleancode.ecommerce.customer.shared.domain.event;
+package com.cleancode.ecommerce.customer.domain.customer.event;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cleancode.ecommerce.customer.domain.customer.Name;
+import com.cleancode.ecommerce.customer.shared.domain.Cpf;
+import com.cleancode.ecommerce.customer.shared.domain.event.Event;
+import com.cleancode.ecommerce.customer.shared.domain.event.TypeEvent;
+
 public class EventNewCustomer implements Event{
 
 	private final LocalDateTime moment;
-	private final String cpf;
-	private final String name;
+	private final Cpf cpf;
+	private final Name name;
 	
-	public EventNewCustomer(LocalDateTime moment, String cpf, String name) {
+	public EventNewCustomer(Cpf cpf, Name name) {
 		
 		this.moment = LocalDateTime.now();
 		this.cpf = cpf;

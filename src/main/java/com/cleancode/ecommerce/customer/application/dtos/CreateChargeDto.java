@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.customer.application.dtos;
 
-import com.cleancode.ecommerce.customer.domain.Charge;
+import com.cleancode.ecommerce.customer.domain.customer.Charge;
 
 public class CreateChargeDto {
 

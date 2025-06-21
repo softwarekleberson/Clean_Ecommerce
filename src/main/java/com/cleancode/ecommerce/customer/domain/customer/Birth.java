@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.customer.domain;
+package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.time.LocalDate;
 
-import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 public class Birth {
 

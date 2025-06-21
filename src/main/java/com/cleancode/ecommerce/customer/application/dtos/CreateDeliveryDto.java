@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.customer.application.dtos;
 
-import com.cleancode.ecommerce.customer.domain.Delivery;
+import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 
 public class CreateDeliveryDto {
 

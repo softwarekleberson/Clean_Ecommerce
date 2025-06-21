@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.domain.repository;
+package com.cleancode.ecommerce.customer.domain.customer.repository;
 
 public interface PasswordEncryptor {
 

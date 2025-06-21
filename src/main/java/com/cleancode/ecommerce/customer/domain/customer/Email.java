@@ -1,6 +1,6 @@
-package com.cleancode.ecommerce.customer.domain;
+package com.cleancode.ecommerce.customer.domain.customer;
 
-import com.cleancode.ecommerce.customer.domain.exception.IllegalContactException;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
 
 public class Email {
 

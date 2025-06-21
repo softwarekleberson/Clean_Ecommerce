@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.customer.shared.domain;
 
-import com.cleancode.ecommerce.customer.domain.exception.IllegalCpfException;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalCpfException;
 
 public class Cpf {
 

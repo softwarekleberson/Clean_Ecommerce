@@ -3,10 +3,10 @@ package com.cleancode.ecommerce.customer.application.useCase;
 import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.application.dtos.CreateDeliveryDto;
-import com.cleancode.ecommerce.customer.domain.Customer;
-import com.cleancode.ecommerce.customer.domain.Delivery;
-import com.cleancode.ecommerce.customer.domain.exception.IllegalDomainException;
-import com.cleancode.ecommerce.customer.domain.repository.CustomerRepository;
+import com.cleancode.ecommerce.customer.domain.customer.Customer;
+import com.cleancode.ecommerce.customer.domain.customer.Delivery;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 
 public class CreateCustomerDelivery {
 

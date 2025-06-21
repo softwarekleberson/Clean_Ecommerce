@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.customer.domain.Phone;
-import com.cleancode.ecommerce.customer.domain.TypePhone;
-import com.cleancode.ecommerce.customer.domain.exception.IllegalContactException;
+import com.cleancode.ecommerce.customer.domain.customer.Phone;
+import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
 
 class PhoneTest {
 
