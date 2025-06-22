@@ -19,4 +19,8 @@ public class Price {
 	public BigDecimal getPrice() {
 		return price;
 	}
+
+	public static Price updatePrice(BigDecimal newPrice) {
+		return new Price(newPrice);
+	}
 }

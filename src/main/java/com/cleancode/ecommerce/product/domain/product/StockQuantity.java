@@ -18,4 +18,8 @@ public class StockQuantity {
 	public int getStockQuantity() {
 		return stockQuantity;
 	}
+
+	public static StockQuantity updateStockQuantity(int newStockQuantity) {
+		return new StockQuantity(newStockQuantity);
+	}	
 }

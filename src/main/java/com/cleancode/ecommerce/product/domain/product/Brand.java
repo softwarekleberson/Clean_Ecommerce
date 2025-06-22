@@ -4,7 +4,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Brand {
 
-	private String brand;
+	private final String brand;
 	
 	public Brand(String brand) {
 		if(brand == null || brand.trim().isEmpty()) {

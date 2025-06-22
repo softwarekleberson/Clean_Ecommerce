@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class CreatedAt {
 
-	private LocalDateTime createdAt;
+	private final LocalDateTime createdAt;
 	
 	public CreatedAt() {
 		this.createdAt = LocalDateTime.now();
