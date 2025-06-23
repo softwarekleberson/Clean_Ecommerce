@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalCpfException;
-import com.cleancode.ecommerce.customer.shared.domain.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Cpf;
 
 class CpfTest {
 

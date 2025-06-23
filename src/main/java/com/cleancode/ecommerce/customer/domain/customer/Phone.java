@@ -1,12 +1,14 @@
 package com.cleancode.ecommerce.customer.domain.customer;
 
+import java.util.Objects;
+
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
 
 public class Phone {
 
-	private String ddd;
-	private String phone;
-	private TypePhone typePhone;
+	private final String ddd;
+	private final String phone;
+	private final TypePhone typePhone;
 	
 	public Phone (String ddd, String phone, TypePhone typePhone) {
 		if(ddd == null || ddd.trim().isEmpty()) {
@@ -38,6 +40,23 @@ public class Phone {
 		return typePhone;
 	}
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(ddd, phone, typePhone);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Phone other = (Phone) obj;
+		return Objects.equals(ddd, other.ddd) && Objects.equals(phone, other.phone) && typePhone == other.typePhone;
+	}
+
 	@Override
 	public String toString() {
 		return "Phone [ddd=" + ddd + ", phone=" + phone + "]";

@@ -1,20 +1,53 @@
 package com.cleancode.ecommerce.customer.domain.customer;
 
+import java.util.Objects;
+
+import com.cleancode.ecommerce.shared.kernel.Email;
+
 public class Contact {
 
-	private Phone phone;
-	private Email email;
+	private final Phone phone;
+	private final Email email;
 	
 	public Contact(Phone phone, Email email) {
 		this.phone = phone;
 		this.email = email;
 	}
 	
-	public String getFullPhone() {
-		return phone.getDdd() + phone.getPhone();
+	public Phone getFullPhone() {
+		return phone;
 	}
 	
-	public String getEmail() {
-		return email.getEmail();
+	public String getPhone() {
+		return phone.getPhone();
+	}
+	
+	public String getDDD() {
+		return phone.getDdd();
+	}
+	
+	public TypePhone getTypePhone() {
+		return phone.getTypePhone();
+	}
+	
+	public Email getEmail() {
+		return email;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, phone);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contact other = (Contact) obj;
+		return Objects.equals(email, other.email) && Objects.equals(phone, other.phone);
 	}
 }

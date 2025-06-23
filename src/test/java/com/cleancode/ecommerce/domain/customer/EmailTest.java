@@ -5,8 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.customer.domain.customer.Email;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
+import com.cleancode.ecommerce.shared.kernel.Email;
 
 class EmailTest {
 

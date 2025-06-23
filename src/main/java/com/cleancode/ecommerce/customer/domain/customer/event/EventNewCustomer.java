@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.cleancode.ecommerce.customer.domain.customer.Name;
-import com.cleancode.ecommerce.customer.shared.domain.Cpf;
-import com.cleancode.ecommerce.customer.shared.domain.event.Event;
-import com.cleancode.ecommerce.customer.shared.domain.event.TypeEvent;
+import com.cleancode.ecommerce.shared.domain.customer.event.Event;
+import com.cleancode.ecommerce.shared.domain.customer.event.TypeEvent;
+import com.cleancode.ecommerce.shared.kernel.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Name;
 
 public class EventNewCustomer implements Event{
 

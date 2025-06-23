@@ -1,10 +1,12 @@
-package com.cleancode.ecommerce.customer.shared.domain;
+package com.cleancode.ecommerce.shared.kernel;
+
+import java.util.Objects;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalCpfException;
 
 public class Cpf {
 
-	private String cpf;
+	private final String cpf;
 	
 	public Cpf(String cpf) {
 		if(cpf == null) {
@@ -20,6 +22,23 @@ public class Cpf {
 	
 	public String getCpf() {
 		return cpf;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cpf);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cpf other = (Cpf) obj;
+		return Objects.equals(cpf, other.cpf);
 	}
 
 	@Override

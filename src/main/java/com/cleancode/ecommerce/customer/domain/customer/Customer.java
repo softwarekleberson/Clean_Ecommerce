@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
-import com.cleancode.ecommerce.customer.shared.domain.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.Name;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -19,9 +22,9 @@ public class Customer {
 	private Cpf cpf;
 	private Contact contact;
 	private Password password;
-	private List<Delivery> deliverys = new ArrayList<>();
+	private List<Delivery> deliveries = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
-	
+
 	public Customer(Id id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
 		this.id = id;
 		this.name = name;
@@ -32,53 +35,74 @@ public class Customer {
 		this.password = password;
 	}
 
+	public void updateCustomer(String name, LocalDate birth, String ddd, String phone, TypePhone typePhone) {
+		if (name != null && !name.isBlank()) {
+			this.name = new Name(name);
+		}
+
+		if (birth != null) {
+			this.birth = new Birth(birth);
+		}
+
+		if (ddd != null && ddd.isBlank()) {
+			this.contact = new Contact(new Phone(ddd, this.contact.getPhone(), this.contact.getTypePhone()),
+			contact.getEmail());
+		}
+		
+		if(phone != null && phone.isBlank()) {
+			this.contact = new Contact(new Phone(this.contact.getDDD(), phone, this.getContact().getTypePhone()),
+			contact.getEmail());
+		}
+		
+		if(typePhone != null) {
+			this.contact = new Contact(new Phone(this.contact.getDDD(), this.contact.getPhone(), typePhone),
+			contact.getEmail());
+		}
+	}
+
 	public void updateActivationStatus() {
 		boolean isCharge = !charges.isEmpty();
-		boolean isDelivery = !deliverys.isEmpty();
-		
+		boolean isDelivery = !deliveries.isEmpty();
+
 		this.active = isCharge && isDelivery;
 	}
-	
-	public String getEmail() {
+
+	public Email getEmail() {
 		return this.contact.getEmail();
 	}
-	
-	public String getFullPhone() {
+
+	public Phone getFullPhone() {
 		return this.contact.getFullPhone();
 	}
-	
+
 	public void insertNewDelivery(Delivery delivery) {
-		if(deliverys.stream().anyMatch(d -> d.equals(delivery))) {
+		if (deliveries.stream().anyMatch(d -> d.equals(delivery))) {
 			throw new IllegalDomainException("This address was previously registered");
 		}
-		this.deliverys.add(delivery);
+		this.deliveries.add(delivery);
 	}
-	
+
 	public Delivery getDelivery(UUID id) {
-		return deliverys.stream()
-			   .filter(d -> d.getId().equals(id))
-			   .findFirst()
-			   .orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
+		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
+				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
-	
+
 	public void removeDelivery(UUID id) {
-		this.deliverys.removeIf(d -> d.getId().equals(id));
+		this.deliveries.removeIf(d -> d.getId().equals(id));
 	}
-	
+
 	public void insertNewCharge(Charge charge) {
-		if(charges.stream().anyMatch(c->c.equals(charge))) {
+		if (charges.stream().anyMatch(c -> c.equals(charge))) {
 			throw new IllegalDomainException("This address was previously registered");
 		}
 		this.charges.add(charge);
 	}
-	
+
 	public Charge getCharge(UUID id) {
-		return charges.stream()
-				.filter(c -> c.getId().equals(id))
-				.findFirst()
+		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
-	
+
 	public void removeCharge(UUID id) {
 		this.charges.removeIf(c -> c.getId().equals(id));
 	}
@@ -86,10 +110,10 @@ public class Customer {
 	public boolean isActive() {
 		return active;
 	}
-	
-    public Id getId() {
-        return id;
-    }
+
+	public Id getId() {
+		return id;
+	}
 
 	public Name getName() {
 		return name;
@@ -112,7 +136,7 @@ public class Customer {
 	}
 
 	public List<Delivery> getDeliverys() {
-		return Collections.unmodifiableList(this.deliverys);
+		return Collections.unmodifiableList(this.deliveries);
 	}
 
 	public List<Charge> getCharges() {

@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.domain.customer;
+package com.cleancode.ecommerce.shared.kernel;
 
 public class Name {
 

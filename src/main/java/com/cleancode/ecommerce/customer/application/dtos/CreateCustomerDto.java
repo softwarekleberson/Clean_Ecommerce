@@ -6,13 +6,13 @@ import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Id;
-import com.cleancode.ecommerce.customer.domain.customer.Email;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
-import com.cleancode.ecommerce.customer.domain.customer.Name;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
-import com.cleancode.ecommerce.customer.shared.domain.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.Name;
 
 public class CreateCustomerDto {
 

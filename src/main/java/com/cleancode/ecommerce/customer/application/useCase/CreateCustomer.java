@@ -9,7 +9,7 @@ import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.customer.domain.customer.repository.PasswordEncryptor;
-import com.cleancode.ecommerce.customer.shared.domain.event.EventPublisher;
+import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
 
 public class CreateCustomer {
 

@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.shared.domain.event;
+package com.cleancode.ecommerce.shared.domain.customer.event;
 
 import java.util.ArrayList;
 import java.util.List;

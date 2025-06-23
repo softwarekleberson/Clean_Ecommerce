@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.product.domain.product;
 
-public enum Category {
+public enum ProductCategory {
 
 	ELECTRONICS,
 	FASHION,
@@ -16,5 +16,6 @@ public enum Category {
 	PET_SUPPLIES,
 	OFFICE_SUPPLIES,
 	MUSIC,
-	JEWELRY
+	JEWELRY,
+	BAG
 }
