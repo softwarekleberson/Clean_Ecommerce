@@ -23,10 +23,11 @@ public class Book extends Product {
 	private final CategoryBoock categoryBoock;
 	private final Dimension dimension;
 	private final PublisherDate publisherDate;
+	private final Pricing pricing;
 
 	public Book(Name name, Description description, Price price, ProductCategory category, Brand brand, List<Image> image,
 			Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn,
-			CategoryBoock categoryBoock, Dimension dimension, PublisherDate publisherDate) {
+			CategoryBoock categoryBoock, Dimension dimension, PublisherDate publisherDate, Pricing pricing) {
 		
 		super(name, description, price, category, brand, image);
 		this.synopsis = synopsis;
@@ -37,6 +38,7 @@ public class Book extends Product {
 		this.categoryBoock = categoryBoock;
 		this.dimension = dimension;
 		this.publisherDate = publisherDate;
+		this.pricing = pricing;
 	}
 
 	public Synopsis getSynopsis() {
@@ -70,10 +72,14 @@ public class Book extends Product {
 	public PublisherDate getPublisherDate() {
 		return publisherDate;
 	}
+	
+	public Pricing getPricing() {
+		return pricing;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(author, categoryBoock, dimension, edition, isbn, page, publisherDate, synopsis);
+		return Objects.hash(author, categoryBoock, dimension, edition, isbn, page, publisherDate, synopsis, pricing);
 	}
 
 	@Override
@@ -88,6 +94,7 @@ public class Book extends Product {
 		return Objects.equals(author, other.author) && categoryBoock == other.categoryBoock
 				&& Objects.equals(dimension, other.dimension) && Objects.equals(edition, other.edition)
 				&& Objects.equals(isbn, other.isbn) && Objects.equals(page, other.page)
-				&& Objects.equals(publisherDate, other.publisherDate) && Objects.equals(synopsis, other.synopsis);
+				&& Objects.equals(publisherDate, other.publisherDate) && Objects.equals(synopsis, other.synopsis)
+				&& Objects.equals(pricing, other.pricing);
 	}
 }

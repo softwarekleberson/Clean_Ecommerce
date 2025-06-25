@@ -16,6 +16,7 @@ import com.cleancode.ecommerce.product.domain.product.books.Book;
 import com.cleancode.ecommerce.product.domain.product.books.CategoryBoock;
 import com.cleancode.ecommerce.product.domain.product.books.Isbn;
 import com.cleancode.ecommerce.product.domain.product.books.Page;
+import com.cleancode.ecommerce.product.domain.product.books.Pricing;
 import com.cleancode.ecommerce.product.domain.product.books.PublisherDate;
 import com.cleancode.ecommerce.product.domain.product.books.Synopsis;
 import com.cleancode.ecommerce.shared.kernel.Name;
@@ -35,11 +36,12 @@ public class CreateBoockDto extends CreateProductDto {
 	private String length;
 	private String weight;
 	private LocalDate publisherDate;
+	private BigDecimal pricing;
 
 	public CreateBoockDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
 			ProductCategory category, String brand, List<Image> images, String synopsis, String page, String author,
 			String edition, String isbn, CategoryBoock categoryBoock, String height, String width, String length,
-			String weight, LocalDate publisherDate) {
+			String weight, LocalDate publisherDate, BigDecimal pricing) {
 
 		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, images);
 		this.synopsis = synopsis;
@@ -53,6 +55,7 @@ public class CreateBoockDto extends CreateProductDto {
 		this.length = length;
 		this.weight = weight;
 		this.publisherDate = publisherDate;
+		this.pricing = pricing;
 	}
 
 	public String getSynopsis() {
@@ -104,6 +107,6 @@ public class CreateBoockDto extends CreateProductDto {
 		return new Book(new Name(getName()), new Description(getDescription()), new Price(getPrice(), getTypeCoin()),
 				getCategory(), new Brand(getBrand()), getImages(), new Synopsis(getSynopsis()), new Page(getPage()),
 				new Author(getAuthor()), new Edition(getEdition()), new Isbn(getIsbn()), categoryBoock,
-				new Dimension(height, width, length, weight), new PublisherDate(getPublisherDate()));
+				new Dimension(height, width, length, weight), new PublisherDate(getPublisherDate()), new Pricing(pricing));
 	}
 }
