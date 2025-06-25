@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.infra.gateways.password;
+package com.cleancode.ecommerce.customer.infra.gateways;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

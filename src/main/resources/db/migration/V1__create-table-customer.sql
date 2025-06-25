@@ -1,0 +1,13 @@
+CREATE TABLE customers (
+    id VARCHAR(36) PRIMARY KEY, 
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    active BOOLEAN NOT NULL DEFAULT 0, 
+    name VARCHAR(255) NOT NULL, 
+    birth DATE NOT NULL, 
+    password VARCHAR(255) NOT NULL, 
+    gender VARCHAR(255) NOT NULL,
+    ddd VARCHAR(2) NOT NULL, 
+    phone VARCHAR(9) NOT NULL,
+    typePhone VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE 
+);
