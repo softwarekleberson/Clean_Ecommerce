@@ -1,44 +1,24 @@
 package com.cleancode.ecommerce.customer.infra.persistence;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PhoneEntity {
 
 	private String ddd;
 	private String phone;
+	
+	@Column(name = "type_phone")
+	@Enumerated(EnumType.STRING)
 	private TypePhoneEntity typePhone;
 	
-	public PhoneEntity() {
-	}
-
-	public PhoneEntity(String ddd, String phone, TypePhoneEntity typePhone) {
-		this.ddd = ddd;
-		this.phone = phone;
-		this.typePhone = typePhone;
-	}
-
-	public String getDdd() {
-		return ddd;
-	}
-
-	public void setDdd(String ddd) {
-		this.ddd = ddd;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public TypePhoneEntity getTypePhone() {
-		return typePhone;
-	}
-
-	public void setTypePhone(TypePhoneEntity typePhone) {
-		this.typePhone = typePhone;
-	}
 }

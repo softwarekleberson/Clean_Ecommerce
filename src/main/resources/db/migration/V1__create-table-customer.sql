@@ -8,6 +8,6 @@ CREATE TABLE customers (
     gender VARCHAR(255) NOT NULL,
     ddd VARCHAR(2) NOT NULL, 
     phone VARCHAR(9) NOT NULL,
-    typePhone VARCHAR(255) NOT NULL,
+    type_phone VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE 
 );
