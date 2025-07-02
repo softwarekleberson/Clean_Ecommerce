@@ -8,6 +8,5 @@ import com.cleancode.ecommerce.customer.domain.customer.Customer;
 public interface CustomerRepository {
 
 	void save (Customer customer);
-	boolean emailInUse (String email);
 	Optional<Customer> getCustomerById(UUID id);
 }
