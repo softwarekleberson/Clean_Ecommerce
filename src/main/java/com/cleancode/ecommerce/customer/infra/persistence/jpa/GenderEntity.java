@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.infra.persistence;
+package com.cleancode.ecommerce.customer.infra.persistence.jpa;
 
 public enum GenderEntity {
 
