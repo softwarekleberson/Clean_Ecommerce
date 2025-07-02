@@ -5,9 +5,9 @@ CREATE TABLE customers (
     name VARCHAR(255) NOT NULL, 
     birth DATE NOT NULL, 
     password VARCHAR(255) NOT NULL, 
-    gender VARCHAR(255) NOT NULL,
+    gender ENUM('MASCULINO', 'FEMININO', 'NAO_INFORMADO') NOT NULL,
     ddd VARCHAR(2) NOT NULL, 
     phone VARCHAR(9) NOT NULL,
-    type_phone VARCHAR(255) NOT NULL,
+    type_phone ENUM('CELULAR', 'WHATSAPP', 'FIXO') NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE 
 );
