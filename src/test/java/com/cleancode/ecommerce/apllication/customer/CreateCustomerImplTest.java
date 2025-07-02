@@ -36,7 +36,7 @@ public class CreateCustomerImplTest {
     }
 
     @Test
-    void deveCriarClienteComSucesso() {
+    void mustCreateCustomerSuccessfully() {
         CreateCustomerDto dto = new CreateCustomerDto(
                 "Kleberson",
                 Gender.MALE,
@@ -59,7 +59,7 @@ public class CreateCustomerImplTest {
     }
 
     @Test
-    void deveLancarExcecaoQuandoSenhasNaoConferem() {
+    void shouldThrowExceptionWhenPasswordDoesNotMatch() {
         CreateCustomerDto dto = new CreateCustomerDto(
                 "Kleberson",
                 Gender.MALE,
