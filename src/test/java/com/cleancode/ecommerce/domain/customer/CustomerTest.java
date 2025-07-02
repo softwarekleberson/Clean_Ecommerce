@@ -35,11 +35,11 @@ public class CustomerTest {
 		this.customer = new Customer(
 			new Id(UUID.randomUUID()),
 			new Name("jose"),
-			Gender.MASCULINO,
+			Gender.MALE,
 			new Birth(LocalDate.of(1994, 10, 10)),
 			new Cpf("478.034.785-40"),
 			new Contact(
-				new Phone("11", "159741236", TypePhone.CELULAR),
+				new Phone("11", "159741236", TypePhone.MOBILE),
 				new Email("josesilva@gmail.com")
 			),
 			new Password("qIx3N@yqfwrno@sp9ke4")
