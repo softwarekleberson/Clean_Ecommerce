@@ -19,6 +19,8 @@ public class DatabaseMemory implements CustomerRepository{
 
 	@Override
 	public Optional<Customer> getCustomerById(UUID id) {
-		return Optional.empty();
+		return customer.stream()
+			   .filter(c ->c.getId().equals(id))
+			   .findFirst();
 	}
 }
