@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.cleancode.ecommerce.customer.infra.persistence.jpa.CustomerEntity;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 
 public interface CustomerJpa extends JpaRepository<CustomerEntity, UUID>{
 

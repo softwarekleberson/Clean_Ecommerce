@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.infra.persistence.jpa;
+package com.cleancode.ecommerce.customer.infra.persistence.jpa.customer;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

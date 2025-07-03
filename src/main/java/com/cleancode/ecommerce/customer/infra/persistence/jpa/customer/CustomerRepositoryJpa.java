@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.infra.persistence.jpa;
+package com.cleancode.ecommerce.customer.infra.persistence.jpa.customer;
 
 import java.util.Optional;
 import java.util.UUID;
