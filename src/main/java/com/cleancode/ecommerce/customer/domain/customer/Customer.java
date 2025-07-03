@@ -118,6 +118,10 @@ public class Customer {
 	public Name getName() {
 		return name;
 	}
+	
+	public Password getPassword() {
+		return password;
+	}
 
 	public Gender getGender() {
 		return gender;

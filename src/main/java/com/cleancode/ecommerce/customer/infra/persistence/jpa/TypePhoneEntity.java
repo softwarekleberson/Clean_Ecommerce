@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.customer.infra.persistence.jpa;
 
 public enum TypePhoneEntity {
 
-	CELULAR,
+	MOBILE,
 	WHATSAPP,
-	FIXO
+	FIXED
 }
