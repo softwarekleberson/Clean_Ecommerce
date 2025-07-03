@@ -17,5 +17,6 @@ CREATE TABLE address (
     CONSTRAINT fk_address_customer
         FOREIGN KEY (customer_id)
         REFERENCES customer(id)
-        ON DELETE SET NULL
+    	ON DELETE CASCADE
+
 );
