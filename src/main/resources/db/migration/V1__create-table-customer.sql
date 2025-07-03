@@ -1,4 +1,4 @@
-CREATE TABLE customers (
+CREATE TABLE customer (
     id VARCHAR(36) PRIMARY KEY, 
     cpf VARCHAR(11) NOT NULL UNIQUE,
     active BOOLEAN NOT NULL DEFAULT 0, 
