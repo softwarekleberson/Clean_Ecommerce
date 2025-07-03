@@ -6,7 +6,7 @@ CREATE TABLE address (
     number VARCHAR(50) NOT NULL,
     neighborhood VARCHAR(255) NOT NULL,
     zip_code VARCHAR(20) NOT NULL,
-    observation VARCHAR(255) NOT NULL,
+    observation VARCHAR(255),
     street_type VARCHAR(255) NOT NULL,
     type_residence VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
