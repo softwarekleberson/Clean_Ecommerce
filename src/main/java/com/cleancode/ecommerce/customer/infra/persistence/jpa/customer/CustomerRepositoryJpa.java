@@ -8,24 +8,26 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.customer.infra.gateways.CustomerJpa;
 import com.cleancode.ecommerce.customer.infra.mapper.CustomerMapper;
 
+import org.springframework.transaction.annotation.Transactional;
+
 public class CustomerRepositoryJpa implements CustomerRepository {
 
-	private final CustomerMapper mapper;
 	private final CustomerJpa jpa;
 
-	public CustomerRepositoryJpa(CustomerMapper mapper, CustomerJpa jpa) {
-		this.mapper = mapper;
+	public CustomerRepositoryJpa(CustomerJpa jpa) {
 		this.jpa = jpa;
 	}
 
 	@Override
+	@Transactional
 	public void save(Customer customer) {
-		CustomerEntity entity = mapper.toEntity(customer);
+		CustomerEntity entity = CustomerMapper.toEntity(customer);
 		jpa.save(entity);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<Customer> getCustomerById(UUID id) {
-		return Optional.empty();
+		return jpa.findFullById(id).map(CustomerMapper::toDomain);
 	}
 }
