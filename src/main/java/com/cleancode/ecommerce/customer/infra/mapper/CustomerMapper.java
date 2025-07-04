@@ -1,13 +1,11 @@
 package com.cleancode.ecommerce.customer.infra.mapper;
 
-import com.cleancode.ecommerce.customer.domain.customer.Birth;
-import com.cleancode.ecommerce.customer.domain.customer.Contact;
-import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.Gender;
-import com.cleancode.ecommerce.customer.domain.customer.Id;
-import com.cleancode.ecommerce.customer.domain.customer.Password;
-import com.cleancode.ecommerce.customer.domain.customer.Phone;
-import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import com.cleancode.ecommerce.customer.domain.customer.*;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEntity;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.DeliveryEntity;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.EmailEntity;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.GenderEntity;
@@ -23,7 +21,6 @@ public final class CustomerMapper {
 	}
 
 	public static CustomerEntity toEntity(Customer customer) {
-
 		CustomerEntity entity = new CustomerEntity();
 
 		entity.setId(customer.getId().getValue());
@@ -41,16 +38,34 @@ public final class CustomerMapper {
 		Email email = customer.getEmail();
 		entity.setEmail(new EmailEntity(email.getEmail()));
 
+		List<DeliveryEntity> deliveryEntities = customer.getDeliverys() != null ? customer.getDeliverys().stream()
+				.map(delivery -> DeliveryMapper.toEntity(delivery, entity)).collect(Collectors.toList()) : List.of();
+		entity.setDeliveryEntities(deliveryEntities);
+
+		List<ChargeEntity> chargeEntities = customer.getCharges() != null ? customer.getCharges().stream()
+				.map(charge -> ChargeMapper.toEntity(charge, entity)).collect(Collectors.toList()) : List.of();
+		entity.setChargeEntities(chargeEntities);
+
 		return entity;
 	}
 
 	public static Customer toDomain(CustomerEntity entity) {
-		return new Customer(new Id(entity.getId()), new Name(entity.getName()),
+		Customer customer = new Customer(new Id(entity.getId()), new Name(entity.getName()),
 				Gender.valueOf(entity.getGender().name()), new Birth(entity.getBirth()), new Cpf(entity.getCpf()),
 				new Contact(
 						new Phone(entity.getPhone().getDdd(), entity.getPhone().getPhone(),
 								TypePhone.valueOf(entity.getPhone().getTypePhone().name())),
 						new Email(entity.getEmail().getEmail())),
 				new Password(entity.getPassword()));
+
+		if (entity.getDeliveryEntities() != null) {
+			entity.getDeliveryEntities().stream().map(DeliveryMapper::toDomain).forEach(customer::insertNewDelivery);
+		}
+
+		if (entity.getChargeEntities() != null) {
+			entity.getChargeEntities().stream().map(ChargeMapper::toDomain).forEach(customer::insertNewCharge);
+		}
+
+		return customer;
 	}
 }
