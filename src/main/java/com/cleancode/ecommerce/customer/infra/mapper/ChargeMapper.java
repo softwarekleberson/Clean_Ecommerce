@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.infra.gateways;
+package com.cleancode.ecommerce.customer.infra.mapper;
 
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEntity;

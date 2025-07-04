@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.customer.infra.gateways.CustomerJpa;
-import com.cleancode.ecommerce.customer.infra.gateways.CustomerMapper;
+import com.cleancode.ecommerce.customer.infra.mapper.CustomerMapper;
 
 public class CustomerRepositoryJpa implements CustomerRepository {
 
