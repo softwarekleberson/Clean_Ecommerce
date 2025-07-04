@@ -2,13 +2,14 @@ package com.cleancode.ecommerce.customer.infra.mapper;
 
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEntity;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 
 public class ChargeMapper {
 
 	public ChargeMapper() {
 	}
 
-	public static ChargeEntity toEntity(Charge charge) {
+	public static ChargeEntity toEntity(Charge charge, CustomerEntity customerEntity) {
 		ChargeEntity entity = new ChargeEntity();
 
 		entity.setId(charge.getId());
@@ -23,6 +24,8 @@ public class ChargeMapper {
 		entity.setCity(charge.getCity());
 		entity.setState(charge.getState());
 		entity.setCountry(charge.getCountry());
+
+		entity.setCustomer(customerEntity); 
 
 		return entity;
 	}

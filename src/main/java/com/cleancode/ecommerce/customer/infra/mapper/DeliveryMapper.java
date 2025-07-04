@@ -2,13 +2,14 @@ package com.cleancode.ecommerce.customer.infra.mapper;
 
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.DeliveryEntity;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 
 public final class DeliveryMapper {
 
 	private DeliveryMapper() {
 	}
 
-	public static DeliveryEntity toEntity(Delivery delivery) {
+	public static DeliveryEntity toEntity(Delivery delivery, CustomerEntity customerEntity) {
 		DeliveryEntity entity = new DeliveryEntity();
 
 		entity.setId(delivery.getId());
@@ -25,8 +26,11 @@ public final class DeliveryMapper {
 		entity.setCountry(delivery.getCountry());
 		entity.setDeliveryPhrase(delivery.getDeliveryPhrase());
 
+		entity.setCustomer(customerEntity);
+
 		return entity;
 	}
+
 
 	public static Delivery toDomain(DeliveryEntity entity) {
 		return new Delivery(entity.getDeliveryPhrase(), entity.getReceiver(), entity.getStreet(), entity.getNumber(),
