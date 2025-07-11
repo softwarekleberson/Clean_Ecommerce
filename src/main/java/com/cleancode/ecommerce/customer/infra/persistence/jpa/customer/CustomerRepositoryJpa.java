@@ -8,8 +8,10 @@ import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepos
 import com.cleancode.ecommerce.customer.infra.gateways.CustomerJpa;
 import com.cleancode.ecommerce.customer.infra.mapper.CustomerMapper;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+@Repository
 public class CustomerRepositoryJpa implements CustomerRepository {
 
 	private final CustomerJpa jpa;
