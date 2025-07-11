@@ -23,7 +23,6 @@ public final class CustomerMapper {
 	public static CustomerEntity toEntity(Customer customer) {
 		CustomerEntity entity = new CustomerEntity();
 
-		entity.setId(customer.getId().getValue());
 		entity.setCpf(customer.getCpf().getCpf());
 		entity.setActive(customer.isActive());
 		entity.setName(customer.getName().getName());
@@ -50,7 +49,7 @@ public final class CustomerMapper {
 	}
 
 	public static Customer toDomain(CustomerEntity entity) {
-		Customer customer = new Customer(new Id(entity.getId()), new Name(entity.getName()),
+		Customer customer = new Customer(new Name(entity.getName()),
 				Gender.valueOf(entity.getGender().name()), new Birth(entity.getBirth()), new Cpf(entity.getCpf()),
 				new Contact(
 						new Phone(entity.getPhone().getDdd(), entity.getPhone().getPhone(),
@@ -66,6 +65,7 @@ public final class CustomerMapper {
 			entity.getChargeEntities().stream().map(ChargeMapper::toDomain).forEach(customer::insertNewCharge);
 		}
 
+		customer.idCustomer(entity.getId());
 		return customer;
 	}
 }
