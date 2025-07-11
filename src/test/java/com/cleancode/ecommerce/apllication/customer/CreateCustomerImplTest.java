@@ -14,7 +14,6 @@ import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.customer.domain.customer.repository.PasswordEncryptor;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
 import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
@@ -22,17 +21,15 @@ import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
 public class CreateCustomerImplTest {
 
     private CustomerRepository repository;
-    private PasswordEncryptor passwordEncryptor;
     private EventPublisher eventPublisher;
     private CreateCustomerImpl createCustomer;
 
     @BeforeEach
     void setUp() {
         repository = mock(CustomerRepository.class);
-        passwordEncryptor = mock(PasswordEncryptor.class);
         eventPublisher = mock(EventPublisher.class);
 
-        createCustomer = new CreateCustomerImpl(repository, passwordEncryptor, eventPublisher);
+        createCustomer = new CreateCustomerImpl(repository, eventPublisher);
     }
 
     @Test
@@ -49,8 +46,6 @@ public class CreateCustomerImplTest {
                 "senha123",
                 "senha123"
         );
-
-        when(passwordEncryptor.encryptPassword("senha123")).thenReturn("senha123_encrypted");
 
         createCustomer.execute(dto);
 
