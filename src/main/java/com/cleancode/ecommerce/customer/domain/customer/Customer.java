@@ -25,13 +25,16 @@ public class Customer {
 	private List<Delivery> deliveries = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
 
-	public Customer(Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+	public Customer(Id id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+		this.id = id;
 		this.name = name;
 		this.gender = gender;
 		this.birth = birth;
 		this.cpf = cpf;
 		this.contact = contact;
 		this.password = password;
+		
+		updateActivationStatus();
 	}
 	
 	public void idCustomer(UUID id) {

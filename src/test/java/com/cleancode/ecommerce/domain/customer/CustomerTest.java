@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
+import com.cleancode.ecommerce.customer.domain.customer.Id;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
@@ -31,6 +33,7 @@ public class CustomerTest {
 	@BeforeEach
 	void setUp() {
 		this.customer = new Customer(
+			new Id(UUID.randomUUID()),
 			new Name("jose"),
 			Gender.MALE,
 			new Birth(LocalDate.of(1994, 10, 10)),

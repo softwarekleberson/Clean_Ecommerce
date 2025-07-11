@@ -18,8 +18,8 @@ public class CreateCustomerChargeImpl implements CreateCustomerCharge{
 	
 	public void execute(UUID id, CreateChargeDto dto) {
 		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));
-		
 		Charge charge = dto.createCharge();
+		
 		customer.insertNewCharge(charge);
 		repository.save(customer);
 	}

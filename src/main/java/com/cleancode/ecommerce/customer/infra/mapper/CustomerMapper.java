@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.customer.infra.mapper;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.customer.domain.customer.*;
@@ -23,6 +24,10 @@ public final class CustomerMapper {
 	public static CustomerEntity toEntity(Customer customer) {
 		CustomerEntity entity = new CustomerEntity();
 
+		if (customer.getId() != null) {
+			entity.setId(customer.getId().getValue());
+		}
+
 		entity.setCpf(customer.getCpf().getCpf());
 		entity.setActive(customer.isActive());
 		entity.setName(customer.getName().getName());
@@ -37,19 +42,26 @@ public final class CustomerMapper {
 		Email email = customer.getEmail();
 		entity.setEmail(new EmailEntity(email.getEmail()));
 
-		List<DeliveryEntity> deliveryEntities = customer.getDeliverys() != null ? customer.getDeliverys().stream()
-				.map(delivery -> DeliveryMapper.toEntity(delivery, entity)).collect(Collectors.toList()) : List.of();
-		entity.setDeliveryEntities(deliveryEntities);
+		Set<DeliveryEntity> deliveryEntities = customer.getDeliverys() != null
+				? customer.getDeliverys().stream().map(delivery -> DeliveryMapper.toEntity(delivery, entity)).collect(
+						Collectors.toCollection(HashSet::new))
+				: new HashSet<>();
 
-		List<ChargeEntity> chargeEntities = customer.getCharges() != null ? customer.getCharges().stream()
-				.map(charge -> ChargeMapper.toEntity(charge, entity)).collect(Collectors.toList()) : List.of();
-		entity.setChargeEntities(chargeEntities);
+		entity.getDeliveryEntities().clear();
+		entity.getDeliveryEntities().addAll(deliveryEntities);
+
+		Set<ChargeEntity> chargeEntities = customer.getCharges() != null ? customer.getCharges().stream()
+				.map(charge -> ChargeMapper.toEntity(charge, entity)).collect(Collectors.toCollection(HashSet::new))
+				: new HashSet<>();
+
+		entity.getChargeEntities().clear();
+		entity.getChargeEntities().addAll(chargeEntities);
 
 		return entity;
 	}
 
 	public static Customer toDomain(CustomerEntity entity) {
-		Customer customer = new Customer(new Name(entity.getName()),
+		Customer customer = new Customer(new Id(entity.getId()), new Name(entity.getName()),
 				Gender.valueOf(entity.getGender().name()), new Birth(entity.getBirth()), new Cpf(entity.getCpf()),
 				new Contact(
 						new Phone(entity.getPhone().getDdd(), entity.getPhone().getPhone(),
@@ -58,14 +70,13 @@ public final class CustomerMapper {
 				new Password(entity.getPassword()));
 
 		if (entity.getDeliveryEntities() != null) {
-			entity.getDeliveryEntities().stream().map(DeliveryMapper::toDomain).forEach(customer::insertNewDelivery);
+			entity.getDeliveryEntities().forEach(e -> customer.insertNewDelivery(DeliveryMapper.toDomain(e)));
 		}
 
 		if (entity.getChargeEntities() != null) {
-			entity.getChargeEntities().stream().map(ChargeMapper::toDomain).forEach(customer::insertNewCharge);
+			entity.getChargeEntities().forEach(e -> customer.insertNewCharge(ChargeMapper.toDomain(e)));
 		}
 
-		customer.idCustomer(entity.getId());
 		return customer;
 	}
 }

@@ -1,6 +1,6 @@
 CREATE TABLE customer (
     id BINARY(16) PRIMARY KEY, 
-    cpf VARCHAR(15) NOT NULL UNIQUE,
+    cpf VARCHAR(15) NOT NULL,
     active BOOLEAN NOT NULL DEFAULT 0, 
     name VARCHAR(255) NOT NULL, 
     birth DATE NOT NULL, 
@@ -9,5 +9,5 @@ CREATE TABLE customer (
     ddd VARCHAR(2) NOT NULL, 
     phone VARCHAR(9) NOT NULL,
     type_phone ENUM('MOBILE', 'WHATSAPP', 'FIXED') NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE 
+    email VARCHAR(255) NOT NULL 
 );

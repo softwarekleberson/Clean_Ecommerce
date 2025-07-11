@@ -1,11 +1,13 @@
 package com.cleancode.ecommerce.customer.application.dtos;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
+import com.cleancode.ecommerce.customer.domain.customer.Id;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
@@ -55,6 +57,7 @@ public class CreateCustomerDto {
 	
 	public Customer createCustomer() {
 		return new Customer(
+			   new Id(UUID.randomUUID()),
 			   new Name(name),
 			   gender, 
 			   new Birth(birth),

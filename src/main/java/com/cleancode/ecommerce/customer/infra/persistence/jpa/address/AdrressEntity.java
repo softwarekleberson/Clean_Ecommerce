@@ -30,6 +30,8 @@ public abstract class AdrressEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "db_id")
 	protected Long dbId;
+	
+	@Column(columnDefinition = "BINARY(16)")
 	protected UUID id;
 	protected String receiver;
 	protected String street;
