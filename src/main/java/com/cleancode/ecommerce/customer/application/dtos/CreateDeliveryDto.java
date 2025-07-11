@@ -39,5 +39,4 @@ public class CreateDeliveryDto {
 		return new Delivery(deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation, streetType,
 				typeResidence, city, state, country);
 	}
-
 }
