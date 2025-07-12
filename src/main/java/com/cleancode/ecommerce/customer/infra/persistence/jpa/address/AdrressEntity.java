@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.customer.infra.persistence.jpa.address;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
@@ -15,10 +16,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -55,4 +58,21 @@ public abstract class AdrressEntity {
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
 	protected CustomerEntity customer;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(dbId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdrressEntity other = (AdrressEntity) obj;
+		return Objects.equals(dbId, other.dbId);
+	}
 }

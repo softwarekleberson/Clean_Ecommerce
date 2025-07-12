@@ -3,9 +3,11 @@ package com.cleancode.ecommerce.customer.infra.persistence.jpa.address;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "delivery")
 public class DeliveryEntity extends AdrressEntity {
