@@ -51,10 +51,6 @@ public class CreateCustomerDto {
 		return confirmPassword;
 	}
 	
-	public String getEmail() {
-		return email;
-	}
-	
 	public Customer createCustomer() {
 		return new Customer(
 			   new Id(UUID.randomUUID()),
