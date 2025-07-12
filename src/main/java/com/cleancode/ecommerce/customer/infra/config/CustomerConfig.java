@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerCharge;
+import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
@@ -24,5 +26,11 @@ public class CustomerConfig {
 	public CreateCustomerDelivery createCustomerDelivery(
             CustomerRepository repository) {
 		return new CreateCustomerDeliveryImpl(repository);
+	}
+	
+	@Bean
+	public CreateCustomerCharge createCustomerCharge (
+			CustomerRepository repository) {
+		return new CreateCustomerChargeImpl(repository);
 	}
 }
