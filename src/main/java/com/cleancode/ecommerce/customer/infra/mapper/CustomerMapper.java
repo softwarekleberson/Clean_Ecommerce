@@ -2,7 +2,6 @@ package com.cleancode.ecommerce.customer.infra.mapper;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.customer.domain.customer.*;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEntity;
@@ -24,10 +23,6 @@ public final class CustomerMapper {
 	public static CustomerEntity toEntity(Customer customer) {
 		CustomerEntity entity = new CustomerEntity();
 
-		if (customer.getId() != null) {
-			entity.setId(customer.getId().getValue());
-		}
-
 		entity.setCpf(customer.getCpf().getCpf());
 		entity.setActive(customer.isActive());
 		entity.setName(customer.getName().getName());
@@ -42,20 +37,65 @@ public final class CustomerMapper {
 		Email email = customer.getEmail();
 		entity.setEmail(new EmailEntity(email.getEmail()));
 
-		Set<DeliveryEntity> deliveryEntities = customer.getDeliverys() != null
-				? customer.getDeliverys().stream().map(delivery -> DeliveryMapper.toEntity(delivery, entity)).collect(
-						Collectors.toCollection(HashSet::new))
-				: new HashSet<>();
+		// Atualiza apenas novos deliverys
+		Set<String> existingDeliveryIds = new HashSet<>();
+		entity.getDeliveryEntities().forEach(e -> existingDeliveryIds.add(e.getId()));
 
-		entity.getDeliveryEntities().clear();
-		entity.getDeliveryEntities().addAll(deliveryEntities);
+		for (Delivery delivery : customer.getDeliverys()) {
+			if (!existingDeliveryIds.contains(delivery.getId())) {
+				DeliveryEntity deliveryEntity = DeliveryMapper.toEntity(delivery, entity);
+				entity.getDeliveryEntities().add(deliveryEntity);
+			}
+		}
 
-		Set<ChargeEntity> chargeEntities = customer.getCharges() != null ? customer.getCharges().stream()
-				.map(charge -> ChargeMapper.toEntity(charge, entity)).collect(Collectors.toCollection(HashSet::new))
-				: new HashSet<>();
+		// Atualiza apenas novos charges
+		Set<String> existingChargeIds = new HashSet<>();
+		entity.getChargeEntities().forEach(e -> existingChargeIds.add(e.getId()));
 
-		entity.getChargeEntities().clear();
-		entity.getChargeEntities().addAll(chargeEntities);
+		for (Charge charge : customer.getCharges()) {
+			if (!existingChargeIds.contains(charge.getId())) {
+				ChargeEntity chargeEntity = ChargeMapper.toEntity(charge, entity);
+				entity.getChargeEntities().add(chargeEntity);
+			}
+		}
+
+		return entity;
+	}
+
+	public static CustomerEntity toEntity(Customer domain, CustomerEntity entity) {
+		entity.setCpf(domain.getCpf().getCpf());
+		entity.setActive(domain.isActive());
+		entity.setName(domain.getName().getName());
+		entity.setBirth(domain.getBirth().getBirth());
+		entity.setPassword(domain.getPassword().getPassword());
+		entity.setGender(GenderEntity.valueOf(domain.getGender().name()));
+
+		Phone phone = domain.getFullPhone();
+		entity.setPhone(new PhoneEntity(phone.getDdd(), phone.getPhone(),
+				TypePhoneEntity.valueOf(phone.getTypePhone().name())));
+
+		Email email = domain.getEmail();
+		entity.setEmail(new EmailEntity(email.getEmail()));
+
+		for (Delivery delivery : domain.getDeliverys()) {
+			boolean exists = entity.getDeliveryEntities().stream()
+					.anyMatch(existing -> existing.getId().equals(delivery.getId()));
+
+			if (!exists) {
+				DeliveryEntity newEntity = DeliveryMapper.toEntity(delivery, entity);
+				entity.getDeliveryEntities().add(newEntity);
+			}
+		}
+
+		for (Charge charge : domain.getCharges()) {
+			boolean exists = entity.getChargeEntities().stream()
+					.anyMatch(existing -> existing.getId().equals(charge.getId()));
+
+			if (!exists) {
+				ChargeEntity newEntity = ChargeMapper.toEntity(charge, entity);
+				entity.getChargeEntities().add(newEntity);
+			}
+		}
 
 		return entity;
 	}

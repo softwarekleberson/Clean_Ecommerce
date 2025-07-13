@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.customer.infra.persistence.jpa.customer;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
@@ -23,13 +22,22 @@ public class CustomerRepositoryJpa implements CustomerRepository {
 	@Override
 	@Transactional
 	public void save(Customer customer) {
-		CustomerEntity entity = CustomerMapper.toEntity(customer);
+		Optional<CustomerEntity> optionalEntity = jpa.findFullById(customer.getId().getValue().toString());
+
+		CustomerEntity entity;
+
+		if (optionalEntity.isPresent()) {
+			entity = CustomerMapper.toEntity(customer, optionalEntity.get());
+		} else {
+			entity = CustomerMapper.toEntity(customer);
+		}
+
 		jpa.save(entity);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Optional<Customer> getCustomerById(UUID id) {
+	public Optional<Customer> getCustomerById(String id) {
 		return jpa.findFullById(id).map(CustomerMapper::toDomain);
 	}
 }

@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.customer.infra.persistence.jpa.address;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 
@@ -34,8 +33,7 @@ public abstract class AdrressEntity {
 	@Column(name = "db_id")
 	protected Long dbId;
 	
-	@Column(columnDefinition = "BINARY(16)")
-	protected UUID id;
+	protected String id;
 	protected String receiver;
 	protected String street;
 	protected String number;

@@ -33,7 +33,7 @@ public class CustomerTest {
 	@BeforeEach
 	void setUp() {
 		this.customer = new Customer(
-			new Id(UUID.randomUUID()),
+			new Id(UUID.randomUUID().toString()),
 			new Name("jose"),
 			Gender.MALE,
 			new Birth(LocalDate.of(1994, 10, 10)),
@@ -80,7 +80,7 @@ public class CustomerTest {
 	void shouldDeleteDelivery() {
 		customer.insertNewDelivery(delivery);
 		Delivery deliveryToRemove = customer.getDeliverys().get(0);
-		customer.removeDelivery(deliveryToRemove.getId());
+		customer.removeDelivery(deliveryToRemove.getId().toString());
 		assertEquals(0, customer.getDeliverys().size());
 	}
 
@@ -88,7 +88,7 @@ public class CustomerTest {
 	void shouldDeleteCharge() {
 		customer.insertNewCharge(charge);
 		Charge chargeToRemove = customer.getCharges().get(0);
-		customer.removeCharge(chargeToRemove.getId());
+		customer.removeCharge(chargeToRemove.getId().toString());
 		assertEquals(0, customer.getCharges().size());
 	}
 

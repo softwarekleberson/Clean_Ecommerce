@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
@@ -37,7 +36,7 @@ public class Customer {
 		updateActivationStatus();
 	}
 	
-	public void idCustomer(UUID id) {
+	public void idCustomer(String id) {
 		this.id = new Id(id);
 	}
 
@@ -82,18 +81,19 @@ public class Customer {
 	}
 
 	public void insertNewDelivery(Delivery delivery) {
+		System.out.println(this.deliveries + "domain");
 		if (deliveries.stream().anyMatch(d -> d.equals(delivery))) {
 			throw new IllegalDomainException("This address was previously registered");
 		}
 		this.deliveries.add(delivery);
 	}
 
-	public Delivery getDelivery(UUID id) {
+	public Delivery getDelivery(String id) {
 		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
 
-	public void removeDelivery(UUID id) {
+	public void removeDelivery(String id) {
 		this.deliveries.removeIf(d -> d.getId().equals(id));
 	}
 
@@ -104,12 +104,12 @@ public class Customer {
 		this.charges.add(charge);
 	}
 
-	public Charge getCharge(UUID id) {
+	public Charge getCharge(String id) {
 		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
 
-	public void removeCharge(UUID id) {
+	public void removeCharge(String id) {
 		this.charges.removeIf(c -> c.getId().equals(id));
 	}
 

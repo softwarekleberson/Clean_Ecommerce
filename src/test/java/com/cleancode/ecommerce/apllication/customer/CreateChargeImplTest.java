@@ -31,7 +31,7 @@ public class CreateChargeImplTest {
     @Test
     void shouldAddChargeToCustomerSuccessfully() {
 
-    	UUID customerId = UUID.randomUUID();
+    	String customerId = UUID.randomUUID().toString();
         CreateChargeDto dto = new CreateChargeDto(
                 "João", "Rua A", "123", "Centro", "00000-000", "Deixar na portaria",
                 "Rua", "Apartamento", "CidadeX", "EstadoY", "Brasil"
@@ -63,7 +63,7 @@ public class CreateChargeImplTest {
     @Test
     void shouldThrowExceptionWhenCustomerNotFound() {
 
-    	UUID customerId = UUID.randomUUID();
+    	String customerId = UUID.randomUUID().toString();
         CreateChargeDto dto = new CreateChargeDto(
                 "João", "Rua A", "123", "Centro", "00000-000", "Deixar na portaria",
                 "Rua", "Apartamento", "CidadeX", "EstadoY", "Brasil"

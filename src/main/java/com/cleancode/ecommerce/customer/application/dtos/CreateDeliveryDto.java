@@ -1,9 +1,12 @@
 package com.cleancode.ecommerce.customer.application.dtos;
 
+import java.util.UUID;
+
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 
 public class CreateDeliveryDto {
 
+	private String id;
 	private String receiver;
 	private String street;
 	private String number;
@@ -21,6 +24,7 @@ public class CreateDeliveryDto {
 			String observation, String streetType, String typeResidence, String city, String state, String country,
 			String deliveryPhrase) {
 
+		this.id = UUID.randomUUID().toString();
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -36,7 +40,7 @@ public class CreateDeliveryDto {
 	}
 
 	public Delivery createDelivery() {
-		return new Delivery(deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation, streetType,
+		return new Delivery(id,deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation, streetType,
 				typeResidence, city, state, country);
 	}
 }

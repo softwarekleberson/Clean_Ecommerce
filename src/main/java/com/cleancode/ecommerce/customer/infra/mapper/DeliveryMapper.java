@@ -12,7 +12,7 @@ public final class DeliveryMapper {
 	public static DeliveryEntity toEntity(Delivery delivery, CustomerEntity customerEntity) {
 		DeliveryEntity entity = new DeliveryEntity();
 
-		entity.setId(delivery.getId());
+		entity.setId(delivery.getId().toString());
 		entity.setReceiver(delivery.getReceiver());
 		entity.setStreet(delivery.getStreet());
 		entity.setNumber(delivery.getNumber());
@@ -33,7 +33,7 @@ public final class DeliveryMapper {
 
 
 	public static Delivery toDomain(DeliveryEntity entity) {
-		return new Delivery(entity.getDeliveryPhrase(), entity.getReceiver(), entity.getStreet(), entity.getNumber(),
+		return new Delivery(entity.getId(), entity.getDeliveryPhrase(), entity.getReceiver(), entity.getStreet(), entity.getNumber(),
 				entity.getNeighborhood(), entity.getZipCode(), entity.getObservation(), entity.getStreet(),
 				entity.getTypeResidence(), entity.getCity(), entity.getState(), entity.getCountry());
 	}

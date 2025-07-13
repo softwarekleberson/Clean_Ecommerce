@@ -1,9 +1,12 @@
 package com.cleancode.ecommerce.customer.application.dtos;
 
+import java.util.UUID;
+
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 
 public class CreateChargeDto {
 
+	private String id;
 	private String receiver;
 	private String street;
 	private String number;
@@ -19,6 +22,7 @@ public class CreateChargeDto {
 	public CreateChargeDto(String receiver, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 
+		this.id = UUID.randomUUID().toString();
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -33,7 +37,7 @@ public class CreateChargeDto {
 	}
 
 	public Charge createCharge() {
-		return new Charge(receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
+		return new Charge(id, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
 				state, country);
 	}
 }

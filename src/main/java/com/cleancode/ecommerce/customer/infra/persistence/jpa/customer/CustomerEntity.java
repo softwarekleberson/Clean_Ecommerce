@@ -10,7 +10,6 @@ import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEnti
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.DeliveryEntity;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -33,8 +32,7 @@ import lombok.Setter;
 public class CustomerEntity {
 
 	@Id
-	@Column(columnDefinition = "BINARY(16)")
-	private UUID id;
+	private String id = UUID.randomUUID().toString();
 	private String cpf;
 	private boolean active;
 	private String name;

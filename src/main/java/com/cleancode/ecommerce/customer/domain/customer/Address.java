@@ -9,7 +9,7 @@ public abstract class Address {
 
 	protected static final int LENGTH_MAX = 255;
 	
-	protected final UUID id;
+	protected final String id;
 	protected String receiver;
 	protected String street;
 	protected String number;
@@ -23,14 +23,14 @@ public abstract class Address {
 	protected String state;
 	protected String country;
 	
-	public Address(String receiver, String street, String number, String neighborhood, String zipCode, String observation,
+	public Address(String id, String receiver, String street, String number, String neighborhood, String zipCode, String observation,
 			String streetType, String typeResidence, String city, String state, String country) {
 		
 		validateInput(receiver, street, number, neighborhood,
 					  zipCode, observation, streetType, typeResidence,
 					  city,  state,  country);
 		
-		this.id = UUID.randomUUID();
+		this.id = (id == null || id.isBlank()) ? UUID.randomUUID().toString() : id;
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -74,7 +74,7 @@ public abstract class Address {
 		return value == null || value.trim().isEmpty();
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 	

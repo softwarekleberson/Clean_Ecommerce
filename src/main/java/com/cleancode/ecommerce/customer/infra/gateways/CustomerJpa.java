@@ -12,10 +12,11 @@ import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerE
 public interface CustomerJpa extends JpaRepository<CustomerEntity, UUID> {
 
 	@Query("""
-			    SELECT c FROM CustomerEntity c
-			    LEFT JOIN FETCH c.deliveryEntities
-			    LEFT JOIN FETCH c.chargeEntities
-			    WHERE c.id = :id
-			""")
-	Optional<CustomerEntity> findFullById(@Param("id") UUID id);
+		    SELECT c 
+		    FROM CustomerEntity c
+		    LEFT JOIN FETCH c.chargeEntities ch
+		    LEFT JOIN FETCH c.deliveryEntities de
+		    WHERE c.id = :customerId
+		""")
+	Optional<CustomerEntity> findFullById(@Param("customerId") String customerId);
 }

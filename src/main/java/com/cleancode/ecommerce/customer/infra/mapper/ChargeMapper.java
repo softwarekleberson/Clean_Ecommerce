@@ -12,7 +12,7 @@ public class ChargeMapper {
 	public static ChargeEntity toEntity(Charge charge, CustomerEntity customerEntity) {
 		ChargeEntity entity = new ChargeEntity();
 
-		entity.setId(charge.getId());
+		entity.setId(charge.getId().toString());
 		entity.setReceiver(charge.getReceiver());
 		entity.setStreet(charge.getStreet());
 		entity.setNumber(charge.getNumber());
@@ -31,7 +31,7 @@ public class ChargeMapper {
 	}
 
 	public static Charge toDomain(ChargeEntity entity) {
-		return new Charge(entity.getReceiver(), entity.getStreet(), entity.getNumber(), entity.getNeighborhood(),
+		return new Charge(entity.getId() ,entity.getReceiver(), entity.getStreet(), entity.getNumber(), entity.getNeighborhood(),
 				entity.getZipCode(), entity.getObservation(), entity.getStreet(), entity.getTypeResidence(),
 				entity.getCity(), entity.getState(), entity.getCountry());
 	}

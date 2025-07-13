@@ -53,7 +53,7 @@ public class CreateCustomerDto {
 	
 	public Customer createCustomer() {
 		return new Customer(
-			   new Id(UUID.randomUUID()),
+			   new Id(UUID.randomUUID().toString()),
 			   new Name(name),
 			   gender, 
 			   new Birth(birth),

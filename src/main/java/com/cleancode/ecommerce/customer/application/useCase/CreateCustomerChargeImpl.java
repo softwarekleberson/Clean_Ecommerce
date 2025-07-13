@@ -1,7 +1,5 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import java.util.UUID;
-
 import com.cleancode.ecommerce.customer.application.dtos.CreateChargeDto;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
@@ -16,7 +14,7 @@ public class CreateCustomerChargeImpl implements CreateCustomerCharge{
 		this.repository = repository;
 	}
 	
-	public void execute(UUID id, CreateChargeDto dto) {
+	public void execute(String id, CreateChargeDto dto) {
 		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));
 		Charge charge = dto.createCharge();
 		

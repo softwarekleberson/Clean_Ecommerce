@@ -1,6 +1,6 @@
 CREATE TABLE address (
     db_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id BINARY(16) NOT NULL,
+    id VARCHAR(36) NOT NULL,
     receiver VARCHAR(255) NOT NULL,
     street VARCHAR(255) NOT NULL,
     number VARCHAR(50) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE address (
     city VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,
     country VARCHAR(255) NOT NULL,
-    customer_id BINARY(16), 
+    customer_id VARCHAR(36), 
 
     CONSTRAINT fk_address_customer
         FOREIGN KEY (customer_id)
