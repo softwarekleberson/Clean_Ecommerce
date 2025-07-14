@@ -11,6 +11,7 @@ import com.cleancode.ecommerce.shared.kernel.Email;
 public record ListCustomerDto(
 		
 		String id,
+		boolean active,
 		String name,
 		Gender gender,
 		Email email,
@@ -22,6 +23,7 @@ public record ListCustomerDto(
 
 	public ListCustomerDto(Customer customer) {
 		this(customer.getId().getValue(),
+			 customer.updateActivationStatus(),	
 			 customer.getName().getName(),
 			 customer.getGender(),
 			 customer.getContact().getEmail(),

@@ -31,7 +31,7 @@ public class Customer {
 		this.birth = birth;
 		this.cpf = cpf;
 		this.contact = contact;
-		this.password = password;
+		this.password = password;		
 	}
 	
 	public void idCustomer(String id) {
@@ -63,11 +63,12 @@ public class Customer {
 		}
 	}
 
-	public void updateActivationStatus() {
+	public boolean updateActivationStatus() {
 		boolean isCharge = !charges.isEmpty();
 		boolean isDelivery = !deliveries.isEmpty();
 
 		this.active = isCharge && isDelivery;
+		return this.active;
 	}
 
 	public Email getEmail() {
