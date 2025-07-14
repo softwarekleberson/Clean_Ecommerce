@@ -81,10 +81,6 @@ public class Customer {
 	}
 
 	public void insertNewDelivery(Delivery delivery) {
-		System.out.println(this.deliveries + "domain");
-		if (deliveries.stream().anyMatch(d -> d.equals(delivery))) {
-			throw new IllegalDomainException("This address was previously registered");
-		}
 		this.deliveries.add(delivery);
 	}
 
@@ -98,9 +94,6 @@ public class Customer {
 	}
 
 	public void insertNewCharge(Charge charge) {
-		if (charges.stream().anyMatch(c -> c.equals(charge))) {
-			throw new IllegalDomainException("This address was previously registered");
-		}
 		this.charges.add(charge);
 	}
 

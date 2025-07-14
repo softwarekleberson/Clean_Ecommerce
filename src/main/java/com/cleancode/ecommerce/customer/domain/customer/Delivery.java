@@ -6,7 +6,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Delivery extends Address{
 
-	private String deliveryPhrase; 
+	private final String deliveryPhrase; 
 	
 	public Delivery(String id, String deliveryPhrase, String receiver, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
@@ -39,4 +39,5 @@ public class Delivery extends Address{
 		Delivery other = (Delivery) obj;
 		return Objects.equals(deliveryPhrase, other.deliveryPhrase);
 	}
+
 }

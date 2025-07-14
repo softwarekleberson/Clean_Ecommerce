@@ -10,18 +10,18 @@ public abstract class Address {
 	protected static final int LENGTH_MAX = 255;
 	
 	protected final String id;
-	protected String receiver;
-	protected String street;
-	protected String number;
-	protected String neighborhood;
+	protected final String receiver;
+	protected final String street;
+	protected final String number;
+	protected final String neighborhood;
 	
-	protected String zipCode;
-	protected String observation;
-	protected String streetType;
-	protected String typeResidence;
-	protected String city;
-	protected String state;
-	protected String country;
+	protected final String zipCode;
+	protected final String observation;
+	protected final String streetType;
+	protected final String typeResidence;
+	protected final String city;
+	protected final String state;
+	protected final String country;
 	
 	public Address(String id, String receiver, String street, String number, String neighborhood, String zipCode, String observation,
 			String streetType, String typeResidence, String city, String state, String country) {

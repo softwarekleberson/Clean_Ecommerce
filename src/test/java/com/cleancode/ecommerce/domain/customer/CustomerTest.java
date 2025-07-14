@@ -45,12 +45,12 @@ public class CustomerTest {
 			new Password("qIx3N@yqfwrno@sp9ke4")
 		);
 
-		this.delivery = new Delivery(
+		this.delivery = new Delivery(UUID.randomUUID().toString(),
 			"frase de entrega", "cleiton", "Rua do urubo", "10", "Gavia", "14785-236",
 			"Observação", "rua", "casa", "Rio de janeiro", "Rio de janeiro", "Brasil"
 		);
 
-		this.charge = new Charge(
+		this.charge = new Charge(UUID.randomUUID().toString(),
 			"cleiton", "Rua do urubo", "10", "Gavia", "14785-236",
 			"Observação", "rua", "casa", "Rio de janeiro", "Rio de janeiro", "Brasil"
 		);
