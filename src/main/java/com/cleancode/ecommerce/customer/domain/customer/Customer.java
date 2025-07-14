@@ -32,8 +32,6 @@ public class Customer {
 		this.cpf = cpf;
 		this.contact = contact;
 		this.password = password;
-		
-		updateActivationStatus();
 	}
 	
 	public void idCustomer(String id) {

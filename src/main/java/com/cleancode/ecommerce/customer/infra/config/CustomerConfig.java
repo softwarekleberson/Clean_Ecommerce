@@ -9,6 +9,8 @@ import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerCharge
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
+import com.cleancode.ecommerce.customer.application.useCase.ListCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.ListCustomerImpl;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
 
@@ -32,5 +34,11 @@ public class CustomerConfig {
 	public CreateCustomerCharge createCustomerCharge (
 			CustomerRepository repository) {
 		return new CreateCustomerChargeImpl(repository);
+	}
+	
+	@Bean
+	public ListCustomer ListCustomer (
+			CustomerRepository repository) {
+		return new ListCustomerImpl(repository);
 	}
 }
