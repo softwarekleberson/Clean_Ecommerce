@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import com.cleancode.ecommerce.customer.application.dtos.ListCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;

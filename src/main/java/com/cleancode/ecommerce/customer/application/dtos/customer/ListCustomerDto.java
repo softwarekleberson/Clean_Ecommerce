@@ -1,8 +1,10 @@
-package com.cleancode.ecommerce.customer.application.dtos;
+package com.cleancode.ecommerce.customer.application.dtos.customer;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.cleancode.ecommerce.customer.application.dtos.address.ListChargeDto;
+import com.cleancode.ecommerce.customer.application.dtos.address.ListDeliveryDto;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;

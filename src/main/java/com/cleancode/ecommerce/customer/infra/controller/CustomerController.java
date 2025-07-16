@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cleancode.ecommerce.customer.application.dtos.CreateChargeDto;
-import com.cleancode.ecommerce.customer.application.dtos.CreateCustomerDto;
-import com.cleancode.ecommerce.customer.application.dtos.CreateDeliveryDto;
-import com.cleancode.ecommerce.customer.application.dtos.ListCustomerDto;
-import com.cleancode.ecommerce.customer.application.dtos.UpdateCustomerDto;
-import com.cleancode.ecommerce.customer.application.dtos.UpdatePasswordDto;
+import com.cleancode.ecommerce.customer.application.dtos.address.CreateChargeDto;
+import com.cleancode.ecommerce.customer.application.dtos.address.CreateDeliveryDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
@@ -44,9 +44,9 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<Void> createCustomer (@RequestBody CreateCustomerDto dto){
-		createCustomer.execute(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<ListCustomerDto> createCustomer (@RequestBody CreateCustomerDto dto){
+		ListCustomerDto customer = createCustomer.execute(dto);
+		return ResponseEntity.ok(customer);
 	}	
 	
 	@GetMapping("/list/{id}")
@@ -56,9 +56,9 @@ public class CustomerController {
 	}
 	
 	@PutMapping("/update/{id}")
-	public ResponseEntity<Void> updateCustomer (@PathVariable String id, @RequestBody UpdateCustomerDto dto){
-		updateCustomer.updateCustomer(id, dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<ListCustomerDto> updateCustomer (@PathVariable String id, @RequestBody UpdateCustomerDto dto){
+		ListCustomerDto customer = updateCustomer.updateCustomer(id, dto);
+		return ResponseEntity.ok(customer);
 	}
 	
 	@PutMapping("/update/password/{id}")
@@ -68,14 +68,14 @@ public class CustomerController {
 	}
 	
 	@PostMapping("/{id}/deliveries")
-	public ResponseEntity<Void> createDelivery (@PathVariable String id, @RequestBody CreateDeliveryDto dto){
-		createCustomerDelivery.execute(id, dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<ListCustomerDto> createDelivery (@PathVariable String id, @RequestBody CreateDeliveryDto dto){
+		ListCustomerDto customer = createCustomerDelivery.execute(id, dto);
+		return ResponseEntity.ok(customer);
 	}
 	
 	@PostMapping("/{id}/charges")
-	public ResponseEntity<Void> createCharge (@PathVariable String id, @RequestBody CreateChargeDto dto){
-		createCustomerCharge.execute(id, dto);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+	public ResponseEntity<ListCustomerDto> createCharge (@PathVariable String id, @RequestBody CreateChargeDto dto){
+		ListCustomerDto customer = createCustomerCharge.execute(id, dto);
+		return ResponseEntity.ok(customer);
 	}
 }

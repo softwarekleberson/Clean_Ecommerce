@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import com.cleancode.ecommerce.customer.application.dtos.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
@@ -18,7 +19,7 @@ public class CreateCustomerImpl implements CreateCustomer {
 		this.eventPublisher = eventPublisher;
 	}
 
-	public void execute(CreateCustomerDto dto) {
+	public ListCustomerDto execute(CreateCustomerDto dto) {
 				
 		checkPassword(dto.getPassword(), dto.getConfirmPassword());
 		Customer customer = dto.createCustomer();
@@ -26,6 +27,7 @@ public class CreateCustomerImpl implements CreateCustomer {
 
 		EventNewCustomer event = new EventNewCustomer(customer.getCpf(), customer.getName());
 		eventPublisher.process(event);
+		return new ListCustomerDto(customer);
 	}
 
 	private void checkPassword(String password, String confirmPassword) {

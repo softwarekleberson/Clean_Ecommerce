@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.application.dtos;
+package com.cleancode.ecommerce.customer.application.dtos.customer;
 
 import java.time.LocalDate;
 import java.util.UUID;

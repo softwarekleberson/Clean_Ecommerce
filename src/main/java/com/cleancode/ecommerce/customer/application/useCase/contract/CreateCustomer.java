@@ -1,9 +1,10 @@
 package com.cleancode.ecommerce.customer.application.useCase.contract;
 
-import com.cleancode.ecommerce.customer.application.dtos.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 
 public interface CreateCustomer {
 
-	void execute(CreateCustomerDto dto);
+	ListCustomerDto execute(CreateCustomerDto dto);
 
 }

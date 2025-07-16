@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import com.cleancode.ecommerce.customer.application.dtos.CreateChargeDto;
+import com.cleancode.ecommerce.customer.application.dtos.address.CreateChargeDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
@@ -15,11 +16,12 @@ public class CreateCustomerChargeImpl implements CreateCustomerCharge{
 		this.repository = repository;
 	}
 	
-	public void execute(String id, CreateChargeDto dto) {
+	public ListCustomerDto execute(String id, CreateChargeDto dto) {
 		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));
 		Charge charge = dto.createCharge();
 		
 		customer.insertNewCharge(charge);
 		repository.save(customer);
+		return new ListCustomerDto(customer);
 	}
 }

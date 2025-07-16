@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.customer.application.dtos.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;

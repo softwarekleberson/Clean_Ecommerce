@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import com.cleancode.ecommerce.customer.application.dtos.CreateChargeDto;
+import com.cleancode.ecommerce.customer.application.dtos.address.CreateChargeDto;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerChargeImpl;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;

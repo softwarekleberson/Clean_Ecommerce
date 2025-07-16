@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.application.dtos;
+package com.cleancode.ecommerce.customer.application.dtos.address;
 
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 

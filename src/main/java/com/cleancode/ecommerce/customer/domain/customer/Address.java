@@ -8,33 +8,32 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 public abstract class Address {
 
 	protected static final int LENGTH_MAX = 255;
-	
-	protected final String id;
-	protected final String receiver;
-	protected final String street;
-	protected final String number;
-	protected final String neighborhood;
-	
-	protected final String zipCode;
-	protected final String observation;
-	protected final String streetType;
-	protected final String typeResidence;
-	protected final String city;
-	protected final String state;
-	protected final String country;
-	
-	public Address(String id, String receiver, String street, String number, String neighborhood, String zipCode, String observation,
-			String streetType, String typeResidence, String city, String state, String country) {
-		
-		validateInput(receiver, street, number, neighborhood,
-					  zipCode, observation, streetType, typeResidence,
-					  city,  state,  country);
-		
+
+	protected String id;
+	protected String receiver;
+	protected String street;
+	protected String number;
+	protected String neighborhood;
+
+	protected String zipCode;
+	protected String observation;
+	protected String streetType;
+	protected String typeResidence;
+	protected String city;
+	protected String state;
+	protected String country;
+
+	public Address(String id, String receiver, String street, String number, String neighborhood, String zipCode,
+			String observation, String streetType, String typeResidence, String city, String state, String country) {
+
+		validateInput(receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
+				state, country);
+
 		this.id = (id == null || id.isBlank()) ? UUID.randomUUID().toString() : id;
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
-		this.neighborhood = neighborhood; 
+		this.neighborhood = neighborhood;
 		this.zipCode = zipCode;
 		this.observation = observation;
 		this.streetType = streetType;
@@ -45,20 +44,30 @@ public abstract class Address {
 	}
 
 	private void validateInput(String receiver, String street, String number, String neighborhood, String zipCode,
-			String observation, String streetType, String typeResidence, String city, String state,
-			String country) {
-		
-		if(isValid(receiver)) throw new IllegalDomainException("Receiver is requerid");
-		if(isValid(street)) throw new IllegalDomainException("Street is requerid");
-		if(isValid(number)) throw new IllegalDomainException("Number is requerid");
-		if(isValid(neighborhood)) throw new IllegalDomainException("Neighborhood is requerid");
-		if(isZipCode(zipCode)) throw new IllegalDomainException("Zip code must be in the format xxxxx-xxx");
-		if(inputSize(observation) || isValid(observation)) throw new IllegalDomainException("Observation needs max length 400 caracters");
-		if(isValid(streetType)) throw new IllegalDomainException("Street type is requerid");
-		if(isValid(typeResidence)) throw new IllegalDomainException("Type Residence is requerid");
-		if(isValid(city)) throw new IllegalDomainException("City is requerid");
-		if(isValid(state)) throw new IllegalDomainException("State is requerid");
-		if(isValid(country)) throw new IllegalDomainException("Country is requerid");
+			String observation, String streetType, String typeResidence, String city, String state, String country) {
+
+		if (isValid(receiver))
+			throw new IllegalDomainException("Receiver is requerid");
+		if (isValid(street))
+			throw new IllegalDomainException("Street is requerid");
+		if (isValid(number))
+			throw new IllegalDomainException("Number is requerid");
+		if (isValid(neighborhood))
+			throw new IllegalDomainException("Neighborhood is requerid");
+		if (isZipCode(zipCode))
+			throw new IllegalDomainException("Zip code must be in the format xxxxx-xxx");
+		if (inputSize(observation) || isValid(observation))
+			throw new IllegalDomainException("Observation needs max length 400 caracters");
+		if (isValid(streetType))
+			throw new IllegalDomainException("Street type is requerid");
+		if (isValid(typeResidence))
+			throw new IllegalDomainException("Type Residence is requerid");
+		if (isValid(city))
+			throw new IllegalDomainException("City is requerid");
+		if (isValid(state))
+			throw new IllegalDomainException("State is requerid");
+		if (isValid(country))
+			throw new IllegalDomainException("Country is requerid");
 	}
 
 	protected boolean inputSize(String value) {
@@ -66,7 +75,7 @@ public abstract class Address {
 	}
 
 	protected boolean isZipCode(String zipCode) {
-	    String zipCodeRegex = "^\\d{5}-\\d{3}$"; 
+		String zipCodeRegex = "^\\d{5}-\\d{3}$";
 		return !zipCode.matches(zipCodeRegex);
 	}
 
@@ -77,7 +86,7 @@ public abstract class Address {
 	public String getId() {
 		return id;
 	}
-	
+
 	public String getReceiver() {
 		return receiver;
 	}
@@ -124,8 +133,8 @@ public abstract class Address {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(zipCode, city, country, neighborhood, number, observation, receiver, state, street, streetType,
-				typeResidence);
+		return Objects.hash(zipCode, city, country, neighborhood, number, observation, receiver, state, street,
+				streetType, typeResidence);
 	}
 
 	@Override

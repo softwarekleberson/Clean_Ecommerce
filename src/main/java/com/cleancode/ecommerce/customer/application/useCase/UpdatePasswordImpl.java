@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.customer.application.useCase;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.application.dtos.UpdatePasswordDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassword;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;

@@ -1,10 +1,10 @@
-package com.cleancode.ecommerce.customer.application.dtos;
+package com.cleancode.ecommerce.customer.application.dtos.address;
 
 import java.util.UUID;
 
-import com.cleancode.ecommerce.customer.domain.customer.Delivery;
+import com.cleancode.ecommerce.customer.domain.customer.Charge;
 
-public class CreateDeliveryDto {
+public class CreateChargeDto {
 
 	private String id;
 	private String receiver;
@@ -18,11 +18,9 @@ public class CreateDeliveryDto {
 	private String city;
 	private String state;
 	private String country;
-	private String deliveryPhrase;
 
-	public CreateDeliveryDto(String receiver, String street, String number, String neighborhood, String zipCode,
-			String observation, String streetType, String typeResidence, String city, String state, String country,
-			String deliveryPhrase) {
+	public CreateChargeDto(String receiver, String street, String number, String neighborhood, String zipCode,
+			String observation, String streetType, String typeResidence, String city, String state, String country) {
 
 		this.id = UUID.randomUUID().toString();
 		this.receiver = receiver;
@@ -36,11 +34,10 @@ public class CreateDeliveryDto {
 		this.city = city;
 		this.state = state;
 		this.country = country;
-		this.deliveryPhrase = deliveryPhrase;
 	}
 
-	public Delivery createDelivery() {
-		return new Delivery(id,deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation, streetType,
-				typeResidence, city, state, country);
+	public Charge createCharge() {
+		return new Charge(id, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
+				state, country);
 	}
 }
