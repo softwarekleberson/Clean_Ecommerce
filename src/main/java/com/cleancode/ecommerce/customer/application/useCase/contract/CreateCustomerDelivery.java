@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.application.useCase;
+package com.cleancode.ecommerce.customer.application.useCase.contract;
 
 import com.cleancode.ecommerce.customer.application.dtos.CreateDeliveryDto;
 

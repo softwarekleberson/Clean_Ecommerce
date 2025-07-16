@@ -47,12 +47,12 @@ public class Customer {
 			this.birth = new Birth(birth);
 		}
 
-		if (ddd != null && ddd.isBlank()) {
+		if (ddd != null && !ddd.isBlank()) {
 			this.contact = new Contact(new Phone(ddd, this.contact.getPhone(), this.contact.getTypePhone()),
 			contact.getEmail());
 		}
 		
-		if(phone != null && phone.isBlank()) {
+		if(phone != null && !phone.isBlank()) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), phone, this.getContact().getTypePhone()),
 			contact.getEmail());
 		}
@@ -62,7 +62,13 @@ public class Customer {
 			contact.getEmail());
 		}
 	}
-
+	
+	public void updateCustomer(String password) {
+		if(password != null && !password.isBlank()) {
+			this.password = new Password(password);
+		}
+	}
+	
 	public boolean updateActivationStatus() {
 		boolean isCharge = !charges.isEmpty();
 		boolean isDelivery = !deliveries.isEmpty();
@@ -89,6 +95,10 @@ public class Customer {
 	}
 
 	public void removeDelivery(String id) {
+		if(id == null || id.isEmpty() || this.deliveries == null) {
+			throw new IllegalDomainException("Cannot remove delivery: id is null/empty or delivery list is not initialized");
+		}
+		
 		this.deliveries.removeIf(d -> d.getId().equals(id));
 	}
 
@@ -102,6 +112,10 @@ public class Customer {
 	}
 
 	public void removeCharge(String id) {
+		if(id == null || id.isEmpty() || this.charges == null) {
+			throw new IllegalDomainException("Cannot remove charge: id is null/empty or Charge list is not initialized");
+		}
+		
 		this.charges.removeIf(c -> c.getId().equals(id));
 	}
 

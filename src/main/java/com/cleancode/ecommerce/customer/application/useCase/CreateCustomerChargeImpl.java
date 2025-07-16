@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
 import com.cleancode.ecommerce.customer.application.dtos.CreateChargeDto;
+import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
