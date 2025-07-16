@@ -16,7 +16,7 @@ public class UpdateCustomerImpl implements UpdateCustomer {
 	}
 
 	@Override
-	public ListCustomerDto updateCustomer(String customerId, UpdateCustomerDto dto) {
+	public ListCustomerDto execute(String customerId, UpdateCustomerDto dto) {
 		Customer customer = repository.getCustomerById(customerId)
 				.orElseThrow(() -> new IllegalDomainException("Customer with id : " + customerId + " not found"));
 				

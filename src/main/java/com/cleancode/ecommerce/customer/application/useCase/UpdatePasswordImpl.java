@@ -17,7 +17,7 @@ public class UpdatePasswordImpl implements UpdatePassword {
 	}
 
 	@Override
-	public void updatePassword(String customerId, UpdatePasswordDto dto) {
+	public void execute(String customerId, UpdatePasswordDto dto) {
 		Customer customer = repository.getCustomerById(customerId)
 				.orElseThrow(() -> new IllegalDomainException("Customer with id : " + customerId + " not found"));
 

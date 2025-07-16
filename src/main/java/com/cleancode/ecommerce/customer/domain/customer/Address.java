@@ -27,7 +27,7 @@ public abstract class Address {
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 
 		validateInput(receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
-				state, country);
+					  state, country);
 
 		this.id = (id == null || id.isBlank()) ? UUID.randomUUID().toString() : id;
 		this.receiver = receiver;

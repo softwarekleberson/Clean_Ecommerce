@@ -6,12 +6,16 @@ import org.springframework.context.annotation.Configuration;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
+import com.cleancode.ecommerce.customer.application.useCase.DeleteChargeImpl;
+import com.cleancode.ecommerce.customer.application.useCase.DeleteDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdatePasswordImpl;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
+import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
+import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassword;
@@ -56,5 +60,17 @@ public class CustomerConfig {
 	public UpdatePassword updatePassword (
 			CustomerRepository repository) {
 		return new UpdatePasswordImpl(repository);
+	}
+	
+	@Bean
+	public DeleteCharge deleteCharge (
+			CustomerRepository repository) {
+		return new DeleteChargeImpl(repository);
+	}
+	
+	@Bean
+	public DeleteDelivery deleteDelivery (
+			CustomerRepository repository) {
+		return new DeleteDeliveryImpl(repository);
 	}
 }

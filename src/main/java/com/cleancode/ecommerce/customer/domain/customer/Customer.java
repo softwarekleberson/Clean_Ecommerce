@@ -31,9 +31,9 @@ public class Customer {
 		this.birth = birth;
 		this.cpf = cpf;
 		this.contact = contact;
-		this.password = password;		
+		this.password = password;
 	}
-	
+
 	public void idCustomer(String id) {
 		this.id = new Id(id);
 	}
@@ -49,26 +49,26 @@ public class Customer {
 
 		if (ddd != null && !ddd.isBlank()) {
 			this.contact = new Contact(new Phone(ddd, this.contact.getPhone(), this.contact.getTypePhone()),
-			contact.getEmail());
+					contact.getEmail());
 		}
-		
-		if(phone != null && !phone.isBlank()) {
+
+		if (phone != null && !phone.isBlank()) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), phone, this.getContact().getTypePhone()),
-			contact.getEmail());
+					contact.getEmail());
 		}
-		
-		if(typePhone != null) {
+
+		if (typePhone != null) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), this.contact.getPhone(), typePhone),
-			contact.getEmail());
+					contact.getEmail());
 		}
 	}
-	
+
 	public void updateCustomer(String password) {
-		if(password != null && !password.isBlank()) {
+		if (password != null && !password.isBlank()) {
 			this.password = new Password(password);
 		}
 	}
-	
+
 	public boolean updateActivationStatus() {
 		boolean isCharge = !charges.isEmpty();
 		boolean isDelivery = !deliveries.isEmpty();
@@ -95,10 +95,11 @@ public class Customer {
 	}
 
 	public void removeDelivery(String id) {
-		if(id == null || id.isEmpty() || this.deliveries == null) {
-			throw new IllegalDomainException("Cannot remove delivery: id is null/empty or delivery list is not initialized");
+		if (id == null || id.isEmpty() || this.deliveries == null) {
+			throw new IllegalDomainException(
+					"Cannot remove delivery: id is null/empty or delivery list is not initialized");
 		}
-		
+
 		this.deliveries.removeIf(d -> d.getId().equals(id));
 	}
 
@@ -112,11 +113,12 @@ public class Customer {
 	}
 
 	public void removeCharge(String id) {
-		if(id == null || id.isEmpty() || this.charges == null) {
-			throw new IllegalDomainException("Cannot remove charge: id is null/empty or Charge list is not initialized");
+		if (id == null || id.isEmpty() || this.charges == null) {
+			throw new IllegalDomainException(
+					"Cannot remove charge: id is null/empty or Charge list is not initialized");
 		}
-		
-		this.charges.removeIf(c -> c.getId().equals(id));
+
+		this.charges.removeIf(c -> id.equals(c.getId()));
 	}
 
 	public boolean isActive() {
@@ -130,7 +132,7 @@ public class Customer {
 	public Name getName() {
 		return name;
 	}
-	
+
 	public Password getPassword() {
 		return password;
 	}
