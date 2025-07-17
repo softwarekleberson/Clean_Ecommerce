@@ -19,11 +19,11 @@ public class Charge extends Address {
 			this.number = number;
 		if (neighborhood != null && !neighborhood.isBlank())
 			this.neighborhood = neighborhood;
-		if (zipCode != null && !zipCode.isBlank())
+		if (zipCode != null && !zipCode.isBlank() && isZipCode(zipCode))
 			this.zipCode = zipCode;
 		if (observation != null)
 			this.observation = observation;
-		if (streetType != null && !streetType.isBlank())
+		if (streetType != null && !streetType.isBlank() && inputSize(observation))
 			this.streetType = streetType;
 		if (typeResidence != null && !typeResidence.isBlank())
 			this.typeResidence = typeResidence;

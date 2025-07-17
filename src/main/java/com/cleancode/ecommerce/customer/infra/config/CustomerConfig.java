@@ -9,7 +9,9 @@ import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.DeleteChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.DeleteDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListCustomerImpl;
+import com.cleancode.ecommerce.customer.application.useCase.UpdateChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateCustomerImpl;
+import com.cleancode.ecommerce.customer.application.useCase.UpdateDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdatePasswordImpl;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
@@ -17,7 +19,9 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassword;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
@@ -72,5 +76,17 @@ public class CustomerConfig {
 	public DeleteDelivery deleteDelivery (
 			CustomerRepository repository) {
 		return new DeleteDeliveryImpl(repository);
+	}
+	
+	@Bean
+	public UpdateCharge updateCharge (
+			CustomerRepository repositor) {
+		return new UpdateChargeImpl(repositor);
+	}
+	
+	@Bean
+	public UpdateDelivery updateDelivery (
+			CustomerRepository repositor) {
+		return new UpdateDeliveryImpl(repositor);
 	}
 }

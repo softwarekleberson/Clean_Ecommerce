@@ -4,20 +4,46 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CreateDeliveryDto {
 
 	private String id;
+	
+	@NotBlank
 	private String receiver;
+	
+	@NotBlank
 	private String street;
+	
+	@NotBlank
 	private String number;
+	
+	@NotBlank
 	private String neighborhood;
+	
+	@NotBlank
 	private String zipCode;
+	
+	@NotBlank
 	private String observation;
+	
+	@NotBlank
 	private String streetType;
+	
+	@NotBlank
 	private String typeResidence;
+	
+	@NotBlank
 	private String city;
+	
+	@NotBlank
 	private String state;
+	
+	@NotBlank
 	private String country;
+	
+	@NotBlank
 	private String deliveryPhrase;
 
 	public CreateDeliveryDto(String receiver, String street, String number, String neighborhood, String zipCode,

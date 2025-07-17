@@ -6,8 +6,7 @@ import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerE
 
 public final class DeliveryMapper {
 
-	private DeliveryMapper() {
-	}
+	private DeliveryMapper() {}
 
 	public static DeliveryEntity toEntity(Delivery delivery, CustomerEntity customerEntity) {
 		DeliveryEntity entity = new DeliveryEntity();
@@ -31,10 +30,37 @@ public final class DeliveryMapper {
 		return entity;
 	}
 
+	public static void updateEntity(Delivery delivery, DeliveryEntity entity) {
+		entity.setReceiver(delivery.getReceiver());
+		entity.setStreet(delivery.getStreet());
+		entity.setNumber(delivery.getNumber());
+		entity.setNeighborhood(delivery.getNeighborhood());
+		entity.setZipCode(delivery.getZipCode());
+		entity.setObservation(delivery.getObservation());
+		entity.setStreetType(delivery.getStreetType());
+		entity.setTypeResidence(delivery.getTypeResidence());
+		entity.setCity(delivery.getCity());
+		entity.setState(delivery.getState());
+		entity.setCountry(delivery.getCountry());
+		entity.setDeliveryPhrase(delivery.getDeliveryPhrase());
+	}
 
+	// Converte de entidade para domínio
 	public static Delivery toDomain(DeliveryEntity entity) {
-		return new Delivery(entity.getId(), entity.getDeliveryPhrase(), entity.getReceiver(), entity.getStreet(), entity.getNumber(),
-				entity.getNeighborhood(), entity.getZipCode(), entity.getObservation(), entity.getStreet(),
-				entity.getTypeResidence(), entity.getCity(), entity.getState(), entity.getCountry());
+		return new Delivery(
+			entity.getId(),
+			entity.getDeliveryPhrase(),
+			entity.getReceiver(),
+			entity.getStreet(),
+			entity.getNumber(),
+			entity.getNeighborhood(),
+			entity.getZipCode(),
+			entity.getObservation(),
+			entity.getStreetType(),
+			entity.getTypeResidence(),
+			entity.getCity(),
+			entity.getState(),
+			entity.getCountry()
+		);
 	}
 }

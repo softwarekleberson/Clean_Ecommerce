@@ -15,17 +15,39 @@ import com.cleancode.ecommerce.shared.kernel.Cpf;
 import com.cleancode.ecommerce.shared.kernel.Email;
 import com.cleancode.ecommerce.shared.kernel.Name;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CreateCustomerDto {
 
-	private String name;	
-	private Gender gender;	
-	private LocalDate birth;	
+	@NotBlank
+	private String name;
+	
+	@NotNull
+	private Gender gender;
+	
+	@NotNull
+	private LocalDate birth;
+	
+	@NotBlank
 	private String cpf;	
+	
+	@NotBlank
 	private String ddd;	
+	
+	@NotBlank
 	private String phone;
+	
+	@NotNull
 	private TypePhone typePhone;
+	
+	@NotBlank
 	private String email;	
+	
+	@NotBlank
 	private String password;
+	
+	@NotBlank
 	private String confirmPassword;
 	
 	public CreateCustomerDto(String name, Gender gender, LocalDate birth, String cpf, String ddd, String phone,
