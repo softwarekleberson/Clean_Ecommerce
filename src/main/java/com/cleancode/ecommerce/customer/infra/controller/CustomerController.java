@@ -99,7 +99,7 @@ public class CustomerController {
     @PutMapping("/{customerId}/deliveries/{deliveryId}")
     public ResponseEntity<ListCustomerDto> updateDelivery(@PathVariable String customerId, @PathVariable String deliveryId, @Valid @RequestBody UpdateAddressDto dto) {
         var updateCustomer = updateDelivery.execute(customerId, deliveryId, dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(updateCustomer);
+        return ResponseEntity.ok(updateCustomer);
     }
 
     @DeleteMapping("/{customerId}/deliveries/{deliveryId}")
@@ -121,7 +121,7 @@ public class CustomerController {
     @PutMapping("/{customerId}/charges/{chargeId}")
     public ResponseEntity<ListCustomerDto> updateCharge(@PathVariable String customerId, @PathVariable String chargeId, @Valid @RequestBody UpdateAddressDto dto) {
         var updateCustomer = updateCharge.execute(customerId, chargeId, dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(updateCustomer);
+        return ResponseEntity.ok(updateCustomer);
     }
 
     @DeleteMapping("/{customerId}/charges/{chargeId}")
