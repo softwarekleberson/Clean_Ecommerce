@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.shared.config.Event;
+package com.cleancode.ecommerce.shared.config.event;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
