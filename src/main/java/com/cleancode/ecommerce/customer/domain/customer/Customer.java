@@ -90,12 +90,16 @@ public class Customer {
 	}
 
 	public Delivery getDelivery(String id) {
+		if (id == null || id.isBlank()) {
+			throw new IllegalDomainException("Delivery ID must not be null or blank");
+		}
+		
 		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
 
 	public void removeDelivery(String id) {
-		if (id == null || id.isEmpty() || this.deliveries == null) {
+		if (id == null || id.isBlank() || this.deliveries == null) {
 			throw new IllegalDomainException(
 					"Cannot remove delivery: id is null/empty or delivery list is not initialized");
 		}
@@ -108,12 +112,16 @@ public class Customer {
 	}
 
 	public Charge getCharge(String id) {
+		if (id == null || id.isBlank()) {
+			throw new IllegalDomainException("Charge ID must not be null or blank");
+		}
+		
 		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
 
 	public void removeCharge(String id) {
-		if (id == null || id.isEmpty() || this.charges == null) {
+		if (id == null || id.isBlank() || this.charges == null) {
 			throw new IllegalDomainException(
 					"Cannot remove charge: id is null/empty or Charge list is not initialized");
 		}
