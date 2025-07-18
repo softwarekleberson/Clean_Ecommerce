@@ -20,25 +20,24 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateCustomerDto {
 
-	@NotBlank
 	private String name;
 	
-	@NotNull
+	@NotNull(message = "MALE, WOMAN, NOT_INFORMED")
 	private Gender gender;
 	
 	@NotNull
 	private LocalDate birth;
 	
-	@NotBlank
+	@NotBlank(message = "The CPF needs this format : xxx.xxx.xxx-xx")
 	private String cpf;	
 	
-	@NotBlank
+	@NotBlank(message = "Ddd need two digits")
 	private String ddd;	
 	
-	@NotBlank
+	@NotBlank(message = "The Phone needs this format : xxxxxxxxx")
 	private String phone;
 	
-	@NotNull
+	@NotNull(message = "MOBILE, WHATSAPP, FIXED")
 	private TypePhone typePhone;
 	
 	@NotBlank
@@ -47,7 +46,7 @@ public class CreateCustomerDto {
 	@NotBlank
 	private String password;
 	
-	@NotBlank
+	@NotBlank(message = "Confirm Password need be equals Password")
 	private String confirmPassword;
 	
 	public CreateCustomerDto(String name, Gender gender, LocalDate birth, String cpf, String ddd, String phone,

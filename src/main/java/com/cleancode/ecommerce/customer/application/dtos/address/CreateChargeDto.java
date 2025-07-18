@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class CreateChargeDto {
 
@@ -23,9 +24,11 @@ public class CreateChargeDto {
 	private String neighborhood;
 	
 	@NotBlank
+	@NotBlank(message = "The Zip Code needs this format : xxxxx-xx ")
 	private String zipCode;
 	
 	@NotBlank
+	@Size(max = 255)
 	private String observation;
 	
 	@NotBlank

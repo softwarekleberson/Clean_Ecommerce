@@ -5,45 +5,48 @@ import java.util.UUID;
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class CreateDeliveryDto {
 
 	private String id;
-	
+
 	@NotBlank
 	private String receiver;
-	
+
 	@NotBlank
 	private String street;
-	
+
 	@NotBlank
 	private String number;
-	
+
 	@NotBlank
 	private String neighborhood;
-	
-	@NotBlank
+
+	@NotBlank(message = "The Zip Code needs this format : xxxxx-xx ")
 	private String zipCode;
-	
+
 	@NotBlank
+	@Size(max = 255)
 	private String observation;
-	
+
 	@NotBlank
 	private String streetType;
-	
+
 	@NotBlank
 	private String typeResidence;
-	
+
 	@NotBlank
 	private String city;
-	
+
 	@NotBlank
 	private String state;
-	
+
 	@NotBlank
 	private String country;
-	
+
 	@NotBlank
+	@Size(max = 255)
 	private String deliveryPhrase;
 
 	public CreateDeliveryDto(String receiver, String street, String number, String neighborhood, String zipCode,
@@ -66,7 +69,7 @@ public class CreateDeliveryDto {
 	}
 
 	public Delivery createDelivery() {
-		return new Delivery(id,deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation, streetType,
-				typeResidence, city, state, country);
+		return new Delivery(id, deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation,
+				streetType, typeResidence, city, state, country);
 	}
 }
