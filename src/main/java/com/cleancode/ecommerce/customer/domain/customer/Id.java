@@ -1,17 +1,15 @@
 package com.cleancode.ecommerce.customer.domain.customer;
 
-import java.util.UUID;
-
 public class Id {
 
-	private final UUID value;
+	private final String value;
 	
-	public Id(UUID value) {
+	public Id(String value) {
 	     if (value == null) throw new IllegalArgumentException("id cannot be null");
 	     this.value = value;
 	}
 
-	public UUID getValue() {
+	public String getValue() {
 	      return value;
 	}
 }

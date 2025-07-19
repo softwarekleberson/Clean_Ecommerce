@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
@@ -35,6 +34,10 @@ public class Customer {
 		this.password = password;
 	}
 
+	public void idCustomer(String id) {
+		this.id = new Id(id);
+	}
+
 	public void updateCustomer(String name, LocalDate birth, String ddd, String phone, TypePhone typePhone) {
 		if (name != null && !name.isBlank()) {
 			this.name = new Name(name);
@@ -44,27 +47,34 @@ public class Customer {
 			this.birth = new Birth(birth);
 		}
 
-		if (ddd != null && ddd.isBlank()) {
+		if (ddd != null && !ddd.isBlank()) {
 			this.contact = new Contact(new Phone(ddd, this.contact.getPhone(), this.contact.getTypePhone()),
-			contact.getEmail());
+					contact.getEmail());
 		}
-		
-		if(phone != null && phone.isBlank()) {
+
+		if (phone != null && !phone.isBlank()) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), phone, this.getContact().getTypePhone()),
-			contact.getEmail());
+					contact.getEmail());
 		}
-		
-		if(typePhone != null) {
+
+		if (typePhone != null) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), this.contact.getPhone(), typePhone),
-			contact.getEmail());
+					contact.getEmail());
 		}
 	}
 
-	public void updateActivationStatus() {
+	public void updateCustomer(String password) {
+		if (password != null && !password.isBlank()) {
+			this.password = new Password(password);
+		}
+	}
+
+	public boolean updateActivationStatus() {
 		boolean isCharge = !charges.isEmpty();
 		boolean isDelivery = !deliveries.isEmpty();
 
 		this.active = isCharge && isDelivery;
+		return this.active;
 	}
 
 	public Email getEmail() {
@@ -76,35 +86,47 @@ public class Customer {
 	}
 
 	public void insertNewDelivery(Delivery delivery) {
-		if (deliveries.stream().anyMatch(d -> d.equals(delivery))) {
-			throw new IllegalDomainException("This address was previously registered");
-		}
 		this.deliveries.add(delivery);
 	}
 
-	public Delivery getDelivery(UUID id) {
+	public Delivery getDelivery(String id) {
+		if (id == null || id.isBlank()) {
+			throw new IllegalDomainException("Delivery ID must not be null or blank");
+		}
+		
 		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
 
-	public void removeDelivery(UUID id) {
+	public void removeDelivery(String id) {
+		if (id == null || id.isBlank() || this.deliveries == null) {
+			throw new IllegalDomainException(
+					"Cannot remove delivery: id is null/empty or delivery list is not initialized");
+		}
+
 		this.deliveries.removeIf(d -> d.getId().equals(id));
 	}
 
 	public void insertNewCharge(Charge charge) {
-		if (charges.stream().anyMatch(c -> c.equals(charge))) {
-			throw new IllegalDomainException("This address was previously registered");
-		}
 		this.charges.add(charge);
 	}
 
-	public Charge getCharge(UUID id) {
+	public Charge getCharge(String id) {
+		if (id == null || id.isBlank()) {
+			throw new IllegalDomainException("Charge ID must not be null or blank");
+		}
+		
 		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
 
-	public void removeCharge(UUID id) {
-		this.charges.removeIf(c -> c.getId().equals(id));
+	public void removeCharge(String id) {
+		if (id == null || id.isBlank() || this.charges == null) {
+			throw new IllegalDomainException(
+					"Cannot remove charge: id is null/empty or Charge list is not initialized");
+		}
+
+		this.charges.removeIf(c -> id.equals(c.getId()));
 	}
 
 	public boolean isActive() {
@@ -117,6 +139,10 @@ public class Customer {
 
 	public Name getName() {
 		return name;
+	}
+
+	public Password getPassword() {
+		return password;
 	}
 
 	public Gender getGender() {
