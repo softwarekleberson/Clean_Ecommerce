@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.domain.customer;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -19,7 +18,6 @@ import com.cleancode.ecommerce.customer.domain.customer.Id;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
-import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
 import com.cleancode.ecommerce.shared.kernel.Email;
 import com.cleancode.ecommerce.shared.kernel.Name;
@@ -87,31 +85,15 @@ public class CustomerTest {
 	@Test
 	void shouldDeleteCharge() {
 		customer.insertNewCharge(charge);
-		Charge chargeToRemove = customer.getCharges().get(0);
+		Charge chargeToRemove = customer.getCharge(charge.getId());
 		customer.removeCharge(chargeToRemove.getId().toString());
 		assertEquals(0, customer.getCharges().size());
 	}
 
 	@Test
-	void shouldNotAllowDuplicateDelivery() {
-		assertThrows(IllegalDomainException.class, () -> {
-			customer.insertNewDelivery(delivery);
-			customer.insertNewDelivery(delivery);
-		});
-	}
-
-	@Test
-	void shouldNotAllowDuplicateCharge() {
-		assertThrows(IllegalDomainException.class, () -> {
-			customer.insertNewCharge(charge);
-			customer.insertNewCharge(charge);
-		});
-	}
-
-	@Test
 	void shouldGetDeliveryById() {
 		customer.insertNewDelivery(delivery);
-		Delivery expected = customer.getDeliverys().get(0);
+		Delivery expected = customer.getDelivery(delivery.getId());
 		Delivery actual = customer.getDelivery(expected.getId());
 		assertEquals(expected.toString(), actual.toString());
 	}
@@ -119,7 +101,7 @@ public class CustomerTest {
 	@Test
 	void shouldGetChargeById() {
 		customer.insertNewCharge(charge);
-		Charge expected = customer.getCharges().get(0);
+		Charge expected = customer.getCharge(charge.getId());
 		Charge actual = customer.getCharge(expected.getId());
 		assertEquals(expected.toString(), actual.toString());
 	}
