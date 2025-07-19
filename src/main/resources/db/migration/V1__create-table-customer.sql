@@ -1,7 +1,6 @@
 CREATE TABLE customer (
     id VARCHAR(36) PRIMARY KEY, 
     cpf VARCHAR(15) NOT NULL UNIQUE,
-    active BOOLEAN NOT NULL DEFAULT 0, 
     name VARCHAR(255) NOT NULL, 
     birth DATE NOT NULL, 
     password VARCHAR(255) NOT NULL, 

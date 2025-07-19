@@ -21,7 +21,6 @@ public final class CustomerMapper {
 
 	public static CustomerEntity toEntity(Customer domain, CustomerEntity entity) {
 		entity.setCpf(domain.getCpf().getCpf());
-		entity.setActive(domain.isActive());
 		entity.setName(domain.getName().getName());
 		entity.setBirth(domain.getBirth().getBirth());
 		entity.setPassword(domain.getPassword().getPassword());

@@ -34,7 +34,6 @@ public class CustomerEntity {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	private String cpf;
-	private boolean active;
 	private String name;
 	private LocalDate birth;
 	private String password;
