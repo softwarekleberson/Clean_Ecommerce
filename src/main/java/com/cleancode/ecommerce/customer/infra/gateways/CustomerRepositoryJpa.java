@@ -1,11 +1,11 @@
-package com.cleancode.ecommerce.customer.infra.persistence.jpa.customer;
+package com.cleancode.ecommerce.customer.infra.gateways;
 
 import java.util.Optional;
 
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.customer.infra.gateways.CustomerJpa;
 import com.cleancode.ecommerce.customer.infra.mapper.CustomerMapper;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

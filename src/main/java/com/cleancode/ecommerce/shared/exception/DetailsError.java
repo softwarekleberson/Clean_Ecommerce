@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.infra.handeler;
+package com.cleancode.ecommerce.shared.exception;
 
 import java.time.LocalDateTime;
 
