@@ -1,0 +1,6 @@
+CREATE TABLE bag (
+	id VARCHAR(255) PRIMARY KEY,
+	volume VARCHAR(255) NOT NULL,
+	color VARCHAR(255) NOT NULL,
+	CONSTRAINT fk_bag_product FOREIGN KEY (id) REFERENCES product(id)
+);

@@ -6,17 +6,23 @@ import java.util.List;
 import com.cleancode.ecommerce.product.domain.Image;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-public abstract class CreateProductDto implements ProductCreatableInterface{
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type"
 
-	private String name;                    
-	private String description;           
-	private BigDecimal price;              
-	private TypeCoin typeCoin;               
-	private ProductCategory category;         
-	private String brand;            
-	private List<Image> images;  
-	
+)
+@JsonSubTypes({ @JsonSubTypes.Type(value = CreateBagDto.class, name = "bag") })
+public abstract class CreateProductDto implements ProductCreatableInterface {
+
+	private String name;
+	private String description;
+	private BigDecimal price;
+	private TypeCoin typeCoin;
+	private ProductCategory category;
+	private String brand;
+	private List<Image> images;
+
 	public CreateProductDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
 			ProductCategory category, String brand, List<Image> images) {
 

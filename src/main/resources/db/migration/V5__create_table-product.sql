@@ -1,0 +1,12 @@
+CREATE TABLE product (
+	id VARCHAR(36) PRIMARY KEY,
+	active BOOLEAN NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	description TEXT NOT NULL,
+	price DECIMAL(19,2) NOT NULL,
+	type_coin VARCHAR(50) NOT NULL,
+	category VARCHAR(50) NOT NULL,
+	brand VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP NOT NULL,
+	update_at TIMESTAMP
+);

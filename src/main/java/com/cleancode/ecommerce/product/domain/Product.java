@@ -33,6 +33,7 @@ public abstract class Product {
 		this.brand = brand;
 		this.image = image;
 		this.createdAt = new CreatedAt();
+		this.updateAt = new UpdateAt();
 	}
 
 	private void update() {
