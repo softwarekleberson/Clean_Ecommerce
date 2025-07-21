@@ -1,9 +1,12 @@
-package com.cleancode.ecommerce.product.domain.product;
+package com.cleancode.ecommerce.product.domain;
+
+import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 public class Image {
 
+	private String id;
 	private String url;
 	
 	public Image(String url) {
@@ -11,7 +14,13 @@ public class Image {
         if(!url.matches(regex)) {
         	throw new IllegalDomainException("Url not be valid");
         }
+        
+        this.id = UUID.randomUUID().toString();
 		this.url = url;
+	}
+	
+	public String getId() {
+		return id;
 	}
 	
 	public String getUrl() {

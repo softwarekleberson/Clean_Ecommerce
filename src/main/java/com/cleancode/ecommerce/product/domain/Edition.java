@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.domain.product;
+package com.cleancode.ecommerce.product.domain;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 

@@ -3,8 +3,8 @@ package com.cleancode.ecommerce.product.application.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.cleancode.ecommerce.product.domain.product.Image;
-import com.cleancode.ecommerce.product.domain.product.ProductCategory;
+import com.cleancode.ecommerce.product.domain.Image;
+import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
 public abstract class CreateProductDto implements ProductCreatableInterface{

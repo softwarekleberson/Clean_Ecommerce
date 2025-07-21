@@ -44,7 +44,7 @@ public class PriceTest {
 		BigDecimal newPrice = new BigDecimal("20.50");
 		TypeCoin coin = TypeCoin.DOLAR;
 
-		Price updated = Price.updatePrice(newPrice, coin);
+		Price updated = new Price(newPrice, coin);
 
 		assertEquals(newPrice, updated.getPrice());
 		assertEquals(coin, updated.getCoin());

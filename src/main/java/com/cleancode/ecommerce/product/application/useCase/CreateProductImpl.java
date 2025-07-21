@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.product.application.useCase;
 
 import com.cleancode.ecommerce.product.application.dto.CreateProductDto;
-import com.cleancode.ecommerce.product.domain.product.Product;
-import com.cleancode.ecommerce.product.domain.product.repository.ProductRepository;
+import com.cleancode.ecommerce.product.domain.Product;
+import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 
 public class CreateProductImpl implements CreateProduct{
 

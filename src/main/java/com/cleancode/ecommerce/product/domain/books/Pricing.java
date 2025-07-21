@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.domain.product.books;
+package com.cleancode.ecommerce.product.domain.books;
 
 import java.math.BigDecimal;
 import java.util.Objects;

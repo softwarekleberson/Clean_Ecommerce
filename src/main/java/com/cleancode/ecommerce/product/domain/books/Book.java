@@ -1,15 +1,15 @@
-package com.cleancode.ecommerce.product.domain.product.books;
+package com.cleancode.ecommerce.product.domain.books;
 
 import java.util.List;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.product.domain.product.Brand;
-import com.cleancode.ecommerce.product.domain.product.ProductCategory;
-import com.cleancode.ecommerce.product.domain.product.Description;
-import com.cleancode.ecommerce.product.domain.product.Dimension;
-import com.cleancode.ecommerce.product.domain.product.Edition;
-import com.cleancode.ecommerce.product.domain.product.Image;
-import com.cleancode.ecommerce.product.domain.product.Product;
+import com.cleancode.ecommerce.product.domain.Brand;
+import com.cleancode.ecommerce.product.domain.Description;
+import com.cleancode.ecommerce.product.domain.Dimension;
+import com.cleancode.ecommerce.product.domain.Edition;
+import com.cleancode.ecommerce.product.domain.Image;
+import com.cleancode.ecommerce.product.domain.Product;
+import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 

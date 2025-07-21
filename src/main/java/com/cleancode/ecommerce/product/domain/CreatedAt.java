@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.domain.product;
+package com.cleancode.ecommerce.product.domain;
 
 import java.time.LocalDateTime;
 

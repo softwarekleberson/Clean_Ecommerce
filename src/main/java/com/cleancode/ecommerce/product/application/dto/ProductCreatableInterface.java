@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.product.application.dto;
 
-import com.cleancode.ecommerce.product.domain.product.Product;
+import com.cleancode.ecommerce.product.domain.Product;
 
 public interface ProductCreatableInterface {
 
