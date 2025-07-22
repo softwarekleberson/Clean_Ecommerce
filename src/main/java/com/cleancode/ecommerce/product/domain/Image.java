@@ -8,15 +8,21 @@ public class Image {
 
 	private String id;
 	private String url;
+	private String description;
 	
-	public Image(String url) {
+	public Image(String url, String description) {
         String regex = "\\b((https?:\\/\\/)?(www\\.)?[\\w\\-]+\\.[\\w\\-]+(\\.[\\w\\-]+)?([\\/\\w\\-\\.\\?\\=\\&\\#]*)?)\\b";
         if(!url.matches(regex)) {
         	throw new IllegalDomainException("Url not be valid");
         }
         
+        if(description == null || description.isBlank()) {
+        	throw new IllegalDomainException("Description not be valid");
+        }
+        
         this.id = UUID.randomUUID().toString();
 		this.url = url;
+		this.description = description;
 	}
 	
 	public String getId() {
@@ -25,5 +31,9 @@ public class Image {
 	
 	public String getUrl() {
 		return url;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 }

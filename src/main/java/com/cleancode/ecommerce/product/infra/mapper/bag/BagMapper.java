@@ -41,6 +41,7 @@ public class BagMapper {
 		List<ImageEntity> imageEntities = domain.getImage().stream().map(image -> {
 			ImageEntity imageEntity = new ImageEntity();
 			imageEntity.setUrl(image.getUrl());
+			imageEntity.setDescription(image.getDescription());
 			imageEntity.setProduct(entity);
 			return imageEntity;
 		}).collect(Collectors.toList());
@@ -62,6 +63,6 @@ public class BagMapper {
 	private static List<Image> toImageList(List<ImageEntity> entities) {
 		if (entities == null)
 			return Collections.emptyList();
-		return entities.stream().map(img -> new Image(img.getUrl())).collect(Collectors.toList());
+		return entities.stream().map(img -> new Image(img.getUrl(), img.getDescription())).collect(Collectors.toList());
 	}
 }

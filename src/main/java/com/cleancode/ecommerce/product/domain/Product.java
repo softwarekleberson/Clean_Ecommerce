@@ -58,9 +58,9 @@ public abstract class Product {
 		}
 	}
 	
-	public void updateImage(String id, String url) {
+	public void updateImage(String id, String url, String description) {
 		this.image.removeIf(i -> i.getId().equals(id));
-		this.image.add(new Image(url));
+		this.image.add(new Image(url, description));
 		update();
 	}
 

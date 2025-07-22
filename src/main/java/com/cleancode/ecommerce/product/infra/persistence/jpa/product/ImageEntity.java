@@ -23,6 +23,7 @@ public class ImageEntity {
 	@Id
 	private String id = UUID.randomUUID().toString();
 	private String url;
+	private String description;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
