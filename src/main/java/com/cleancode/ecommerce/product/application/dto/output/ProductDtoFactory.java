@@ -21,6 +21,6 @@ public class ProductDtoFactory {
 			return dto;
 		}
 
-		throw new IllegalArgumentException("Tipo de produto desconhecido: " + product.getClass());
+		throw new IllegalArgumentException("Unknown product type: " + product.getClass());
 	}
 }
