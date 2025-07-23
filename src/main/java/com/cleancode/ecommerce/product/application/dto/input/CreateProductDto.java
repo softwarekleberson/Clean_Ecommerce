@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.application.dto;
+package com.cleancode.ecommerce.product.application.dto.input;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -12,7 +12,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type"
 
 )
-@JsonSubTypes({ @JsonSubTypes.Type(value = CreateBagDto.class, name = "bag") })
+
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = CreateBoockDto.class, name = "book"),
+    @JsonSubTypes.Type(value = CreateBagDto.class, name = "bag")
+})
 public abstract class CreateProductDto implements ProductCreatableInterface {
 
 	private String name;

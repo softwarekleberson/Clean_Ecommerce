@@ -8,7 +8,7 @@ public class Isbn {
 	
 	public Isbn(String isbn) {
 		String ISBN_REGEX = "^(?:\\d{9}X|\\d{10}|97[89]\\d{10})$";
-		if(isbn.matches(ISBN_REGEX)) {
+		if(!isbn.matches(ISBN_REGEX)) {
 			throw new IllegalDomainException("Isbn not be valid");
 		}
 		

@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.application.dto;
+package com.cleancode.ecommerce.product.application.dto.input;
 
 import com.cleancode.ecommerce.product.domain.Product;
 

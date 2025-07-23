@@ -4,27 +4,27 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Dimension {
 
-	private final String height;
-	private final String width;
-	private final String length;
-	private final String weight;
-	
-	public Dimension(String height, String width, String length, String weight) {
-		
-		if(height == null || height.trim().isEmpty()) {
-			throw new IllegalDomainException("Height not be null");
+	public final int NUMBER_MIM_DIMENSION = 1;
+	private final double height;
+	private final double width;
+	private final double length;
+	private final double weight;
+
+	public Dimension(double height, double width, double length, double weight) {
+		if (height < NUMBER_MIM_DIMENSION) {
+			throw new IllegalDomainException("Number page not be less than 0");
 		}
 		
-		if(width == null || width.trim().isEmpty()) {
-			throw new IllegalDomainException("Width not be null");
+		if (width < NUMBER_MIM_DIMENSION) {
+			throw new IllegalDomainException("Width page not be less than 0");
 		}
 		
-		if(length == null || length.trim().isEmpty()) {
-			throw new IllegalDomainException("Length not be null");
+		if (length < NUMBER_MIM_DIMENSION) {
+			throw new IllegalDomainException("Length page not be less than 0");
 		}
 		
-		if(weight == null || weight.trim().isEmpty()) {
-			throw new IllegalDomainException("Weight not be null");
+		if (weight < NUMBER_MIM_DIMENSION) {
+			throw new IllegalDomainException("Weight page not be less than 0");
 		}
 		
 		this.height = height;
@@ -33,19 +33,19 @@ public class Dimension {
 		this.weight = weight;
 	}
 
-	public String getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public String getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
-	public String getLength() {
+	public double getLength() {
 		return length;
 	}
 
-	public String getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 }

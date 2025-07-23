@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.product.domain.books;
 
-public enum CategoryBoock {
+public enum CategoryBook {
 
 	FICTION,
 	NON_FICTION,

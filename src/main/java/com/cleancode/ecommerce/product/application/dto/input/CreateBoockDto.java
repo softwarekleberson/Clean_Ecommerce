@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.application.dto;
+package com.cleancode.ecommerce.product.application.dto.input;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,10 +13,9 @@ import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.books.Author;
 import com.cleancode.ecommerce.product.domain.books.Book;
-import com.cleancode.ecommerce.product.domain.books.CategoryBoock;
+import com.cleancode.ecommerce.product.domain.books.CategoryBook;
 import com.cleancode.ecommerce.product.domain.books.Isbn;
 import com.cleancode.ecommerce.product.domain.books.Page;
-import com.cleancode.ecommerce.product.domain.books.Pricing;
 import com.cleancode.ecommerce.product.domain.books.PublisherDate;
 import com.cleancode.ecommerce.product.domain.books.Synopsis;
 import com.cleancode.ecommerce.shared.kernel.Name;
@@ -26,22 +25,21 @@ import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 public class CreateBoockDto extends CreateProductDto {
 
 	private String synopsis;
-	private String page;
+	private int page;
 	private String author;
 	private String edition;
 	private String isbn;
-	private CategoryBoock categoryBoock;
-	private String height;
-	private String width;
-	private String length;
-	private String weight;
+	private CategoryBook categoryBoock;
+	private double height;
+	private double width;
+	private double length;
+	private double weight;
 	private LocalDate publisherDate;
-	private BigDecimal pricing;
 
 	public CreateBoockDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
-			ProductCategory category, String brand, List<Image> images, String synopsis, String page, String author,
-			String edition, String isbn, CategoryBoock categoryBoock, String height, String width, String length,
-			String weight, LocalDate publisherDate, BigDecimal pricing) {
+			ProductCategory category, String brand, List<Image> images, String synopsis, int page, String author,
+			String edition, String isbn, CategoryBook categoryBoock, double height, double width, double length,
+			double weight, LocalDate publisherDate) {
 
 		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, images);
 		this.synopsis = synopsis;
@@ -55,14 +53,13 @@ public class CreateBoockDto extends CreateProductDto {
 		this.length = length;
 		this.weight = weight;
 		this.publisherDate = publisherDate;
-		this.pricing = pricing;
 	}
 
 	public String getSynopsis() {
 		return synopsis;
 	}
 
-	public String getPage() {
+	public int getPage() {
 		return page;
 	}
 
@@ -78,23 +75,23 @@ public class CreateBoockDto extends CreateProductDto {
 		return isbn;
 	}
 
-	public CategoryBoock getCategoryBoock() {
+	public CategoryBook getCategoryBoock() {
 		return categoryBoock;
 	}
 
-	public String getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public String getWidth() {
+	public double getWidth() {
 		return width;
 	}
 
-	public String getLength() {
+	public double getLength() {
 		return length;
 	}
 
-	public String getWeight() {
+	public double getWeight() {
 		return weight;
 	}
 
@@ -107,6 +104,6 @@ public class CreateBoockDto extends CreateProductDto {
 		return new Book(new Name(getName()), new Description(getDescription()), new Price(getPrice(), getTypeCoin()),
 				getCategory(), new Brand(getBrand()), getImages(), new Synopsis(getSynopsis()), new Page(getPage()),
 				new Author(getAuthor()), new Edition(getEdition()), new Isbn(getIsbn()), categoryBoock,
-				new Dimension(height, width, length, weight), new PublisherDate(getPublisherDate()), new Pricing(pricing));
+				new Dimension(height, width, length, weight), new PublisherDate(getPublisherDate()));
 	}
 }

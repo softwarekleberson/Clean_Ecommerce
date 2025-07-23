@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.product.application.useCase;
 
-import com.cleancode.ecommerce.product.application.dto.CreateProductDto;
+import com.cleancode.ecommerce.product.application.dto.input.CreateProductDto;
 
 public interface CreateProduct {
 

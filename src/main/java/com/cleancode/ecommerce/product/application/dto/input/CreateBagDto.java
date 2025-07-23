@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.application.dto;
+package com.cleancode.ecommerce.product.application.dto.input;
 
 import java.math.BigDecimal;
 import java.util.List;

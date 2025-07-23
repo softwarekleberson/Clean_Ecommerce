@@ -30,7 +30,7 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Product> listAllProduct() {
+	public List<Product> listAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

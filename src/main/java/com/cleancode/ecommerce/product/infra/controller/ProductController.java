@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cleancode.ecommerce.product.application.dto.CreateProductDto;
+import com.cleancode.ecommerce.product.application.dto.input.CreateProductDto;
 import com.cleancode.ecommerce.product.application.useCase.CreateProduct;
 
 import jakarta.validation.Valid;

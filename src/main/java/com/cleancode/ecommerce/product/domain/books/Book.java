@@ -20,25 +20,23 @@ public class Book extends Product {
 	private final Author author;
 	private final Edition edition;
 	private final Isbn isbn;
-	private final CategoryBoock categoryBoock;
+	private final CategoryBook categoryBook;
 	private final Dimension dimension;
 	private final PublisherDate publisherDate;
-	private final Pricing pricing;
 
-	public Book(Name name, Description description, Price price, ProductCategory category, Brand brand, List<Image> image,
-			Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn,
-			CategoryBoock categoryBoock, Dimension dimension, PublisherDate publisherDate, Pricing pricing) {
-		
+	public Book(Name name, Description description, Price price, ProductCategory category, Brand brand,
+			List<Image> image, Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn,
+			CategoryBook categoryBook, Dimension dimension, PublisherDate publisherDate) {
+
 		super(name, description, price, category, brand, image);
 		this.synopsis = synopsis;
 		this.page = page;
 		this.author = author;
 		this.edition = edition;
 		this.isbn = isbn;
-		this.categoryBoock = categoryBoock;
+		this.categoryBook = categoryBook;
 		this.dimension = dimension;
 		this.publisherDate = publisherDate;
-		this.pricing = pricing;
 	}
 
 	public Synopsis getSynopsis() {
@@ -61,8 +59,8 @@ public class Book extends Product {
 		return isbn;
 	}
 
-	public CategoryBoock getCategoryBoock() {
-		return categoryBoock;
+	public CategoryBook getCategoryBook() {
+		return categoryBook;
 	}
 
 	public Dimension getDimension() {
@@ -72,14 +70,10 @@ public class Book extends Product {
 	public PublisherDate getPublisherDate() {
 		return publisherDate;
 	}
-	
-	public Pricing getPricing() {
-		return pricing;
-	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(author, categoryBoock, dimension, edition, isbn, page, publisherDate, synopsis, pricing);
+		return Objects.hash(author, categoryBook, dimension, edition, isbn, page, publisherDate, synopsis);
 	}
 
 	@Override
@@ -91,10 +85,9 @@ public class Book extends Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Book other = (Book) obj;
-		return Objects.equals(author, other.author) && categoryBoock == other.categoryBoock
+		return Objects.equals(author, other.author) && categoryBook == other.categoryBook
 				&& Objects.equals(dimension, other.dimension) && Objects.equals(edition, other.edition)
 				&& Objects.equals(isbn, other.isbn) && Objects.equals(page, other.page)
-				&& Objects.equals(publisherDate, other.publisherDate) && Objects.equals(synopsis, other.synopsis)
-				&& Objects.equals(pricing, other.pricing);
+				&& Objects.equals(publisherDate, other.publisherDate) && Objects.equals(synopsis, other.synopsis);
 	}
 }
