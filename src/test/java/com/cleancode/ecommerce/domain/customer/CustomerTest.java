@@ -56,53 +56,53 @@ public class CustomerTest {
 
 	@Test
 	void shouldCreateDelivery() {
-		customer.insertNewDelivery(delivery);
+		customer.registerDelivery(delivery);
 		assertEquals(1, customer.getDeliverys().size());
 	}
 
 	@Test
 	void shouldCreateCharge() {
-		customer.insertNewCharge(charge);
+		customer.registerCharge(charge);
 		assertEquals(1, customer.getCharges().size());
 	}
 
 	@Test
 	void shouldActivateCustomer() {
-		customer.insertNewDelivery(delivery);
-		customer.insertNewCharge(charge);
-		customer.updateActivationStatus();
+		customer.registerDelivery(delivery);
+		customer.registerCharge(charge);
+		customer.checkActivationRequirements();
 		assertEquals(true, customer.isActive());
 	}
 
 	@Test
 	void shouldDeleteDelivery() {
-		customer.insertNewDelivery(delivery);
+		customer.registerDelivery(delivery);
 		Delivery deliveryToRemove = customer.getDeliverys().get(0);
-		customer.removeDelivery(deliveryToRemove.getId().toString());
+		customer.removeDeliveryById(deliveryToRemove.getId().toString());
 		assertEquals(0, customer.getDeliverys().size());
 	}
 
 	@Test
 	void shouldDeleteCharge() {
-		customer.insertNewCharge(charge);
-		Charge chargeToRemove = customer.getCharge(charge.getId());
-		customer.removeCharge(chargeToRemove.getId().toString());
+		customer.registerCharge(charge);
+		Charge chargeToRemove = customer.findChargeById(charge.getId());
+		customer.removeChargeById(chargeToRemove.getId().toString());
 		assertEquals(0, customer.getCharges().size());
 	}
 
 	@Test
 	void shouldGetDeliveryById() {
-		customer.insertNewDelivery(delivery);
-		Delivery expected = customer.getDelivery(delivery.getId());
-		Delivery actual = customer.getDelivery(expected.getId());
+		customer.registerDelivery(delivery);
+		Delivery expected = customer.findDeliveryById(delivery.getId());
+		Delivery actual = customer.findDeliveryById(expected.getId());
 		assertEquals(expected.toString(), actual.toString());
 	}
 
 	@Test
 	void shouldGetChargeById() {
-		customer.insertNewCharge(charge);
-		Charge expected = customer.getCharge(charge.getId());
-		Charge actual = customer.getCharge(expected.getId());
+		customer.registerCharge(charge);
+		Charge expected = customer.findChargeById(charge.getId());
+		Charge actual = customer.findChargeById(expected.getId());
 		assertEquals(expected.toString(), actual.toString());
 	}
 }

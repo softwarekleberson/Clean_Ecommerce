@@ -16,7 +16,7 @@ public class DeleteChargeImpl implements DeleteCharge{
 	@Override
 	public void execute(String customerId, String ChargeId) {
 		Customer customer = repository.getCustomerById(customerId).orElseThrow(()-> new IllegalDomainException("Customer with id : " + customerId + " not found")); 
-		customer.removeCharge(ChargeId);
+		customer.removeChargeById(ChargeId);
 		
 		repository.save(customer);
 	}

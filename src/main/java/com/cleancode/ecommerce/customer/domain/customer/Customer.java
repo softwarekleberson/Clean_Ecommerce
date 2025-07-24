@@ -34,7 +34,7 @@ public class Customer {
 		this.password = password;
 	}
 
-	public void idCustomer(String id) {
+	public void assignId(String id) {
 		this.id = new Id(id);
 	}
 
@@ -63,17 +63,18 @@ public class Customer {
 		}
 	}
 
-	public void updateCustomer(String password) {
+	public void updatePassword(String password) {
 		if (password != null && !password.isBlank()) {
 			this.password = new Password(password);
 		}
 	}
 
-	public boolean updateActivationStatus() {
-		boolean isCharge = !charges.isEmpty();
-		boolean isDelivery = !deliveries.isEmpty();
+	private boolean meetsActivationCriteria() {
+		return !charges.isEmpty() && !deliveries.isEmpty();
+	}
 
-		this.active = isCharge && isDelivery;
+	public boolean checkActivationRequirements() {
+		this.active = meetsActivationCriteria();
 		return this.active;
 	}
 
@@ -85,20 +86,20 @@ public class Customer {
 		return this.contact.getFullPhone();
 	}
 
-	public void insertNewDelivery(Delivery delivery) {
+	public void registerDelivery(Delivery delivery) {
 		this.deliveries.add(delivery);
 	}
 
-	public Delivery getDelivery(String id) {
+	public Delivery findDeliveryById(String id) {
 		if (id == null || id.isBlank()) {
 			throw new IllegalDomainException("Delivery ID must not be null or blank");
 		}
-		
+
 		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
 
-	public void removeDelivery(String id) {
+	public void removeDeliveryById(String id) {
 		if (id == null || id.isBlank() || this.deliveries == null) {
 			throw new IllegalDomainException(
 					"Cannot remove delivery: id is null/empty or delivery list is not initialized");
@@ -107,20 +108,20 @@ public class Customer {
 		this.deliveries.removeIf(d -> d.getId().equals(id));
 	}
 
-	public void insertNewCharge(Charge charge) {
+	public void registerCharge(Charge charge) {
 		this.charges.add(charge);
 	}
 
-	public Charge getCharge(String id) {
+	public Charge findChargeById(String id) {
 		if (id == null || id.isBlank()) {
 			throw new IllegalDomainException("Charge ID must not be null or blank");
 		}
-		
+
 		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
 
-	public void removeCharge(String id) {
+	public void removeChargeById(String id) {
 		if (id == null || id.isBlank() || this.charges == null) {
 			throw new IllegalDomainException(
 					"Cannot remove charge: id is null/empty or Charge list is not initialized");
