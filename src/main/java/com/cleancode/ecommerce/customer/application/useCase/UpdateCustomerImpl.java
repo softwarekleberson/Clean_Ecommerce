@@ -19,7 +19,7 @@ public class UpdateCustomerImpl implements UpdateCustomer {
 	public ListCustomerDto execute(String customerId, UpdateCustomerDto dto) {
 		Customer customer = repository.getCustomerById(customerId)
 				.orElseThrow(() -> new IllegalDomainException("Customer with id : " + customerId + " not found"));
-				
+
 		customer.updateCustomer(dto.name(), dto.birth(), dto.ddd(), dto.phone(), dto.typePhone());
 		repository.save(customer);
 		return new ListCustomerDto(customer);

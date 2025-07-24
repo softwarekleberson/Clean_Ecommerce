@@ -25,7 +25,7 @@ public class UpdatePasswordImpl implements UpdatePassword {
 			throw new IllegalDomainException("password confirmation is different from password");
 		}
 		
-		customer.updateCustomer(dto.password());
+		customer.updatePassword(dto.password());
 		repository.save(customer);
 	}
 }

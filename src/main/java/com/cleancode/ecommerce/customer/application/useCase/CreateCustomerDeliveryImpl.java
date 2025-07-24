@@ -20,7 +20,7 @@ public class CreateCustomerDeliveryImpl implements CreateCustomerDelivery{
 		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));				
 		Delivery delivery = dto.createDelivery();
 		
-		customer.insertNewDelivery(delivery);
+		customer.registerDelivery(delivery);
 		repository.save(customer);
 		return new ListCustomerDto(customer);
 	}
