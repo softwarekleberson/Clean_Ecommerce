@@ -87,11 +87,11 @@ public final class CustomerMapper {
 		);
 
 		if (entity.getDeliveryEntities() != null) {
-			entity.getDeliveryEntities().forEach(e -> customer.insertNewDelivery(DeliveryMapper.toDomain(e)));
+			entity.getDeliveryEntities().forEach(e -> customer.registerDelivery(DeliveryMapper.toDomain(e)));
 		}
 
 		if (entity.getChargeEntities() != null) {
-			entity.getChargeEntities().forEach(e -> customer.insertNewCharge(ChargeMapper.toDomain(e)));
+			entity.getChargeEntities().forEach(e -> customer.registerCharge(ChargeMapper.toDomain(e)));
 		}
 
 		return customer;

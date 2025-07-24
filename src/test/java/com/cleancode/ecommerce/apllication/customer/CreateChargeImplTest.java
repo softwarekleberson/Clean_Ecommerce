@@ -42,7 +42,7 @@ public class CreateChargeImplTest {
         useCase.execute(customerId, dto);
 
         ArgumentCaptor<Charge> captor = ArgumentCaptor.forClass(Charge.class);
-        verify(customer).insertNewCharge(captor.capture());
+        verify(customer).registerCharge(captor.capture());
 
         Charge captured = captor.getValue();
         assertEquals("João", captured.getReceiver());

@@ -25,7 +25,7 @@ public record ListCustomerDto(
 
 	public ListCustomerDto(Customer customer) {
 		this(customer.getId().getValue(),
-			 customer.updateActivationStatus(),	
+			 customer.checkActivationRequirements(),	
 			 customer.getName().getName(),
 			 customer.getGender(),
 			 customer.getContact().getEmail(),

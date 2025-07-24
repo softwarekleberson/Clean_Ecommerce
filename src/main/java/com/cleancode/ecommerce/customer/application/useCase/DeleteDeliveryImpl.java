@@ -16,7 +16,7 @@ public class DeleteDeliveryImpl implements DeleteDelivery {
 	@Override
 	public void execute(String customerId, String deliveryId) {
 		Customer customer = repository.getCustomerById(customerId).orElseThrow(()-> new IllegalDomainException("Customer with id : " + customerId + " not found")); 
-		customer.removeDelivery(deliveryId);
+		customer.removeDeliveryById(deliveryId);
 		
 		repository.save(customer);
 	}
