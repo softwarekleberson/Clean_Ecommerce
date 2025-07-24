@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.domain.customer;
+package com.cleancode.ecommerce.domain.share;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
