@@ -37,31 +37,38 @@ public abstract class Product {
 		this.updateAt = new UpdateAt();
 	}
 
-	public abstract void newPrice(BigDecimal newPrice, TypeCoin coin);
+	public void activate() {
+		this.active = true;
+		registerChange();
+	}
+	
+	public void deactivate() {
+		this.active = false;
+		registerChange();
+	}
 
-	private void update() {
+	private void registerChange() {
 		this.updateAt = UpdateAt.update();
 	}
 
-	public void updateProduct(String newDescription, String newName, BigDecimal newPrice, TypeCoin typeCoin) {
+	public void reviseDetails(String newDescription, String newName, BigDecimal newPrice, TypeCoin typeCoin) {
 
 		if (newName != null && !newName.isBlank()) {
 			this.name = new Name(newName);
-			update();
 		}
 
 		if (newPrice != null) {
 			this.price = new Price(newPrice, typeCoin);
-			update();
+			registerChange();
 		}
 
 		if (newDescription != null && !newDescription.isBlank()) {
 			this.description = new Description(newDescription);
-			update();
+			registerChange();
 		}
 	}
 
-	public void updateMidia(String id, String url, String description) {
+	public void replaceMedia(String id, String url, String description) {
 		boolean idExist = this.midia.stream().anyMatch(i -> i.getId().equals(id));
 
 		if (!idExist) {
@@ -70,16 +77,16 @@ public abstract class Product {
 
 		this.midia.removeIf(i -> i.getId().equals(id));
 		this.midia.add(new Midia(url, description));
-		update();
+		registerChange();
 	}
 
-	public void deleteMidia(String id) {
+	public void removeMediaById(String id) {
 		boolean idExist = this.midia.stream().anyMatch(i -> i.getId().equals(id));
 
 		if (!idExist) {
 			throw new IllegalDomainException("Midia with ID '" + id + "' not found.");
 		}
-		
+
 		this.midia.removeIf(m -> m.getId().equals(id));
 	}
 

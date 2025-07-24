@@ -6,7 +6,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Edition {
 
-	private String edition;
+	private final String edition;
 	
 	public Edition(String edition) {
 		if(edition == null || edition.trim().isEmpty()) {

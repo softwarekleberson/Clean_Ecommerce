@@ -6,9 +6,9 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Midia {
 
-	private String id;
-	private String url;
-	private String description;
+	private final String id;
+	private final String url;
+	private final String description;
 	
 	public Midia(String url, String description) {
         String regex = "\\b((https?:\\/\\/)?(www\\.)?[\\w\\-]+\\.[\\w\\-]+(\\.[\\w\\-]+)?([\\/\\w\\-\\.\\?\\=\\&\\#]*)?)\\b";

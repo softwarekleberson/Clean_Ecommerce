@@ -6,7 +6,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Dimension {
 
-	public final int NUMBER_MIM_DIMENSION = 1;
+	public final int NUMBER_MIM_DIMENSION = 0;
 	private final double height;
 	private final double width;
 	private final double length;

@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class UpdateAt {
 
-	private LocalDateTime updateAt;
+	private final LocalDateTime updateAt;
 	
 	public UpdateAt() {
 		this.updateAt = LocalDateTime.now();

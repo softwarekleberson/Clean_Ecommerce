@@ -23,7 +23,7 @@ public class Volume {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(MIN_VOLUME_ACCEPTABLE, volume);
+		return Objects.hash(volume);
 	}
 
 	@Override
@@ -35,7 +35,6 @@ public class Volume {
 		if (getClass() != obj.getClass())
 			return false;
 		Volume other = (Volume) obj;
-		return Double.doubleToLongBits(MIN_VOLUME_ACCEPTABLE) == Double.doubleToLongBits(other.MIN_VOLUME_ACCEPTABLE)
-				&& Double.doubleToLongBits(volume) == Double.doubleToLongBits(other.volume);
+		return Double.doubleToLongBits(volume) == Double.doubleToLongBits(other.volume);
 	}
 }

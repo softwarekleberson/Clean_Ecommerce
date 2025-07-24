@@ -4,7 +4,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 
 public class Description {
 
-	private String description;
+	private final String description;
 	
 	public Description(String description) {
 		if(description == null || description.trim().isEmpty()) {
