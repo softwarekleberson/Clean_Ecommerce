@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.product.domain.books;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,11 +8,12 @@ import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
 import com.cleancode.ecommerce.product.domain.Edition;
-import com.cleancode.ecommerce.product.domain.Image;
+import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
 public class Book extends Product {
 
@@ -25,7 +27,7 @@ public class Book extends Product {
 	private final PublisherDate publisherDate;
 
 	public Book(Name name, Description description, Price price, ProductCategory category, Brand brand,
-			List<Image> image, Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn,
+			List<Midia> image, Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn,
 			CategoryBook categoryBook, Dimension dimension, PublisherDate publisherDate) {
 
 		super(name, description, price, category, brand, image);
@@ -37,6 +39,11 @@ public class Book extends Product {
 		this.categoryBook = categoryBook;
 		this.dimension = dimension;
 		this.publisherDate = publisherDate;
+	}
+	
+	@Override
+	public void newPrice(BigDecimal newPrice, TypeCoin coin) {
+		this.price = new Price(newPrice, coin);		
 	}
 
 	public Synopsis getSynopsis() {

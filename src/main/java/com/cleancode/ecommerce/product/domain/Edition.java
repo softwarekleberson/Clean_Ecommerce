@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.product.domain;
 
+import java.util.Objects;
+
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 public class Edition {
@@ -15,5 +17,22 @@ public class Edition {
 	
 	public String getEdition() {
 		return edition;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(edition);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Edition other = (Edition) obj;
+		return Objects.equals(edition, other.edition);
 	}
 }

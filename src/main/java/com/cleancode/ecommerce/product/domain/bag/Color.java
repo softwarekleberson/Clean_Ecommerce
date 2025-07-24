@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.product.domain.bag;
 
+import java.util.Objects;
+
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 public class Color {
@@ -16,5 +18,22 @@ public class Color {
 	
 	public String getColor() {
 		return color;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(color);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Color other = (Color) obj;
+		return Objects.equals(color, other.color);
 	}
 }

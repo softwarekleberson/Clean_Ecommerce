@@ -4,13 +4,13 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
-public class Image {
+public class Midia {
 
 	private String id;
 	private String url;
 	private String description;
 	
-	public Image(String url, String description) {
+	public Midia(String url, String description) {
         String regex = "\\b((https?:\\/\\/)?(www\\.)?[\\w\\-]+\\.[\\w\\-]+(\\.[\\w\\-]+)?([\\/\\w\\-\\.\\?\\=\\&\\#]*)?)\\b";
         if(!url.matches(regex)) {
         	throw new IllegalDomainException("Url not be valid");

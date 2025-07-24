@@ -46,7 +46,7 @@ public abstract class ProductEntity {
 	protected String brand;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	protected List<ImageEntity> image;
+	protected List<MidiaEntity> midia;
 	
 	@Column(name = "created_at")
 	protected LocalDateTime createdAt;

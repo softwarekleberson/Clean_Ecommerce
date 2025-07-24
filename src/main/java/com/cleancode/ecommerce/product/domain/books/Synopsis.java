@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.product.domain.books;
 
+import java.util.Objects;
+
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 public class Synopsis {
@@ -16,5 +18,22 @@ public class Synopsis {
 	
 	public String getSynopsis() {
 		return synopsis;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(synopsis);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Synopsis other = (Synopsis) obj;
+		return Objects.equals(synopsis, other.synopsis);
 	}
 }

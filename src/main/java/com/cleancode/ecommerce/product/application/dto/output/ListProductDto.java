@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.product.application.dto.output;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.cleancode.ecommerce.product.domain.Image;
+import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
@@ -16,7 +16,7 @@ public abstract class ListProductDto {
 	private TypeCoin typeCoin;
 	private ProductCategory category;
 	private String brand;
-	private List<Image> images;
+	private List<Midia> images;
 
 	public String getId() {
 		return id;
@@ -74,11 +74,11 @@ public abstract class ListProductDto {
 		this.brand = brand;
 	}
 
-	public List<Image> getImages() {
+	public List<Midia> getImages() {
 		return images;
 	}
 
-	public void setImages(List<Image> images) {
+	public void setImages(List<Midia> images) {
 		this.images = images;
 	}
 }

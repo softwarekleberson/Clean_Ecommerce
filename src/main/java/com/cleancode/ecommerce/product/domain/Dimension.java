@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.product.domain;
 
+import java.util.Objects;
+
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 
 public class Dimension {
@@ -14,19 +16,19 @@ public class Dimension {
 		if (height < NUMBER_MIM_DIMENSION) {
 			throw new IllegalDomainException("Number page not be less than 0");
 		}
-		
+
 		if (width < NUMBER_MIM_DIMENSION) {
 			throw new IllegalDomainException("Width page not be less than 0");
 		}
-		
+
 		if (length < NUMBER_MIM_DIMENSION) {
 			throw new IllegalDomainException("Length page not be less than 0");
 		}
-		
+
 		if (weight < NUMBER_MIM_DIMENSION) {
 			throw new IllegalDomainException("Weight page not be less than 0");
 		}
-		
+
 		this.height = height;
 		this.width = width;
 		this.length = length;
@@ -47,5 +49,25 @@ public class Dimension {
 
 	public double getWeight() {
 		return weight;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(height, length, weight, width);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Dimension other = (Dimension) obj;
+		return Double.doubleToLongBits(height) == Double.doubleToLongBits(other.height)
+				&& Double.doubleToLongBits(length) == Double.doubleToLongBits(other.length)
+				&& Double.doubleToLongBits(weight) == Double.doubleToLongBits(other.weight)
+				&& Double.doubleToLongBits(width) == Double.doubleToLongBits(other.width);
 	}
 }

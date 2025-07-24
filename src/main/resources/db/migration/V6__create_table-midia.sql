@@ -1,4 +1,4 @@
-CREATE TABLE image (
+CREATE TABLE midia (
     id VARCHAR(255) PRIMARY KEY,
     url TEXT NOT NULL,
     description TEXT NOT NULL,

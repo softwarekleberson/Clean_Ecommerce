@@ -8,7 +8,7 @@ import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
 import com.cleancode.ecommerce.product.domain.Edition;
-import com.cleancode.ecommerce.product.domain.Image;
+import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.books.Author;
@@ -37,11 +37,11 @@ public class CreateBoockDto extends CreateProductDto {
 	private LocalDate publisherDate;
 
 	public CreateBoockDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
-			ProductCategory category, String brand, List<Image> images, String synopsis, int page, String author,
+			ProductCategory category, String brand, List<Midia> midias, String synopsis, int page, String author,
 			String edition, String isbn, CategoryBook categoryBoock, double height, double width, double length,
 			double weight, LocalDate publisherDate) {
 
-		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, images);
+		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, midias);
 		this.synopsis = synopsis;
 		this.page = page;
 		this.author = author;
@@ -102,7 +102,7 @@ public class CreateBoockDto extends CreateProductDto {
 	@Override
 	public Product toProduct() {
 		return new Book(new Name(getName()), new Description(getDescription()), new Price(getPrice(), getTypeCoin()),
-				getCategory(), new Brand(getBrand()), getImages(), new Synopsis(getSynopsis()), new Page(getPage()),
+				getCategory(), new Brand(getBrand()), getMidias(), new Synopsis(getSynopsis()), new Page(getPage()),
 				new Author(getAuthor()), new Edition(getEdition()), new Isbn(getIsbn()), categoryBoock,
 				new Dimension(height, width, length, weight), new PublisherDate(getPublisherDate()));
 	}

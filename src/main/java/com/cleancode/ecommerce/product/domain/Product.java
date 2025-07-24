@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.cleancode.ecommerce.shared.kernel.Price;
@@ -18,12 +19,12 @@ public abstract class Product {
 	protected Price price;
 	protected final ProductCategory category;
 	protected final Brand brand;
-	protected List<Image> image = new LinkedList<>();
+	protected List<Midia> midia = new LinkedList<>();
 	protected final CreatedAt createdAt;
 	protected UpdateAt updateAt;
 
 	public Product(Name name, Description description, Price price, ProductCategory category, Brand brand,
-			List<Image> image) {
+			List<Midia> midia) {
 
 		this.idProduct = new IdProduct();
 		this.name = name;
@@ -31,10 +32,12 @@ public abstract class Product {
 		this.price = price;
 		this.category = category;
 		this.brand = brand;
-		this.image = image;
+		this.midia = midia;
 		this.createdAt = new CreatedAt();
 		this.updateAt = new UpdateAt();
 	}
+
+	public abstract void newPrice(BigDecimal newPrice, TypeCoin coin);
 
 	private void update() {
 		this.updateAt = UpdateAt.update();
@@ -57,11 +60,27 @@ public abstract class Product {
 			update();
 		}
 	}
-	
-	public void updateImage(String id, String url, String description) {
-		this.image.removeIf(i -> i.getId().equals(id));
-		this.image.add(new Image(url, description));
+
+	public void updateMidia(String id, String url, String description) {
+		boolean idExist = this.midia.stream().anyMatch(i -> i.getId().equals(id));
+
+		if (!idExist) {
+			throw new IllegalDomainException("Midia with ID '" + id + "' not found.");
+		}
+
+		this.midia.removeIf(i -> i.getId().equals(id));
+		this.midia.add(new Midia(url, description));
 		update();
+	}
+
+	public void deleteMidia(String id) {
+		boolean idExist = this.midia.stream().anyMatch(i -> i.getId().equals(id));
+
+		if (!idExist) {
+			throw new IllegalDomainException("Midia with ID '" + id + "' not found.");
+		}
+		
+		this.midia.removeIf(m -> m.getId().equals(id));
 	}
 
 	public IdProduct getIdProduct() {
@@ -92,8 +111,8 @@ public abstract class Product {
 		return brand;
 	}
 
-	public List<Image> getImage() {
-		return Collections.unmodifiableList(this.image);
+	public List<Midia> getMidia() {
+		return Collections.unmodifiableList(this.midia);
 	}
 
 	public CreatedAt getCreatedAt() {

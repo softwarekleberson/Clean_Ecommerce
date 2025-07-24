@@ -17,6 +17,6 @@ import lombok.Setter;
 @Table(name = "bag")
 public class BagEntity extends ProductEntity{
 
-	private String volume;
+	private double volume;
 	private String color;
 }

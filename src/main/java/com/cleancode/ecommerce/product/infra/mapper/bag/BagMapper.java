@@ -6,13 +6,13 @@ import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
-import com.cleancode.ecommerce.product.domain.Image;
+import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
 import com.cleancode.ecommerce.product.domain.bag.Volume;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.bag.BagEntity;
-import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ImageEntity;
+import com.cleancode.ecommerce.product.infra.persistence.jpa.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.TypeCoinEntity;
 import com.cleancode.ecommerce.shared.kernel.Name;
@@ -38,14 +38,14 @@ public class BagMapper {
 		entity.setCreatedAt(domain.getCreatedAt().getCreatedAt());
 		entity.setUpdateAt(domain.getUpdateAt().getUpdateAt());
 
-		List<ImageEntity> imageEntities = domain.getImage().stream().map(image -> {
-			ImageEntity imageEntity = new ImageEntity();
-			imageEntity.setUrl(image.getUrl());
-			imageEntity.setDescription(image.getDescription());
+		List<MidiaEntity> imageEntities = domain.getMidia().stream().map(midia -> {
+			MidiaEntity imageEntity = new MidiaEntity();
+			imageEntity.setUrl(midia.getUrl());
+			imageEntity.setDescription(midia.getDescription());
 			imageEntity.setProduct(entity);
 			return imageEntity;
 		}).collect(Collectors.toList());
-		entity.setImage(imageEntities);
+		entity.setMidia(imageEntities);
 
 		entity.setVolume(domain.getVolume().getVolume());
 		entity.setColor(domain.getColor().getColor());
@@ -57,12 +57,12 @@ public class BagMapper {
 		return new Bag(new Name(entity.getName()), new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				toImageList(entity.getImage()), new Volume(entity.getVolume()), new Color(entity.getColor()));
+				toImageList(entity.getMidia()), new Volume(entity.getVolume()), new Color(entity.getColor()));
 	}
 
-	private static List<Image> toImageList(List<ImageEntity> entities) {
+	private static List<Midia> toImageList(List<MidiaEntity> entities) {
 		if (entities == null)
 			return Collections.emptyList();
-		return entities.stream().map(img -> new Image(img.getUrl(), img.getDescription())).collect(Collectors.toList());
+		return entities.stream().map(img -> new Midia(img.getUrl(), img.getDescription())).collect(Collectors.toList());
 	}
 }

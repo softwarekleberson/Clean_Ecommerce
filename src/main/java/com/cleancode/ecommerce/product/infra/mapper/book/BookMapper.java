@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import com.cleancode.ecommerce.product.domain.books.Book;
 import com.cleancode.ecommerce.product.domain.books.CategoryBook;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.book.BookEntity;
-import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ImageEntity;
+import com.cleancode.ecommerce.product.infra.persistence.jpa.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.TypeCoinEntity;
 
@@ -30,14 +30,14 @@ public class BookMapper {
 		entity.setCreatedAt(domain.getCreatedAt().getCreatedAt());
 		entity.setUpdateAt(domain.getUpdateAt().getUpdateAt());
 
-		List<ImageEntity> imageEntities = domain.getImage().stream().map(image -> {
-			ImageEntity imageEntity = new ImageEntity();
-			imageEntity.setUrl(image.getUrl());
-			imageEntity.setDescription(image.getDescription());
+		List<MidiaEntity> imageEntities = domain.getMidia().stream().map(midia -> {
+			MidiaEntity imageEntity = new MidiaEntity();
+			imageEntity.setUrl(midia.getUrl());
+			imageEntity.setDescription(midia.getDescription());
 			imageEntity.setProduct(entity);
 			return imageEntity;
 		}).collect(Collectors.toList());
-		entity.setImage(imageEntities);
+		entity.setMidia(imageEntities);
 		
 		entity.setSynopsis(domain.getSynopsis().getSynopsis());
 		entity.setPage(domain.getPage().getPage());

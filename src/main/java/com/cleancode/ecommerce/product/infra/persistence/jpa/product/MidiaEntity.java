@@ -17,8 +17,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "image")
-public class ImageEntity {
+@Table(name = "midia")
+public class MidiaEntity {
 	
 	@Id
 	private String id = UUID.randomUUID().toString();
