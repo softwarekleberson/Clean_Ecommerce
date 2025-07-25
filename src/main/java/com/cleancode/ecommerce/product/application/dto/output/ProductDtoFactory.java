@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.product.application.dto.output;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.books.Book;
+import com.cleancode.ecommerce.product.infra.mapper.MidiaOutputMapper;
 
 public class ProductDtoFactory {
 
@@ -17,7 +18,7 @@ public class ProductDtoFactory {
 			dto.setTypeCoin(bag.getPrice().getCoin());
 			dto.setCategory(bag.getProductCategory());
 			dto.setBrand(bag.getBrand().getBrand());
-			dto.setMidias(bag.getMidia());
+			dto.setMidias(MidiaOutputMapper.toOutputDtoList(bag.getMidia()));
 			dto.setVolume(bag.getVolume().getVolume());
 			dto.setColor(bag.getColor().getColor());
 			return dto;
@@ -32,7 +33,7 @@ public class ProductDtoFactory {
 			dto.setTypeCoin(book.getPrice().getCoin());
 			dto.setCategory(book.getProductCategory());
 			dto.setBrand(book.getBrand().getBrand());
-			dto.setMidias(book.getMidia());
+			dto.setMidias(MidiaOutputMapper.toOutputDtoList(book.getMidia()));
 			dto.setSynopsis(book.getSynopsis().getSynopsis());
 			dto.setPage(book.getPage().getPage());
 			dto.setAuthor(book.getAuthor().getAuthor());

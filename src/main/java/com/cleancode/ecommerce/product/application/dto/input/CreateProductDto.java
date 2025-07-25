@@ -3,7 +3,6 @@ package com.cleancode.ecommerce.product.application.dto.input;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -25,10 +24,10 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 	private TypeCoin typeCoin;
 	private ProductCategory category;
 	private String brand;
-	private List<Midia> midias;
+	private List<MidiaInputDto> midias;
 
 	public CreateProductDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
-			ProductCategory category, String brand, List<Midia> midias) {
+			ProductCategory category, String brand, List<MidiaInputDto> midias) {
 
 		this.name = name;
 		this.description = description;
@@ -63,7 +62,7 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 		return brand;
 	}
 
-	public List<Midia> getMidias() {
+	public List<MidiaInputDto> getMidias() {
 		return midias;
 	}
 }

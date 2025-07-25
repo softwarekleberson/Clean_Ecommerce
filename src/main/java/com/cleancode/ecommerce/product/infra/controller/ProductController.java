@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import com.cleancode.ecommerce.product.application.dto.input.CreateProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.useCase.CreateProduct;
 import com.cleancode.ecommerce.product.application.useCase.ListAllProduct;
+import com.cleancode.ecommerce.product.application.useCase.ListProduct;
 
 import jakarta.validation.Valid;
 
@@ -22,10 +24,12 @@ public class ProductController {
 
 	private final CreateProduct createProduct;
 	private final ListAllProduct listAllProduct;
+	private final ListProduct listProduct;
 
-	public ProductController(CreateProduct createProduct, ListAllProduct listAllProduct) {
+	public ProductController(CreateProduct createProduct, ListAllProduct listAllProduct, ListProduct listProduct) {
 		this.createProduct = createProduct;
 		this.listAllProduct = listAllProduct;
+		this.listProduct = listProduct;
 	}
 
 	@PostMapping
@@ -37,5 +41,10 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<List<ListProductDto>> getAllProduct() {
 		return ResponseEntity.ok(listAllProduct.execute());
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<ListProductDto> getOneProduct(@PathVariable String id) {
+		return ResponseEntity.ok(listProduct.execute(id));
 	}
 }
