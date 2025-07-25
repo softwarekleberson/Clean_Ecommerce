@@ -5,9 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Brand;
+import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
+import com.cleancode.ecommerce.product.domain.IdProduct;
 import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
+import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
 import com.cleancode.ecommerce.product.domain.bag.Volume;
@@ -45,7 +48,7 @@ public class BagMapper {
 			imageEntity.setProduct(entity);
 			return imageEntity;
 		}).collect(Collectors.toList());
-		entity.setMidia(imageEntities);
+		entity.setMidias(imageEntities);
 
 		entity.setVolume(domain.getVolume().getVolume());
 		entity.setColor(domain.getColor().getColor());
@@ -54,15 +57,19 @@ public class BagMapper {
 	}
 
 	public static Bag toDomain(BagEntity entity) {
-		return new Bag(new Name(entity.getName()), new Description(entity.getDescription()),
+		return new Bag(new IdProduct(entity.getId()), entity.isActive(), new Name(entity.getName()),
+				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				toImageList(entity.getMidia()), new Volume(entity.getVolume()), new Color(entity.getColor()));
+				toMidiaList(entity.getMidias()), new CreatedAt(entity.getCreatedAt()),
+				new UpdateAt(entity.getUpdateAt()), new Volume(entity.getVolume()), new Color(entity.getColor()));
 	}
 
-	private static List<Midia> toImageList(List<MidiaEntity> entities) {
+	private static List<Midia> toMidiaList(List<MidiaEntity> entities) {
 		if (entities == null)
 			return Collections.emptyList();
-		return entities.stream().map(img -> new Midia(img.getUrl(), img.getDescription())).collect(Collectors.toList());
+
+		return entities.stream().map(img -> new Midia(img.getId(), img.getUrl(), img.getDescription()))
+				.collect(Collectors.toList());
 	}
 }

@@ -12,7 +12,7 @@ public class ListProductImpl implements ListProduct {
 	}
 
 	@Override
-	public Product listProduct(String idProduct) {
+	public Product execute(String idProduct) {
 		return repository.listProduct(idProduct);
 	}
 }

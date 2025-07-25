@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.product.domain;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
@@ -25,6 +26,12 @@ public class Midia {
 		this.description = description;
 	}
 	
+	public Midia(String id, String url, String description) {
+		this.id = id;
+		this.url = url;
+		this.description = description;
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -35,5 +42,27 @@ public class Midia {
 	
 	public String getDescription() {
 		return description;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(description, url);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Midia other = (Midia) obj;
+		return Objects.equals(description, other.description) && Objects.equals(url, other.url);
+	}
+
+	@Override
+	public String toString() {
+		return "Midia [id=" + id + ", url=" + url + ", description=" + description + "]";
 	}
 }

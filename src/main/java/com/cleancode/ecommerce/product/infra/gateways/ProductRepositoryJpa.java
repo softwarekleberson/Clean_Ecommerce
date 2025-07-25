@@ -31,8 +31,10 @@ public class ProductRepositoryJpa implements ProductRepository {
 	@Transactional(readOnly = true)
 	@Override
 	public List<Product> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ProductEntity> entity = jpa.findAll();
+		return entity.stream()
+				   .map(ProductMapper::toDomain)
+				   .toList();
 	}
 
 	@Transactional(readOnly = true)

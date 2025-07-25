@@ -15,11 +15,11 @@ public class ProductMapper {
 	}
 
 	public static Product toDomain(ProductEntity entity) {
-		if (entity instanceof BagEntity) {
+		if (entity instanceof BagEntity bagEntity) {
 			return BagMapper.toDomain((BagEntity) entity);
 		}
 
-		if (entity instanceof BookEntity) {
+		if (entity instanceof BookEntity bookEntity) {
 			return BookMapper.toDomain((BookEntity) entity);
 		}
 		

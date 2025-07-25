@@ -19,12 +19,12 @@ public abstract class Product {
 	protected Price price;
 	protected final ProductCategory category;
 	protected final Brand brand;
-	protected List<Midia> midia = new LinkedList<>();
+	protected List<Midia> midias = new LinkedList<>();
 	protected final CreatedAt createdAt;
 	protected UpdateAt updateAt;
 
 	public Product(Name name, Description description, Price price, ProductCategory category, Brand brand,
-			List<Midia> midia) {
+			List<Midia> midias) {
 
 		this.idProduct = new IdProduct();
 		this.name = name;
@@ -32,9 +32,24 @@ public abstract class Product {
 		this.price = price;
 		this.category = category;
 		this.brand = brand;
-		this.midia = midia;
+		this.midias = midias;
 		this.createdAt = new CreatedAt();
 		this.updateAt = new UpdateAt();
+	}
+	
+	public Product(IdProduct idProduct, boolean active, Name name, Description description, Price price,
+			ProductCategory category, Brand brand, List<Midia> midias, CreatedAt createdAt, UpdateAt updateAt) {
+		
+		this.idProduct = idProduct;
+		this.active = active;
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+		this.brand = brand;
+		this.midias = midias;
+		this.createdAt = createdAt;
+		this.updateAt = updateAt;
 	}
 
 	public void activate() {
@@ -69,25 +84,25 @@ public abstract class Product {
 	}
 
 	public void replaceMedia(String id, String url, String description) {
-		boolean idExist = this.midia.stream().anyMatch(i -> i.getId().equals(id));
+		boolean idExist = this.midias.stream().anyMatch(i -> i.getId().equals(id));
 
 		if (!idExist) {
 			throw new IllegalDomainException("Midia with ID '" + id + "' not found.");
 		}
 
-		this.midia.removeIf(i -> i.getId().equals(id));
-		this.midia.add(new Midia(url, description));
+		this.midias.removeIf(i -> i.getId().equals(id));
+		this.midias.add(new Midia(url, description));
 		registerChange();
 	}
 
 	public void removeMediaById(String id) {
-		boolean idExist = this.midia.stream().anyMatch(i -> i.getId().equals(id));
+		boolean idExist = this.midias.stream().anyMatch(i -> i.getId().equals(id));
 
 		if (!idExist) {
 			throw new IllegalDomainException("Midia with ID '" + id + "' not found.");
 		}
 
-		this.midia.removeIf(m -> m.getId().equals(id));
+		this.midias.removeIf(m -> m.getId().equals(id));
 	}
 
 	public IdProduct getIdProduct() {
@@ -119,7 +134,7 @@ public abstract class Product {
 	}
 
 	public List<Midia> getMidia() {
-		return Collections.unmodifiableList(this.midia);
+		return Collections.unmodifiableList(this.midias);
 	}
 
 	public CreatedAt getCreatedAt() {
@@ -128,5 +143,12 @@ public abstract class Product {
 
 	public UpdateAt getUpdateAt() {
 		return updateAt;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [idProduct=" + idProduct + ", active=" + active + ", name=" + name + ", description="
+				+ description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", midia=" + midias
+				+ ", createdAt=" + createdAt + ", updateAt=" + updateAt + "]";
 	}
 }

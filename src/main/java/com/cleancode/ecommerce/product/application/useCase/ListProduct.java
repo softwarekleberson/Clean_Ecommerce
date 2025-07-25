@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.product.domain.Product;
 
 public interface ListProduct {
 
-	Product listProduct(String idProduct);
+	Product execute(String idProduct);
 }

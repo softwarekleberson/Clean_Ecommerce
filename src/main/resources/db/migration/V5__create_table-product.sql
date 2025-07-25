@@ -1,5 +1,6 @@
 CREATE TABLE product (
 	id VARCHAR(36) PRIMARY KEY,
+	type VARCHAR(255) NOT NULL,
 	active BOOLEAN NOT NULL,
 	name VARCHAR(255) NOT NULL,
 	description TEXT NOT NULL,

@@ -6,7 +6,15 @@ import java.util.List;
 import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+
+@JsonSubTypes
+({ @JsonSubTypes.Type(value = ListBookDto.class, name = "book"),
+   @JsonSubTypes.Type(value = ListBagDto.class, name = "bag") 
+})
 public abstract class ListProductDto {
 
 	private String id;
@@ -16,16 +24,16 @@ public abstract class ListProductDto {
 	private TypeCoin typeCoin;
 	private ProductCategory category;
 	private String brand;
-	private List<Midia> images;
+	private List<Midia> midias;
 
 	public String getId() {
 		return id;
 	}
-	
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -74,11 +82,11 @@ public abstract class ListProductDto {
 		this.brand = brand;
 	}
 
-	public List<Midia> getImages() {
-		return images;
+	public List<Midia> getMidias() {
+		return midias;
 	}
 
-	public void setImages(List<Midia> images) {
-		this.images = images;
+	public void setMidias(List<Midia> midias) {
+		this.midias = midias;
 	}
 }

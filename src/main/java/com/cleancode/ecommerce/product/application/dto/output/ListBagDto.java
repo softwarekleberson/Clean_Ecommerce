@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.product.application.dto.output;
 public class ListBagDto extends ListProductDto {
 
 	private String color;
-	private String volume;
+	private double volume;
 	
 	public String getColor() {
 		return color;
@@ -11,10 +11,10 @@ public class ListBagDto extends ListProductDto {
 	public void setColor(String color) {
 		this.color = color;
 	}
-	public String getVolume() {
+	public double getVolume() {
 		return volume;
 	}
-	public void setVolume(String volume) {
+	public void setVolume(double volume) {
 		this.volume = volume;
 	}
 }

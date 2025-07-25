@@ -6,6 +6,7 @@ import com.cleancode.ecommerce.product.domain.books.CategoryBook;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductEntity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,6 +22,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "book")
+@DiscriminatorValue("book")
 public class BookEntity extends ProductEntity{
 
 	private String synopsis;

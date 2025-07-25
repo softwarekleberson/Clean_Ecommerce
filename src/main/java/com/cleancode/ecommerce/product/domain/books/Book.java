@@ -4,12 +4,15 @@ import java.util.List;
 import java.util.Objects;
 
 import com.cleancode.ecommerce.product.domain.Brand;
+import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
 import com.cleancode.ecommerce.product.domain.Edition;
+import com.cleancode.ecommerce.product.domain.IdProduct;
 import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
+import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 
@@ -39,6 +42,23 @@ public class Book extends Product {
 		this.publisherDate = publisherDate;
 	}
 	
+	public Book(IdProduct idProduct, boolean active, Name name, Description description, Price price,
+			ProductCategory category, Brand brand, List<Midia> midia, CreatedAt createdAt, UpdateAt updateAt,
+			Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn, CategoryBook categoryBook,
+			Dimension dimension, PublisherDate publisherDate) {
+		
+		super(idProduct, active, name, description, price, category, brand, midia, createdAt, updateAt);
+		
+		this.synopsis = synopsis;
+		this.page = page;
+		this.author = author;
+		this.edition = edition;
+		this.isbn = isbn;
+		this.categoryBook = categoryBook;
+		this.dimension = dimension;
+		this.publisherDate = publisherDate;
+	}
+
 	public Synopsis getSynopsis() {
 		return synopsis;
 	}
@@ -89,5 +109,12 @@ public class Book extends Product {
 				&& Objects.equals(dimension, other.dimension) && Objects.equals(edition, other.edition)
 				&& Objects.equals(isbn, other.isbn) && Objects.equals(page, other.page)
 				&& Objects.equals(publisherDate, other.publisherDate) && Objects.equals(synopsis, other.synopsis);
+	}
+
+	@Override
+	public String toString() {
+		return "Book [synopsis=" + synopsis + ", page=" + page + ", author=" + author + ", edition=" + edition
+				+ ", isbn=" + isbn + ", categoryBook=" + categoryBook + ", dimension=" + dimension + ", publisherDate="
+				+ publisherDate + "]";
 	}
 }

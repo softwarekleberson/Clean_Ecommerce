@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.product.application.dto.output;
 
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
+import com.cleancode.ecommerce.product.domain.books.Book;
 
 public class ProductDtoFactory {
 
@@ -12,12 +13,37 @@ public class ProductDtoFactory {
 			dto.setId(bag.getIdProduct().getIdProduct());
 			dto.setName(bag.getName().getName());
 			dto.setDescription(bag.getDescription().getDescription());
-			dto.setPrice(dto.getPrice());
-			dto.setTypeCoin(dto.getTypeCoin());
-			dto.setCategory(dto.getCategory());
-			dto.setBrand(dto.getBrand());
-			dto.setVolume(dto.getVolume());
-			dto.setColor(dto.getColor());
+			dto.setPrice(bag.getPrice().getPrice());
+			dto.setTypeCoin(bag.getPrice().getCoin());
+			dto.setCategory(bag.getProductCategory());
+			dto.setBrand(bag.getBrand().getBrand());
+			dto.setMidias(bag.getMidia());
+			dto.setVolume(bag.getVolume().getVolume());
+			dto.setColor(bag.getColor().getColor());
+			return dto;
+		}
+
+		if (product instanceof Book book) {
+			ListBookDto dto = new ListBookDto();
+			dto.setId(book.getIdProduct().getIdProduct());
+			dto.setName(book.getName().getName());
+			dto.setDescription(book.getDescription().getDescription());
+			dto.setPrice(book.getPrice().getPrice());
+			dto.setTypeCoin(book.getPrice().getCoin());
+			dto.setCategory(book.getProductCategory());
+			dto.setBrand(book.getBrand().getBrand());
+			dto.setMidias(book.getMidia());
+			dto.setSynopsis(book.getSynopsis().getSynopsis());
+			dto.setPage(book.getPage().getPage());
+			dto.setAuthor(book.getAuthor().getAuthor());
+			dto.setEdition(book.getEdition().getEdition());
+			dto.setIsbn(book.getIsbn().getIsbn());
+			dto.setCategoryBook(book.getCategoryBook());
+			dto.setHeight(book.getDimension().getHeight());
+			dto.setWidth(book.getDimension().getWidth());
+			dto.setLength(book.getDimension().getLength());
+			dto.setWeight(book.getDimension().getWeight());
+			dto.setPublisherDate(book.getPublisherDate().getPublisherDate());			
 			return dto;
 		}
 

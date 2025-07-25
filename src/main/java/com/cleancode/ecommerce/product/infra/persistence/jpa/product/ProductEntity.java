@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -20,7 +21,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +31,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "product")
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "type")
 public abstract class ProductEntity {
 
 	@Id
@@ -36,7 +40,7 @@ public abstract class ProductEntity {
 	protected String name;
 	protected String description;
 	protected BigDecimal price;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "type_coin")
 	protected TypeCoinEntity typeCoin;
@@ -46,11 +50,11 @@ public abstract class ProductEntity {
 	protected String brand;
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	protected List<MidiaEntity> midia;
-	
+	protected List<MidiaEntity> midias;
+
 	@Column(name = "created_at")
 	protected LocalDateTime createdAt;
-	
+
 	@Column(name = "update_at")
 	protected LocalDateTime updateAt;
 }

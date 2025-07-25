@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.product.application.useCase;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ProductDtoFactory;
@@ -16,10 +15,10 @@ public class ListAllProductImpl implements ListAllProduct {
 		this.repository = repository;
 	}
 
-	public List<ListProductDto> getAllProduct() {
+	public List<ListProductDto> execute() {
 		List<Product> products = this.repository.listAll();
 		return products.stream()
 			.map(ProductDtoFactory::listAllProduct)
-            .collect(Collectors.toList());
+            .toList();
 	}
 }
