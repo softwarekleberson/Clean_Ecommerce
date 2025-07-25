@@ -40,7 +40,7 @@ public class ProductRepositoryJpa implements ProductRepository {
 	@Transactional(readOnly = true)
 	@Override
 	public Product listProduct(String idProduct) {
-		// TODO Auto-generated method stub
-		return null;
+		ProductEntity entity = jpa.findById(idProduct)                              .orElseThrow(() -> new RuntimeException("Product not found")); ;
+		return ProductMapper.toDomain(entity);
 	}
 }
