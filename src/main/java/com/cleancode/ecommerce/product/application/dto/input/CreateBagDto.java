@@ -53,5 +53,4 @@ public class CreateBagDto extends CreateProductDto {
 	        new Color(color)
 	    );
 	}
-
 }
