@@ -24,10 +24,6 @@ public class Price {
 		return price;
 	}
 
-	public static Price updatePrice(BigDecimal newPrice, TypeCoin typeCoin) {
-		return new Price(newPrice, typeCoin);
-	}
-	
 	public TypeCoin getCoin() {
 		return coin;
 	}
