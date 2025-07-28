@@ -12,10 +12,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 )
 
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = CreateBoockDto.class, name = "book"),
-    @JsonSubTypes.Type(value = CreateBagDto.class, name = "bag")
-})
+@JsonSubTypes({ @JsonSubTypes.Type(value = CreateBoockDto.class, name = "book"),
+		@JsonSubTypes.Type(value = CreateBagDto.class, name = "bag") })
 public abstract class CreateProductDto implements ProductCreatableInterface {
 
 	private String name;
@@ -25,9 +23,10 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 	private ProductCategory category;
 	private String brand;
 	private List<MidiaInputDto> midias;
+	private BigDecimal pricing;
 
 	public CreateProductDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
-			ProductCategory category, String brand, List<MidiaInputDto> midias) {
+			ProductCategory category, String brand, List<MidiaInputDto> midias, BigDecimal pricing) {
 
 		this.name = name;
 		this.description = description;
@@ -36,6 +35,7 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 		this.category = category;
 		this.brand = brand;
 		this.midias = midias;
+		this.pricing = pricing;
 	}
 
 	public String getName() {
@@ -64,5 +64,9 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 
 	public List<MidiaInputDto> getMidias() {
 		return midias;
+	}
+
+	public BigDecimal getPricing() {
+		return pricing;
 	}
 }

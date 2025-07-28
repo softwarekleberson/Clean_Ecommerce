@@ -9,6 +9,7 @@ import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.IdProduct;
 import com.cleancode.ecommerce.product.domain.Midia;
+import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
@@ -48,8 +49,10 @@ public class BagMapper {
 			imageEntity.setProduct(entity);
 			return imageEntity;
 		}).collect(Collectors.toList());
+		
 		entity.setMidias(imageEntities);
-
+		entity.setPricing(domain.getPricing().getPricing());
+		
 		entity.setVolume(domain.getVolume().getVolume());
 		entity.setColor(domain.getColor().getColor());
 
@@ -61,7 +64,7 @@ public class BagMapper {
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				toMidiaList(entity.getMidias()), new CreatedAt(entity.getCreatedAt()),
+				toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()),new CreatedAt(entity.getCreatedAt()),
 				new UpdateAt(entity.getUpdateAt()), new Volume(entity.getVolume()), new Color(entity.getColor()));
 	}
 

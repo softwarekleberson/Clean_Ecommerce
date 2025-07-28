@@ -20,11 +20,12 @@ public abstract class Product {
 	protected final ProductCategory category;
 	protected final Brand brand;
 	protected List<Midia> midias = new LinkedList<>();
+	protected Pricing pricing;
 	protected final CreatedAt createdAt;
 	protected UpdateAt updateAt;
 
 	public Product(Name name, Description description, Price price, ProductCategory category, Brand brand,
-			List<Midia> midias) {
+			List<Midia> midias, Pricing pricing) {
 
 		this.idProduct = new IdProduct();
 		this.name = name;
@@ -33,13 +34,15 @@ public abstract class Product {
 		this.category = category;
 		this.brand = brand;
 		this.midias = midias;
+		this.pricing = pricing;
 		this.createdAt = new CreatedAt();
 		this.updateAt = new UpdateAt();
 	}
-	
+
 	public Product(IdProduct idProduct, boolean active, Name name, Description description, Price price,
-			ProductCategory category, Brand brand, List<Midia> midias, CreatedAt createdAt, UpdateAt updateAt) {
-		
+			ProductCategory category, Brand brand, List<Midia> midias, Pricing pricing, CreatedAt createdAt,
+			UpdateAt updateAt) {
+
 		this.idProduct = idProduct;
 		this.active = active;
 		this.name = name;
@@ -48,6 +51,7 @@ public abstract class Product {
 		this.category = category;
 		this.brand = brand;
 		this.midias = midias;
+		this.pricing = pricing;
 		this.createdAt = createdAt;
 		this.updateAt = updateAt;
 	}
@@ -56,7 +60,7 @@ public abstract class Product {
 		this.active = true;
 		registerChange();
 	}
-	
+
 	public void deactivate() {
 		this.active = false;
 		registerChange();
@@ -135,6 +139,14 @@ public abstract class Product {
 
 	public List<Midia> getMidia() {
 		return Collections.unmodifiableList(this.midias);
+	}
+	
+	public List<Midia> getMidias() {
+		return midias;
+	}
+	
+	public Pricing getPricing() {
+		return pricing;
 	}
 
 	public CreatedAt getCreatedAt() {

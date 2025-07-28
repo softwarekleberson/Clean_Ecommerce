@@ -51,6 +51,8 @@ public abstract class ProductEntity {
 
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	protected List<MidiaEntity> midias;
+	
+	protected BigDecimal pricing;
 
 	@Column(name = "created_at")
 	protected LocalDateTime createdAt;

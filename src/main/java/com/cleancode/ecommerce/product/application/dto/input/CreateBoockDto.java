@@ -8,13 +8,14 @@ import java.util.stream.Collectors;
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
-import com.cleancode.ecommerce.product.domain.Edition;
 import com.cleancode.ecommerce.product.domain.Midia;
+import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.books.Author;
 import com.cleancode.ecommerce.product.domain.books.Book;
 import com.cleancode.ecommerce.product.domain.books.CategoryBook;
+import com.cleancode.ecommerce.product.domain.books.Edition;
 import com.cleancode.ecommerce.product.domain.books.Isbn;
 import com.cleancode.ecommerce.product.domain.books.Page;
 import com.cleancode.ecommerce.product.domain.books.PublisherDate;
@@ -38,11 +39,11 @@ public class CreateBoockDto extends CreateProductDto {
 	private LocalDate publisherDate;
 
 	public CreateBoockDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
-			ProductCategory category, String brand, List<MidiaInputDto> midias, String synopsis, int page,
-			String author, String edition, String isbn, CategoryBook categoryBoock, double height, double width,
-			double length, double weight, LocalDate publisherDate) {
+			ProductCategory category, String brand, List<MidiaInputDto> midias, BigDecimal pricing, String synopsis,
+			int page, String author, String edition, String isbn, CategoryBook categoryBoock, double height,
+			double width, double length, double weight, LocalDate publisherDate) {
 
-		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, midias);
+		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, midias, pricing);
 		this.synopsis = synopsis;
 		this.page = page;
 		this.author = author;
@@ -106,8 +107,9 @@ public class CreateBoockDto extends CreateProductDto {
 				.map(midiaDto -> new Midia(midiaDto.getUrl(), midiaDto.getDescription())).collect(Collectors.toList());
 
 		return new Book(new Name(getName()), new Description(getDescription()), new Price(getPrice(), getTypeCoin()),
-				getCategory(), new Brand(getBrand()), midiasDomain, new Synopsis(getSynopsis()), new Page(getPage()),
-				new Author(getAuthor()), new Edition(getEdition()), new Isbn(getIsbn()), categoryBoock,
-				new Dimension(height, width, length, weight), new PublisherDate(getPublisherDate()));
+				getCategory(), new Brand(getBrand()), midiasDomain, new Pricing(getPricing()),
+				new Synopsis(getSynopsis()), new Page(getPage()), new Author(getAuthor()), new Edition(getEdition()),
+				new Isbn(getIsbn()), categoryBoock, new Dimension(height, width, length, weight),
+				new PublisherDate(getPublisherDate()));
 	}
 }

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
-import com.cleancode.ecommerce.product.domain.Edition;
+import com.cleancode.ecommerce.product.domain.books.Edition;
 
 public class EditionTest {
 

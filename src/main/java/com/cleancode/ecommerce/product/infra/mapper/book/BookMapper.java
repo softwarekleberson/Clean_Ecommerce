@@ -8,14 +8,15 @@ import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
-import com.cleancode.ecommerce.product.domain.Edition;
 import com.cleancode.ecommerce.product.domain.IdProduct;
 import com.cleancode.ecommerce.product.domain.Midia;
+import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.product.domain.books.Author;
 import com.cleancode.ecommerce.product.domain.books.Book;
 import com.cleancode.ecommerce.product.domain.books.CategoryBook;
+import com.cleancode.ecommerce.product.domain.books.Edition;
 import com.cleancode.ecommerce.product.domain.books.Isbn;
 import com.cleancode.ecommerce.product.domain.books.Page;
 import com.cleancode.ecommerce.product.domain.books.PublisherDate;
@@ -35,7 +36,7 @@ public class BookMapper {
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				toMidiaList(entity.getMidias()), new CreatedAt(entity.getCreatedAt()),
+				toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()) ,new CreatedAt(entity.getCreatedAt()),
 				new UpdateAt(entity.getUpdateAt()), new Synopsis(entity.getSynopsis()), new Page(entity.getPage()),
 				new Author(entity.getAuthor()), new Edition(entity.getEdition()), new Isbn(entity.getIsbn()),
 				CategoryBook.valueOf(entity.getCategoryBook().name()),
@@ -66,6 +67,7 @@ public class BookMapper {
 		}).collect(Collectors.toList());
 		entity.setMidias(imageEntities);
 
+		entity.setPricing(domain.getPricing().getPricing());
 		entity.setSynopsis(domain.getSynopsis().getSynopsis());
 		entity.setPage(domain.getPage().getPage());
 		entity.setEdition(domain.getEdition().getEdition());
@@ -77,7 +79,6 @@ public class BookMapper {
 		entity.setLength(domain.getDimension().getLength());
 		entity.setWeight(domain.getDimension().getWeight());
 		entity.setPublisherDate(domain.getPublisherDate().getPublisherDate());
-		entity.setPrice(domain.getPrice().getPrice());
 
 		return entity;
 	}

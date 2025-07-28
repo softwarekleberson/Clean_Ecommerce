@@ -8,6 +8,7 @@ CREATE TABLE product (
 	type_coin VARCHAR(50) NOT NULL,
 	category VARCHAR(50) NOT NULL,
 	brand VARCHAR(255) NOT NULL,
+	pricing DECIMAL(19,2) NOT NULL,
 	created_at TIMESTAMP NOT NULL,
 	update_at TIMESTAMP
 );

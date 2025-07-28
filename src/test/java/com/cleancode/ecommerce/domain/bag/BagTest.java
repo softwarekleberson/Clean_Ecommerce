@@ -16,6 +16,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Midia;
+import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
@@ -32,8 +33,8 @@ public class BagTest {
 	void setUp() {
 		bag = new Bag(new Name("Bolsa X"), new Description("Bolsa impermeável"),
 				new Price(BigDecimal.valueOf(250.0), TypeCoin.DOLAR), ProductCategory.BAG, new Brand("Nike"),
-				new LinkedList<>(List.of(new Midia("https://site.com/img.jpg", "Imagem bolsa"))), new Volume(35),
-				new Color("Preto"));
+				new LinkedList<>(List.of(new Midia("https://site.com/img.jpg", "Imagem bolsa"))),
+				new Pricing(BigDecimal.TEN), new Volume(35), new Color("Preto"));
 	}
 
 	@Test
@@ -51,7 +52,7 @@ public class BagTest {
 	void shouldCompareBagsByVolumeAndColor() {
 		Bag sameBag = new Bag(new Name("Outra Bolsa"), new Description("Outra descrição"),
 				new Price(BigDecimal.valueOf(300), TypeCoin.DOLAR), ProductCategory.BAG, new Brand("Adidas"), List.of(),
-				new Volume(35), new Color("Preto"));
+				new Pricing(BigDecimal.TEN), new Volume(35), new Color("Preto"));
 
 		assertEquals(bag, sameBag);
 		assertEquals(bag.hashCode(), sameBag.hashCode());
@@ -61,7 +62,7 @@ public class BagTest {
 	void shouldNotBeEqualIfVolumeOrColorIsDifferent() {
 		Bag differentBag = new Bag(new Name("Outra Bolsa"), new Description("Outra descrição"),
 				new Price(BigDecimal.valueOf(300), TypeCoin.DOLAR), ProductCategory.BAG, new Brand("Adidas"), List.of(),
-				new Volume(40), new Color("Preto"));
+				new Pricing(BigDecimal.TEN), new Volume(40), new Color("Preto"));
 
 		assertNotEquals(bag, differentBag);
 	}
@@ -120,13 +121,13 @@ public class BagTest {
 
 		assertEquals("Midia with ID 'inexistente-123' not found.", exception.getMessage());
 	}
-	
+
 	@Test
 	void shouldDeleteMidiaSuccessfully() {
-	   String id = bag.getMidia().get(0).getId();
-	   assertEquals(1, bag.getMidia().size());
-	   
-	   bag.removeMediaById(id);
-	   assertEquals(0, bag.getMidia().size());
+		String id = bag.getMidia().get(0).getId();
+		assertEquals(1, bag.getMidia().size());
+
+		bag.removeMediaById(id);
+		assertEquals(0, bag.getMidia().size());
 	}
 }

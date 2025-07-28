@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.domain;
+package com.cleancode.ecommerce.product.domain.books;
 
 import java.util.Objects;
 
