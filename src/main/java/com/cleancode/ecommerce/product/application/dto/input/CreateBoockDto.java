@@ -3,7 +3,6 @@ package com.cleancode.ecommerce.product.application.dto.input;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
@@ -103,8 +102,7 @@ public class CreateBoockDto extends CreateProductDto {
 
 	@Override
 	public Product toProduct() {
-		List<Midia> midiasDomain = getMidias().stream()
-				.map(midiaDto -> new Midia(midiaDto.getUrl(), midiaDto.getDescription())).collect(Collectors.toList());
+		List<Midia> midiasDomain = extractedMidia();
 
 		return new Book(new Name(getName()), new Description(getDescription()), new Price(getPrice(), getTypeCoin()),
 				getCategory(), new Brand(getBrand()), midiasDomain, new Pricing(getPricing()),
