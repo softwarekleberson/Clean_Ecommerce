@@ -5,16 +5,16 @@ import java.util.Objects;
 
 public class Reservations {
 
-	private final IdStock reservationId;
+	private final IdStock id;
 	private final String cartId;
 	private final String customerId;
 	private final Quantity quantity;
 	private final LocalDateTime reservationTime;
 	private ReserveStatus reserveStatus;
 
-	public Reservations(String cartId, String customerId, int quantity) {
+	public Reservations(String id, String cartId, String customerId, int quantity) {
 
-		this.reservationId = new IdStock();
+		this.id = new IdStock(id);
 		this.cartId = cartId;
 		this.customerId = customerId;
 		this.quantity = new Quantity(quantity);
@@ -30,8 +30,8 @@ public class Reservations {
 		this.reserveStatus = ReserveStatus.CONSUMED;
 	}
 
-	public IdStock getReservationId() {
-		return reservationId;
+	public String getId() {
+		return id.toString();
 	}
 
 	public String getCartId() {
@@ -56,7 +56,7 @@ public class Reservations {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cartId, customerId, quantity, reservationId, reservationTime, reserveStatus);
+		return Objects.hash(cartId, customerId, quantity, id, reservationTime, reserveStatus);
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class Reservations {
 			return false;
 		Reservations other = (Reservations) obj;
 		return Objects.equals(cartId, other.cartId) && Objects.equals(customerId, other.customerId)
-				&& quantity == other.quantity && Objects.equals(reservationId, other.reservationId)
+				&& quantity == other.quantity && Objects.equals(id, other.id)
 				&& Objects.equals(reservationTime, other.reservationTime) && reserveStatus == other.reserveStatus;
 	}
 }

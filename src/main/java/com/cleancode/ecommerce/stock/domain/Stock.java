@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.IdProduct;
@@ -44,14 +45,14 @@ public class Stock {
 			throw new IllegalDomainException("Insufficient stock");
 		}
 
-		Reservations reservation = new Reservations(customerId, cartId, quantity);
+		Reservations reservation = new Reservations(UUID.randomUUID().toString() ,customerId, cartId, quantity);
 		this.quantityAvailable -= quantity;
 		this.reservations.add(reservation);
 		return reservation;
 	}
 
 	public void cancelReservation(String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
+		Reservations reservation = reservations.stream().filter(r -> r.getId().equals(reservationId))
 				.findFirst().orElseThrow(() -> new IllegalDomainException("Reservation not found"));
 
 		reservation.cancel();
@@ -61,13 +62,21 @@ public class Stock {
 	public void confirmOrder(String orderId, String reservationId) {
 		Reservations reservation = reservations.stream()
 
-				.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
+				.filter(r -> r.getId().equals(reservationId)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Reservation not found"));
 
 		reservation.confirmOrder();
 
 		this.totalQuantity -= reservation.getQuantity().getQuantity();
 		this.productOutputs.add(new ProductOutput(orderId, productId, reservation.getQuantity().getQuantity()));
+	}
+	
+	public Reservations getReservationId(String reservationId) {
+		Reservations reservation = reservations.stream()
+		.filter(r -> r.getId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalDomainException("Reservation not found"));
+
+		return reservation;
 	}
 
 	public IdStock getId() {
@@ -100,7 +109,7 @@ public class Stock {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(productInputs, productOutputs, productId, quantityAvailable, reservations, totalQuantity);
+		return Objects.hash(productId, productInputs, productOutputs, quantityAvailable, reservations, totalQuantity);
 	}
 
 	@Override
@@ -112,9 +121,8 @@ public class Stock {
 		if (getClass() != obj.getClass())
 			return false;
 		Stock other = (Stock) obj;
-		return Objects.equals(productInputs, other.productInputs)
-				&& Objects.equals(productOutputs, other.productOutputs) && Objects.equals(productId, other.productId)
-				&& quantityAvailable == other.quantityAvailable && Objects.equals(reservations, other.reservations)
-				&& totalQuantity == other.totalQuantity;
+		return Objects.equals(productId, other.productId) && Objects.equals(productInputs, other.productInputs)
+				&& Objects.equals(productOutputs, other.productOutputs) && quantityAvailable == other.quantityAvailable
+				&& Objects.equals(reservations, other.reservations) && totalQuantity == other.totalQuantity;
 	}
 }
