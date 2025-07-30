@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.mapper.book;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -9,7 +8,6 @@ import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
 import com.cleancode.ecommerce.product.domain.IdProduct;
-import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.UpdateAt;
@@ -21,6 +19,7 @@ import com.cleancode.ecommerce.product.domain.books.Isbn;
 import com.cleancode.ecommerce.product.domain.books.Page;
 import com.cleancode.ecommerce.product.domain.books.PublisherDate;
 import com.cleancode.ecommerce.product.domain.books.Synopsis;
+import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.book.BookEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductCategoryEntity;
@@ -36,7 +35,7 @@ public class BookMapper {
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()) ,new CreatedAt(entity.getCreatedAt()),
+				MidiaInputMapper.toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()) ,new CreatedAt(entity.getCreatedAt()),
 				new UpdateAt(entity.getUpdateAt()), new Synopsis(entity.getSynopsis()), new Page(entity.getPage()),
 				new Author(entity.getAuthor()), new Edition(entity.getEdition()), new Isbn(entity.getIsbn()),
 				CategoryBook.valueOf(entity.getCategoryBook().name()),
@@ -82,13 +81,4 @@ public class BookMapper {
 
 		return entity;
 	}
-
-	private static List<Midia> toMidiaList(List<MidiaEntity> entities) {
-		if (entities == null)
-			return Collections.emptyList();
-
-		return entities.stream().map(img -> new Midia(img.getId(), img.getUrl(), img.getDescription()))
-				.collect(Collectors.toList());
-	}
-
 }

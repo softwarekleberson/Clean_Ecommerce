@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.mapper.bag;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,13 +7,13 @@ import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.IdProduct;
-import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
 import com.cleancode.ecommerce.product.domain.bag.Volume;
+import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.bag.BagEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductCategoryEntity;
@@ -49,10 +48,10 @@ public class BagMapper {
 			imageEntity.setProduct(entity);
 			return imageEntity;
 		}).collect(Collectors.toList());
-		
+
 		entity.setMidias(imageEntities);
 		entity.setPricing(domain.getPricing().getPricing());
-		
+
 		entity.setVolume(domain.getVolume().getVolume());
 		entity.setColor(domain.getColor().getColor());
 
@@ -64,15 +63,8 @@ public class BagMapper {
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()),new CreatedAt(entity.getCreatedAt()),
+				MidiaInputMapper.toMidiaList(entity.getMidias()),
+				new Pricing(entity.getPricing()), new CreatedAt(entity.getCreatedAt()),
 				new UpdateAt(entity.getUpdateAt()), new Volume(entity.getVolume()), new Color(entity.getColor()));
-	}
-
-	private static List<Midia> toMidiaList(List<MidiaEntity> entities) {
-		if (entities == null)
-			return Collections.emptyList();
-
-		return entities.stream().map(img -> new Midia(img.getId(), img.getUrl(), img.getDescription()))
-				.collect(Collectors.toList());
 	}
 }
