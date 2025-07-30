@@ -23,18 +23,45 @@ import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+
 public class CreateBoockDto extends CreateProductDto {
 
+	@NotBlank(message = "Synopsi is required")
 	private String synopsis;
+	
+	@Min(1)
 	private int page;
+	
+	@NotBlank(message = "Autor is required")
 	private String author;
+	
+	@NotBlank(message = "Edition is required")
 	private String edition;
+	
+	@NotBlank(message = "Isbn is required")
 	private String isbn;
+	
+	@NotNull(message = "Category book is required")
 	private CategoryBook categoryBoock;
+	
+	@Min(0)
 	private double height;
+	
+	@Min(0)
 	private double width;
+	
+	@Min(0)
 	private double length;
+	
+	@Min(0)
 	private double weight;
+	
+	@NotNull
+	@PastOrPresent
 	private LocalDate publisherDate;
 
 	public CreateBoockDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
