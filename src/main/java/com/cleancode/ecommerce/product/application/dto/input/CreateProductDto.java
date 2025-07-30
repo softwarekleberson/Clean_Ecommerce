@@ -2,7 +2,9 @@ package com.cleancode.ecommerce.product.application.dto.input;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
@@ -36,6 +38,12 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 		this.brand = brand;
 		this.midias = midias;
 		this.pricing = pricing;
+	}
+
+	protected List<Midia> extractedMidia() {
+		List<Midia> midiasDomain = getMidias().stream()
+				.map(midiaDto -> new Midia(midiaDto.getUrl(), midiaDto.getDescription())).collect(Collectors.toList());
+		return midiasDomain;
 	}
 
 	public String getName() {

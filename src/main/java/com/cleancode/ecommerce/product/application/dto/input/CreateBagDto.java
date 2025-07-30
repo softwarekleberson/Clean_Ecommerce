@@ -2,7 +2,6 @@ package com.cleancode.ecommerce.product.application.dto.input;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Brand;
 import com.cleancode.ecommerce.product.domain.Description;
@@ -39,8 +38,7 @@ public class CreateBagDto extends CreateProductDto {
 
 	@Override
 	public Product toProduct() {
-		List<Midia> midiasDomain = getMidias().stream()
-				.map(midiaDto -> new Midia(midiaDto.getUrl(), midiaDto.getDescription())).collect(Collectors.toList());
+		List<Midia> midiasDomain = extractedMidia();
 
 		return new Bag(new Name(getName()), new Description(getDescription()), new Price(getPrice(), getTypeCoin()),
 				getCategory(), new Brand(getBrand()), midiasDomain, new Pricing(getPricing()), new Volume(volume),
