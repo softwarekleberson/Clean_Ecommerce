@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class Customer {
 
-	private Id id;
+	private IdCustomer id;
 	private boolean active = false;
 	private Name name;
 	private Gender gender;
@@ -24,7 +24,7 @@ public class Customer {
 	private List<Delivery> deliveries = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
 
-	public Customer(Id id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+	public Customer(IdCustomer id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
@@ -35,7 +35,7 @@ public class Customer {
 	}
 
 	public void assignId(String id) {
-		this.id = new Id(id);
+		this.id = new IdCustomer(id);
 	}
 
 	public void updateCustomer(String name, LocalDate birth, String ddd, String phone, TypePhone typePhone) {
@@ -134,7 +134,7 @@ public class Customer {
 		return active;
 	}
 
-	public Id getId() {
+	public IdCustomer getId() {
 		return id;
 	}
 

@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.product.infra.gateways;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
@@ -39,8 +40,7 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Product listProduct(String idProduct) {
-		ProductEntity entity = jpa.findById(idProduct)                              .orElseThrow(() -> new RuntimeException("Product not found")); ;
-		return ProductMapper.toDomain(entity);
+	public Optional<Product> listProduct(String idProduct) {
+		return jpa.findById(idProduct).map(ProductMapper::toDomain);  
 	}
 }

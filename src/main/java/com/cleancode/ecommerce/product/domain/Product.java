@@ -141,10 +141,6 @@ public abstract class Product {
 		return Collections.unmodifiableList(this.midias);
 	}
 	
-	public List<Midia> getMidias() {
-		return midias;
-	}
-	
 	public Pricing getPricing() {
 		return pricing;
 	}

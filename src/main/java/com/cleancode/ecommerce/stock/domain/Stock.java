@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.stock.domain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -21,14 +22,31 @@ public class Stock {
 	private List<ProductInput> productInputs = new ArrayList<>();
 	private List<ProductOutput> productOutputs = new ArrayList<>();
 
-	public Stock(IdProduct productId, int totalQuantity) {
+	public Stock(IdProduct productId) {
 		this.id = new IdStock();
+		this.productId = productId;
+	}
+	
+	public Stock(IdStock id, IdProduct productId, int totalQuantity) {
+		this.id = id;
 		this.productId = productId;
 		this.totalQuantity = totalQuantity;
 		this.quantityAvailable = totalQuantity;
 	}
+	
+	public void addReservations (List<Reservations> reservations) {
+		this.reservations.addAll(reservations);
+	}
+	
+	public void addProductInput (List<ProductInput> productInput) {
+		this.productInputs.addAll(productInput);
+	}
+	
+	public void addProductOutput (List<ProductOutput> productOutput) {
+		this.productOutputs.addAll(productOutput);
+	}
 
-	public void productInput(int quantity, ProductQuality productQuality, BigDecimal purchasePrice, String supplier) {
+	public void addProductInput(int quantity, ProductQuality productQuality, BigDecimal purchasePrice, String supplier) {
 
 		if (quantity <= MIN_QUANTITY) {
 			throw new IllegalDomainException("quntity must be positive");
@@ -59,7 +77,7 @@ public class Stock {
 		this.quantityAvailable += reservation.getQuantity().getQuantity();
 	}
 
-	public void confirmOrder(String orderId, String reservationId) {
+	public void confirmOrder(String orderId, String productId ,String reservationId) {
 		Reservations reservation = reservations.stream()
 
 				.filter(r -> r.getId().equals(reservationId)).findFirst()
@@ -68,7 +86,7 @@ public class Stock {
 		reservation.confirmOrder();
 
 		this.totalQuantity -= reservation.getQuantity().getQuantity();
-		this.productOutputs.add(new ProductOutput(orderId, productId, reservation.getQuantity().getQuantity()));
+		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new IdProduct(productId), reservation.getQuantity().getQuantity()));
 	}
 	
 	public Reservations getReservationId(String reservationId) {
@@ -82,7 +100,7 @@ public class Stock {
 	public IdStock getId() {
 		return id;
 	}
-
+	
 	public IdProduct getProductId() {
 		return productId;
 	}
@@ -96,15 +114,15 @@ public class Stock {
 	}
 
 	public List<Reservations> getReservations() {
-		return reservations;
+		return Collections.unmodifiableList(this.reservations);
 	}
 
 	public List<ProductInput> getProductInput() {
-		return productInputs;
+		return Collections.unmodifiableList(this.productInputs);
 	}
 
 	public List<ProductOutput> getProductOutput() {
-		return productOutputs;
+		return Collections.unmodifiableList(this.productOutputs);
 	}
 
 	@Override
@@ -124,5 +142,12 @@ public class Stock {
 		return Objects.equals(productId, other.productId) && Objects.equals(productInputs, other.productInputs)
 				&& Objects.equals(productOutputs, other.productOutputs) && quantityAvailable == other.quantityAvailable
 				&& Objects.equals(reservations, other.reservations) && totalQuantity == other.totalQuantity;
+	}
+
+	@Override
+	public String toString() {
+		return "Stock [id=" + id + ", productId=" + productId + ", totalQuantity=" + totalQuantity
+				+ ", quantityAvailable=" + quantityAvailable + ", reservations=" + reservations + ", productInputs="
+				+ productInputs + ", productOutputs=" + productOutputs + "]";
 	}
 }

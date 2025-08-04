@@ -31,9 +31,11 @@ public record ListCustomerDto(
 			 customer.getContact().getEmail(),
 			 customer.getContact().getFullPhone(),
 			 
+			 customer.getDeliverys() == null ? List.of() :
 			 customer.getDeliverys().stream().map(ListDeliveryDto::new)
 			 .collect(Collectors.toList()),
 			 
+			 customer.getCharges() == null ? List.of() :
 			 customer.getCharges().stream().map(ListChargeDto::new)
 			 .collect(Collectors.toList())
 			);

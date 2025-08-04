@@ -25,7 +25,7 @@ public class StockTest {
 	@BeforeEach
 	void setUp() {
 		idProduct = new IdProduct();
-		stock = new Stock(idProduct, 10);
+		stock = new Stock(idProduct);
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class StockTest {
 
 	@Test
 	void mustAddProductToStock() {
-		stock.productInput(5, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
+		stock.addProductInput(5, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
 		assertEquals(15, stock.getTotalQuantity());
 		assertEquals(15, stock.getQuantityAvailable());
 		assertEquals(1, stock.getProductInput().size());
@@ -48,7 +48,7 @@ public class StockTest {
 	@Test
 	void shouldThrowExceptionWhenAddingInvalidQuantity() {
 		assertThrows(IllegalDomainException.class, () -> {
-			stock.productInput(0, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
+			stock.addProductInput(0, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
 		});
 	}
 
@@ -85,7 +85,7 @@ public class StockTest {
 	@Test
 	void mustConfirmOrderReduceTotalStockRegisterOutput() {
 		Reservations reservations = stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
-		stock.confirmOrder(UUID.randomUUID().toString(), reservations.getId());
+		stock.confirmOrder(UUID.randomUUID().toString(), UUID.randomUUID().toString(), reservations.getId());
 		Reservations reserveStatus = stock.getReservationId(reservations.getId());
 
 		assertEquals(5, stock.getTotalQuantity());
@@ -95,6 +95,6 @@ public class StockTest {
 
 	@Test
 	void shouldThrowExceptionWhenConfirmingOrderWithNonExistentReservation() {
-		assertThrows(IllegalDomainException.class, () -> stock.confirmOrder("orderX", "resNaoExiste"));
+		assertThrows(IllegalDomainException.class, () -> stock.confirmOrder("orderX", "oo" ,"resNaoExiste"));
 	}
 }

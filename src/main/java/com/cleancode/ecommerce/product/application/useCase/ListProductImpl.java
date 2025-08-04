@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.product.application.useCase;
 
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ProductDtoFactory;
 import com.cleancode.ecommerce.product.domain.Product;
@@ -15,7 +16,9 @@ public class ListProductImpl implements ListProduct {
 
 	@Override
 	public ListProductDto execute(String idProduct) {
-		Product product = repository.listProduct(idProduct);
+		Product product = repository.listProduct(idProduct)
+	   .orElseThrow(() -> new IllegalDomainException("Product with id : " + idProduct + "not found"));
+		
 		return ProductDtoFactory.listAllProduct(product);
 	}
 }

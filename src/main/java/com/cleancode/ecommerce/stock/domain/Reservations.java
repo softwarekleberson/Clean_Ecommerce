@@ -3,11 +3,13 @@ package com.cleancode.ecommerce.stock.domain;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.cleancode.ecommerce.customer.domain.customer.IdCustomer;
+
 public class Reservations {
 
 	private final IdStock id;
-	private final String cartId;
-	private final String customerId;
+	private final IdCart cartId;
+	private final IdCustomer customerId;
 	private final Quantity quantity;
 	private final LocalDateTime reservationTime;
 	private ReserveStatus reserveStatus;
@@ -15,8 +17,8 @@ public class Reservations {
 	public Reservations(String id, String cartId, String customerId, int quantity) {
 
 		this.id = new IdStock(id);
-		this.cartId = cartId;
-		this.customerId = customerId;
+		this.cartId = new IdCart(cartId);
+		this.customerId = new IdCustomer(customerId);
 		this.quantity = new Quantity(quantity);
 		this.reservationTime = LocalDateTime.now();
 		this.reserveStatus = ReserveStatus.ACTIVE;
@@ -34,11 +36,11 @@ public class Reservations {
 		return id.toString();
 	}
 
-	public String getCartId() {
+	public IdCart getCartId() {
 		return cartId;
 	}
 
-	public String getCustomerId() {
+	public IdCustomer getCustomerId() {
 		return customerId;
 	}
 

@@ -6,20 +6,20 @@ import com.cleancode.ecommerce.product.domain.IdProduct;
 
 public class ProductOutput {
 
-	private final IdStock orderId;
+	private final OrderId orderId;
 	private final IdProduct productId;
 	private final int quantity;
 
-	public ProductOutput(String orderId, IdProduct productId, int quantity) {
-		this.orderId = new IdStock();
+	public ProductOutput(OrderId orderId, IdProduct productId, int quantity) {
+		this.orderId = orderId;
 		this.productId = productId;
 		this.quantity = quantity;
 	}
 
-	public IdStock getOrderId() {
+	public OrderId getOrderId() {
 		return orderId;
 	}
-
+	
 	public IdProduct getProductId() {
 		return productId;
 	}
