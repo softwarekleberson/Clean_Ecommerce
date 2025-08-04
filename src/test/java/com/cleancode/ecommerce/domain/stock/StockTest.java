@@ -30,8 +30,6 @@ public class StockTest {
 
 	@Test
 	void mustCreateStockWithInitialValue() {
-		assertEquals(10, stock.getTotalQuantity());
-		assertEquals(10, stock.getQuantityAvailable());
 		assertTrue(stock.getReservations().isEmpty());
 		assertTrue(stock.getProductInput().isEmpty());
 		assertTrue(stock.getProductOutput().isEmpty());
@@ -40,8 +38,8 @@ public class StockTest {
 	@Test
 	void mustAddProductToStock() {
 		stock.addProductInput(5, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
-		assertEquals(15, stock.getTotalQuantity());
-		assertEquals(15, stock.getQuantityAvailable());
+		assertEquals(5, stock.getTotalQuantity());
+		assertEquals(5, stock.getQuantityAvailable());
 		assertEquals(1, stock.getProductInput().size());
 	}
 
@@ -54,6 +52,7 @@ public class StockTest {
 
 	@Test
 	void mustCreateReserveandReduceAvailableQuantity() {
+		stock.addProductInput(10, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
 		stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
 		assertEquals(5, stock.getQuantityAvailable());
 		assertEquals(1, stock.getReservations().size());
@@ -68,6 +67,7 @@ public class StockTest {
 
 	@Test
 	void mustCancelReservationRestoreAvailableQuantity() {
+		stock.addProductInput(10, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
 		Reservations reservations = stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
 		stock.cancelReservation(reservations.getId());
 		Reservations reserveStatus = stock.getReservationId(reservations.getId());
@@ -84,6 +84,7 @@ public class StockTest {
 
 	@Test
 	void mustConfirmOrderReduceTotalStockRegisterOutput() {
+		stock.addProductInput(10, ProductQuality.NEW, BigDecimal.valueOf(100), "xpto");
 		Reservations reservations = stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
 		stock.confirmOrder(UUID.randomUUID().toString(), UUID.randomUUID().toString(), reservations.getId());
 		Reservations reserveStatus = stock.getReservationId(reservations.getId());
