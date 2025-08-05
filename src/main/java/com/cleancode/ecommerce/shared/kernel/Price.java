@@ -12,6 +12,10 @@ public class Price {
 	private TypeCoin coin;
 	
 	public Price(BigDecimal price, TypeCoin coin) {
+		if(price == null) {
+			throw new IllegalDomainException("Price not be null");
+		}
+		
 		if(price.compareTo(LOWEST_PRICE) < 0) {
 			throw new IllegalDomainException("Price must not be less than or equal to 0");
 		}
