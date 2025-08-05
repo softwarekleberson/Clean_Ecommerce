@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationService;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationServiceImpl;
+import com.cleancode.ecommerce.stock.application.service.ProductPriceService;
+import com.cleancode.ecommerce.stock.application.service.ProductPriceServiceImpl;
 import com.cleancode.ecommerce.stock.application.usecase.CreateProductInputImpl;
 import com.cleancode.ecommerce.stock.application.usecase.CreateStock;
 import com.cleancode.ecommerce.stock.application.usecase.CreateStockImpl;
@@ -27,14 +29,20 @@ public class StockConfig {
 	public com.cleancode.ecommerce.stock.application.usecase.CreateProductInput CreateProductInput (
 			StockRepository repository,
 			ProductRepository productRepository,
-			ProductActivationService service
+			ProductActivationService service,
+			ProductPriceService productPriceService
 			) {
 		
-		return new CreateProductInputImpl(repository, productRepository, service);
+		return new CreateProductInputImpl(repository, productRepository, service, productPriceService);
 	}
 	
 	@Bean
 	public ProductActivationService productActivationService () {
 		return new ProductActivationServiceImpl();
+	}
+	
+	@Bean
+	public ProductPriceService productPriceService () {
+		return new ProductPriceServiceImpl();
 	}
 }

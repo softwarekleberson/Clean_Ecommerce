@@ -112,7 +112,7 @@ public class Stock {
 	public int getQuantityAvailable() {
 		return quantityAvailable;
 	}
-
+	
 	public List<Reservations> getReservations() {
 		return Collections.unmodifiableList(this.reservations);
 	}

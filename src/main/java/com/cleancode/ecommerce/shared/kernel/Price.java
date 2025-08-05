@@ -9,10 +9,10 @@ public class Price {
 
 	public static final BigDecimal LOWEST_PRICE = BigDecimal.ZERO;
 	private final BigDecimal price;
-	private final TypeCoin coin;
+	private TypeCoin coin;
 	
 	public Price(BigDecimal price, TypeCoin coin) {
-		if(price.compareTo(LOWEST_PRICE) <= 0) {
+		if(price.compareTo(LOWEST_PRICE) < 0) {
 			throw new IllegalDomainException("Price must not be less than or equal to 0");
 		}
 		
