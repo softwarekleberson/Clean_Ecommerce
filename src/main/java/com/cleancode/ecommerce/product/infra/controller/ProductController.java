@@ -44,7 +44,6 @@ public class ProductController {
 	}
 
 	@GetMapping("/{id}")
-
 	public ResponseEntity<ListProductDto> getProductById(@PathVariable String id) {
 		return ResponseEntity.ok(listProduct.execute(id));
 	}

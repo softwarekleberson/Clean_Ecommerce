@@ -14,7 +14,7 @@ import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
-import com.cleancode.ecommerce.customer.domain.customer.Id;
+import com.cleancode.ecommerce.customer.domain.customer.IdCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
@@ -31,7 +31,7 @@ public class CustomerTest {
 	@BeforeEach
 	void setUp() {
 		this.customer = new Customer(
-			new Id(UUID.randomUUID().toString()),
+			new IdCustomer(UUID.randomUUID().toString()),
 			new Name("jose"),
 			Gender.MALE,
 			new Birth(LocalDate.of(1994, 10, 10)),

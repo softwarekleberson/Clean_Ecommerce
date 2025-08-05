@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.domain.books;
+package com.cleancode.ecommerce.domain.book;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.product.domain.books.Page;
 
 class PageTest {
 

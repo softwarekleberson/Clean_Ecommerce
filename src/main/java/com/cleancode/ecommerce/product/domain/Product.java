@@ -69,6 +69,10 @@ public abstract class Product {
 	private void registerChange() {
 		this.updateAt = UpdateAt.update();
 	}
+	
+	public void productSalesValue (BigDecimal price, TypeCoin coin) {
+		this.price = new Price(price, coin);
+	}
 
 	public void reviseDetails(String newDescription, String newName, BigDecimal newPrice, TypeCoin typeCoin) {
 
@@ -139,10 +143,6 @@ public abstract class Product {
 
 	public List<Midia> getMidia() {
 		return Collections.unmodifiableList(this.midias);
-	}
-	
-	public List<Midia> getMidias() {
-		return midias;
 	}
 	
 	public Pricing getPricing() {

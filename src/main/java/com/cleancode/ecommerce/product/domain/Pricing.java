@@ -9,13 +9,17 @@ public class Pricing {
 	private BigDecimal pricing;
 
 	public Pricing(BigDecimal pricing) {
-		if (pricing.compareTo(BigDecimal.ZERO) < 0) {
-			throw new IllegalDomainException("Price must be a positive value");
+		if (pricing == null) {
+			throw new IllegalDomainException("Pricing cannot be null");
+		}
+		
+		if (pricing.compareTo(BigDecimal.ZERO) < 0 || pricing.compareTo(BigDecimal.ONE) > 0) {
+			throw new IllegalDomainException("Pricing must be a positive value or 0");
 		}
 
 		this.pricing = pricing;
 	}
-	
+
 	public BigDecimal getPricing() {
 		return pricing;
 	}

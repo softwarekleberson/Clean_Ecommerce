@@ -16,9 +16,15 @@ import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class CreateBagDto extends CreateProductDto {
 
+	@NotBlank(message = "Color is required")
 	private String color;
+	
+	@Min(0)
 	private double volume;
 
 	public CreateBagDto(String name, String description, BigDecimal price, TypeCoin typeCoin, ProductCategory category,
