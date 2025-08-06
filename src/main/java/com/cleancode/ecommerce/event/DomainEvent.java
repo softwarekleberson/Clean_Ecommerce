@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.domain.event;
+package com.cleancode.ecommerce.event;
 
 import java.time.Instant;
 

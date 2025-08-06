@@ -1,10 +1,10 @@
 package com.cleancode.ecommerce.stock.application.usecase;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.event.EventPublisher;
+import com.cleancode.ecommerce.event.ProductActivatedEvent;
 import com.cleancode.ecommerce.product.domain.Product;
-import com.cleancode.ecommerce.product.domain.event.ProductActivatedEvent;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
-import com.cleancode.ecommerce.shared.event.product.event.EventPublisher;
 import com.cleancode.ecommerce.stock.application.dto.CreateInputStockDto;
 import com.cleancode.ecommerce.stock.application.dto.ListStockDto;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationService;
@@ -38,10 +38,11 @@ public class CreateProductInputImpl implements CreateProductInput{
 		
 		product = service.activateProductIfStockAvailable(product, stock);
 		product = productPriceService.productPriceService(product, stock);
-		eventPublisher.publish(new ProductActivatedEvent(product.getIdProduct().getIdProduct()));
 		
+		eventPublisher.publish(new ProductActivatedEvent(product.getIdProduct().getIdProduct(), product.isActive()));
 		repository.create(stock);
 		productRepository.create(product);
+		
 		return new ListStockDto(stock);
 	}
 }

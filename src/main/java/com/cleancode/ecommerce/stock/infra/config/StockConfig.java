@@ -3,8 +3,8 @@ package com.cleancode.ecommerce.stock.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
-import com.cleancode.ecommerce.shared.event.product.event.EventPublisher;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationService;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationServiceImpl;
 import com.cleancode.ecommerce.stock.application.service.ProductPriceService;

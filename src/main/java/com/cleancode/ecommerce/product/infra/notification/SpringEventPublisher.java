@@ -3,8 +3,8 @@ package com.cleancode.ecommerce.product.infra.notification;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 
-import com.cleancode.ecommerce.product.domain.event.DomainEvent;
-import com.cleancode.ecommerce.shared.event.product.event.EventPublisher;
+import com.cleancode.ecommerce.event.DomainEvent;
+import com.cleancode.ecommerce.event.EventPublisher;
 
 @Component
 public class SpringEventPublisher implements EventPublisher {

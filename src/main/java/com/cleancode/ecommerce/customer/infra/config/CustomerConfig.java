@@ -24,15 +24,18 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassword;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.event.EventPublisher;
 
 @Configuration
 public class CustomerConfig {
 
 	@Bean
     public CreateCustomer createCustomer(
-            CustomerRepository repository
-            							) {
-        return new CreateCustomerImpl(repository);
+            CustomerRepository repository,
+            EventPublisher eventPublisher
+    		) 
+				{
+        return new CreateCustomerImpl(repository, eventPublisher);
     }
 	
 	@Bean

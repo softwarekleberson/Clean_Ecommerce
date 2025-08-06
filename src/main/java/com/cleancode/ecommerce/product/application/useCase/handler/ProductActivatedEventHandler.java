@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.product.application.useCase.handler;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 
-import com.cleancode.ecommerce.product.domain.event.ProductActivatedEvent;
+import com.cleancode.ecommerce.event.ProductActivatedEvent;
 import com.cleancode.ecommerce.product.infra.notification.EmailService;
 
 public class ProductActivatedEventHandler {
@@ -18,6 +18,6 @@ public class ProductActivatedEventHandler {
 	@EventListener
 	public void handle(ProductActivatedEvent event) {
 		emailService.sendEmail("admin@empresa.com", "Product activated",
-				"Product with ID " + event.getProductId() + " has activated success!");
+				"Product with ID " + event.getProductId() + " has activated success! " + "status " + event.isProductStatus());
 	}
 }
