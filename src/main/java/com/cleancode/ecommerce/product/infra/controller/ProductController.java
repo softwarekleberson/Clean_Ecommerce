@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.product.infra.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cleancode.ecommerce.product.application.dto.input.CreateProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.useCase.CreateProduct;
+import com.cleancode.ecommerce.product.application.useCase.DeactivateProduct;
 import com.cleancode.ecommerce.product.application.useCase.ListAllProduct;
 import com.cleancode.ecommerce.product.application.useCase.ListProduct;
 
@@ -25,11 +27,14 @@ public class ProductController {
 	private final CreateProduct createProduct;
 	private final ListAllProduct listAllProduct;
 	private final ListProduct listProduct;
+	private final DeactivateProduct deactivateProduct;
 
-	public ProductController(CreateProduct createProduct, ListAllProduct listAllProduct, ListProduct listProduct) {
+	public ProductController(CreateProduct createProduct, ListAllProduct listAllProduct, ListProduct listProduct,
+			DeactivateProduct deactivateProduct) {
 		this.createProduct = createProduct;
 		this.listAllProduct = listAllProduct;
 		this.listProduct = listProduct;
+		this.deactivateProduct = deactivateProduct;
 	}
 
 	@PostMapping
@@ -46,5 +51,11 @@ public class ProductController {
 	@GetMapping("/{id}")
 	public ResponseEntity<ListProductDto> getProductById(@PathVariable String id) {
 		return ResponseEntity.ok(listProduct.execute(id));
+	}
+
+	@DeleteMapping("/{productId}")
+	public ResponseEntity<Void> deactivateProduct(@PathVariable String productId) {
+		deactivateProduct.execute(productId);
+		return ResponseEntity.noContent().build();
 	}
 }

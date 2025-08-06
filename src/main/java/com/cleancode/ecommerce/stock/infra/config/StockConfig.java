@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.stock.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationService;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationServiceImpl;
@@ -17,32 +18,26 @@ import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 public class StockConfig {
 
 	@Bean
-	public CreateStock createStock (
-			StockRepository stockRepository,
-			ProductRepository productRepository
-			) {
-		
+	public CreateStock createStock(StockRepository stockRepository, ProductRepository productRepository) {
+
 		return new CreateStockImpl(productRepository, stockRepository);
 	}
-	
+
 	@Bean
-	public com.cleancode.ecommerce.stock.application.usecase.CreateProductInput CreateProductInput (
-			StockRepository repository,
-			ProductRepository productRepository,
-			ProductActivationService service,
-			ProductPriceService productPriceService
-			) {
-		
-		return new CreateProductInputImpl(repository, productRepository, service, productPriceService);
+	public com.cleancode.ecommerce.stock.application.usecase.CreateProductInput CreateProductInput(
+			StockRepository repository, ProductRepository productRepository, ProductActivationService service,
+			ProductPriceService productPriceService, EventPublisher eventPublisher) {
+
+		return new CreateProductInputImpl(repository, productRepository, service, productPriceService, eventPublisher);
 	}
-	
+
 	@Bean
-	public ProductActivationService productActivationService () {
+	public ProductActivationService productActivationService() {
 		return new ProductActivationServiceImpl();
 	}
-	
+
 	@Bean
-	public ProductPriceService productPriceService () {
+	public ProductPriceService productPriceService() {
 		return new ProductPriceServiceImpl();
-	}
+	}	
 }

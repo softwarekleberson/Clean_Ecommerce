@@ -4,10 +4,10 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomer
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
+import com.cleancode.ecommerce.event.EventPublisher;
+import com.cleancode.ecommerce.event.NewCustomerEvent;
 
 public class CreateCustomerImpl implements CreateCustomer {
 
@@ -23,10 +23,9 @@ public class CreateCustomerImpl implements CreateCustomer {
 				
 		checkPassword(dto.getPassword(), dto.getConfirmPassword());
 		Customer customer = dto.createCustomer();
+		
 		repository.save(customer);
-
-		EventNewCustomer event = new EventNewCustomer(customer.getCpf(), customer.getName());
-		eventPublisher.process(event);
+		eventPublisher.publish(new NewCustomerEvent(customer.getName().getName(), customer.getEmail().getEmail()));
 		return new ListCustomerDto(customer);
 	}
 
