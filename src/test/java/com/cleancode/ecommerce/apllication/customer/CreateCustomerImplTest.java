@@ -15,21 +15,17 @@ import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
-import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
-import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
 
 public class CreateCustomerImplTest {
 
     private CustomerRepository repository;
-    private EventPublisher eventPublisher;
     private CreateCustomerImpl createCustomer;
 
     @BeforeEach
     void setUp() {
         repository = mock(CustomerRepository.class);
-        eventPublisher = mock(EventPublisher.class);
 
-        createCustomer = new CreateCustomerImpl(repository, eventPublisher);
+        createCustomer = new CreateCustomerImpl(repository);
     }
 
     @Test
@@ -50,7 +46,6 @@ public class CreateCustomerImplTest {
         createCustomer.execute(dto);
 
         verify(repository, times(1)).save(any(Customer.class));
-        verify(eventPublisher, times(1)).process(any(EventNewCustomer.class));
     }
 
     @Test
@@ -74,6 +69,5 @@ public class CreateCustomerImplTest {
 
         assertEquals("password does not match confirm password", exception.getMessage());
         verify(repository, never()).save(any());
-        verify(eventPublisher, never()).process(any());
     }
 }

@@ -4,19 +4,15 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomer
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.event.EventNewCustomer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.shared.domain.customer.event.EventPublisher;
 
 public class CreateCustomerImpl implements CreateCustomer {
 
 	private final CustomerRepository repository;
-	private final EventPublisher eventPublisher;
 
-	public CreateCustomerImpl(CustomerRepository repository, EventPublisher eventPublisher) {
+	public CreateCustomerImpl(CustomerRepository repository) {
 		this.repository = repository;
-		this.eventPublisher = eventPublisher;
 	}
 
 	public ListCustomerDto execute(CreateCustomerDto dto) {
@@ -25,8 +21,6 @@ public class CreateCustomerImpl implements CreateCustomer {
 		Customer customer = dto.createCustomer();
 		repository.save(customer);
 
-		EventNewCustomer event = new EventNewCustomer(customer.getCpf(), customer.getName());
-		eventPublisher.process(event);
 		return new ListCustomerDto(customer);
 	}
 
