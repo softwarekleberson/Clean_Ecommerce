@@ -78,31 +78,31 @@ public class CustomerTest {
 	void shouldDeleteDelivery() {
 		customer.registerDelivery(delivery);
 		Delivery deliveryToRemove = customer.getDeliverys().get(0);
-		customer.removeDeliveryById(deliveryToRemove.getId().toString());
+		customer.removeDeliveryById(deliveryToRemove.getPublicId().toString());
 		assertEquals(0, customer.getDeliverys().size());
 	}
 
 	@Test
 	void shouldDeleteCharge() {
 		customer.registerCharge(charge);
-		Charge chargeToRemove = customer.findChargeById(charge.getId());
-		customer.removeChargeById(chargeToRemove.getId().toString());
+		Charge chargeToRemove = customer.findChargeById(charge.getPublicId());
+		customer.removeChargeById(chargeToRemove.getPublicId().toString());
 		assertEquals(0, customer.getCharges().size());
 	}
 
 	@Test
 	void shouldGetDeliveryById() {
 		customer.registerDelivery(delivery);
-		Delivery expected = customer.findDeliveryById(delivery.getId());
-		Delivery actual = customer.findDeliveryById(expected.getId());
+		Delivery expected = customer.findDeliveryById(delivery.getPublicId());
+		Delivery actual = customer.findDeliveryById(expected.getPublicId());
 		assertEquals(expected.toString(), actual.toString());
 	}
 
 	@Test
 	void shouldGetChargeById() {
 		customer.registerCharge(charge);
-		Charge expected = customer.findChargeById(charge.getId());
-		Charge actual = customer.findChargeById(expected.getId());
+		Charge expected = customer.findChargeById(charge.getPublicId());
+		Charge actual = customer.findChargeById(expected.getPublicId());
 		assertEquals(expected.toString(), actual.toString());
 	}
 }

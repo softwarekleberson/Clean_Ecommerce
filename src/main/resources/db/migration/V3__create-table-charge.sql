@@ -1,8 +1,9 @@
-CREATE TABLE charge (
-	db_id BIGINT PRIMARY KEY,
-	
-	CONSTRAINT fk_charge_address
-	FOREIGN KEY (db_id)
-	REFERENCES address(db_id)
-	ON DELETE CASCADE
+CREATE TABLE tb_charge (
+    charge_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    address_id BIGINT NOT NULL,
+    
+    CONSTRAINT fk_tb_charge_address
+        FOREIGN KEY (address_id)
+        REFERENCES tb_address(address_id)
+        ON DELETE CASCADE
 );

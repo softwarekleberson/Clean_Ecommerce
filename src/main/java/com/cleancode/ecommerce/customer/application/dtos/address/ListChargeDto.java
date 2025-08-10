@@ -20,9 +20,9 @@ public record ListChargeDto(
 		) {
 	
 	public ListChargeDto(Charge charges) {
-		this(charges.getId(), charges.getReceiver(), charges.getStreet(),
+		this(charges.getPublicId(), charges.getReceiver(), charges.getStreet(),
 			charges.getNumber(), charges.getNeighborhood(), charges.getZipCode(),
-			charges.getObservation(), charges.getStreetType(), charges.getTypeResidence(),
+			charges.getObservation(), charges.getStreetType(), charges.getResidenceType(),
 			charges.getCity(), charges.getState(), charges.getCountry()
 			);
 	}

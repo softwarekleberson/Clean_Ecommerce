@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "charge")
+@Table(name = "tb_charge")
 public class ChargeEntity extends AdrressEntity {
 
 }

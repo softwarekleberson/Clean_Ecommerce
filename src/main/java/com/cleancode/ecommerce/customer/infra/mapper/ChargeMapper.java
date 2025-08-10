@@ -11,15 +11,15 @@ public final class ChargeMapper {
 	public static ChargeEntity toEntity(Charge charge, CustomerEntity customerEntity) {
 		ChargeEntity entity = new ChargeEntity();
 
-		entity.setId(charge.getId().toString());
+		entity.setPublic_id(charge.getPublicId().toString());
 		entity.setReceiver(charge.getReceiver());
 		entity.setStreet(charge.getStreet());
 		entity.setNumber(charge.getNumber());
 		entity.setNeighborhood(charge.getNeighborhood());
-		entity.setZipCode(charge.getZipCode());
+		entity.setZip_code(charge.getZipCode());
 		entity.setObservation(charge.getObservation());
-		entity.setStreetType(charge.getStreetType());
-		entity.setTypeResidence(charge.getTypeResidence());
+		entity.setStreet_type(charge.getStreetType());
+		entity.setResidence_type(charge.getResidenceType());
 		entity.setCity(charge.getCity());
 		entity.setState(charge.getState());
 		entity.setCountry(charge.getCountry());
@@ -34,10 +34,10 @@ public final class ChargeMapper {
 		entity.setStreet(charge.getStreet());
 		entity.setNumber(charge.getNumber());
 		entity.setNeighborhood(charge.getNeighborhood());
-		entity.setZipCode(charge.getZipCode());
+		entity.setZip_code(charge.getZipCode());
 		entity.setObservation(charge.getObservation());
-		entity.setStreetType(charge.getStreetType());
-		entity.setTypeResidence(charge.getTypeResidence());
+		entity.setStreet_type(charge.getStreetType());
+		entity.setResidence_type(charge.getResidenceType());
 		entity.setCity(charge.getCity());
 		entity.setState(charge.getState());
 		entity.setCountry(charge.getCountry());
@@ -45,15 +45,15 @@ public final class ChargeMapper {
 
 	public static Charge toDomain(ChargeEntity entity) {
 		return new Charge(
-			entity.getId(),
+			entity.getPublic_id(),
 			entity.getReceiver(),
 			entity.getStreet(),
 			entity.getNumber(),
 			entity.getNeighborhood(),
-			entity.getZipCode(),
+			entity.getZip_code(),
 			entity.getObservation(),
-			entity.getStreetType(),
-			entity.getTypeResidence(),
+			entity.getStreet_type(),
+			entity.getResidence_type(),
 			entity.getCity(),
 			entity.getState(),
 			entity.getCountry()

@@ -8,5 +8,5 @@ CREATE TABLE reservation (
     stock_id VARCHAR(36) NOT NULL,
     
     CONSTRAINT fk_reservation_stock FOREIGN KEY (stock_id) REFERENCES stock(id) ON DELETE CASCADE,
-	CONSTRAINT fk_reservation_customer FOREIGN KEY (customer_id) REFERENCES customer(id) ON DELETE CASCADE
+	CONSTRAINT fk_reservation_customer FOREIGN KEY (customer_id) REFERENCES tb_customer(customer_id) ON DELETE CASCADE
 );

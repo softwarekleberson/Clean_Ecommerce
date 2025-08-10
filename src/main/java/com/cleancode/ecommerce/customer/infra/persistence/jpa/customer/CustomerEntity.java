@@ -28,15 +28,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "customer")
+@Table(name = "tb_customer")
 public class CustomerEntity {
 
 	@Id
-	private String id = UUID.randomUUID().toString();
+	private String customer_id = UUID.randomUUID().toString();
 	private String cpf;
-	private String name;
-	private LocalDate birth;
-	private String password;
+	private String full_name;
+	private LocalDate birth_date;
+	private String password_hash;
 	
 	@Enumerated(EnumType.STRING)
 	private GenderEntity gender;
@@ -55,7 +55,7 @@ public class CustomerEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(customer_id);
 	}
 
 	@Override
@@ -67,6 +67,6 @@ public class CustomerEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		CustomerEntity other = (CustomerEntity) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(customer_id, other.customer_id);
 	}
 }

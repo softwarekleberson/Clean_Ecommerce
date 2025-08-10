@@ -95,7 +95,7 @@ public class Customer {
 			throw new IllegalDomainException("Delivery ID must not be null or blank");
 		}
 
-		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
+		return deliveries.stream().filter(d -> d.getPublicId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
 
@@ -105,7 +105,7 @@ public class Customer {
 					"Cannot remove delivery: id is null/empty or delivery list is not initialized");
 		}
 
-		this.deliveries.removeIf(d -> d.getId().equals(id));
+		this.deliveries.removeIf(d -> d.getPublicId().equals(id));
 	}
 
 	public void registerCharge(Charge charge) {
@@ -117,7 +117,7 @@ public class Customer {
 			throw new IllegalDomainException("Charge ID must not be null or blank");
 		}
 
-		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
+		return charges.stream().filter(c -> c.getPublicId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
 
@@ -127,7 +127,7 @@ public class Customer {
 					"Cannot remove charge: id is null/empty or Charge list is not initialized");
 		}
 
-		this.charges.removeIf(c -> id.equals(c.getId()));
+		this.charges.removeIf(c -> id.equals(c.getPublicId()));
 	}
 
 	public boolean isActive() {
