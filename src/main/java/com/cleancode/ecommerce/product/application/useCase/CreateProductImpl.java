@@ -19,7 +19,7 @@ public class CreateProductImpl implements CreateProduct{
 	public void execute(CreateProductDto dto) {
 		Product product = dto.toProduct();
 		
-		eventPublisher.publish(new NewProductEvent(product.getIdProduct().getIdProduct(), product.getName().getName(), product.getProductCategory().name()));
+		eventPublisher.publish(new NewProductEvent(product.getProductId().getProductId(), product.getName().getName(), product.getProductCategory().name()));
 		repository.create(product);
 	}
 }

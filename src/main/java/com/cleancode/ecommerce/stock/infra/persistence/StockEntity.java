@@ -22,27 +22,26 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "stock")
+@Table(name = "tb_stock")
 public class StockEntity {
 
 	@Id
-	private String id = UUID.randomUUID().toString();
+	private String stock_id = UUID.randomUUID().toString();
 	
 	@Column(name = "product_id")
 	private String productId;
 	
-	@Column(name = "total_quantity")
-	private int totalQuantity;
+	private int total_quantity;
 	
 	@Column(name = "quantity_available")
-	private int quantityAvailable;
+	private int quantity_available;
 	
 	@OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	List<ReservationEntity> reservations;
 	
 	@OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	List<ProductInputEntity> inputs;
+	List<StockInputEntity> inputs;
 	
 	@OneToMany(mappedBy = "stock", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-	List<ProductOutputEntity> outputs;
+	List<StockOutputEntity> outputs;
 }

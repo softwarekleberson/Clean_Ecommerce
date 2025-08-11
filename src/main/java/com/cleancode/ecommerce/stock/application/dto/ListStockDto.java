@@ -15,8 +15,8 @@ public record ListStockDto(
 	
     public ListStockDto(Stock stock) {
         this(
-            stock.getId().getIdStock(),
-            stock.getProductId().getIdProduct(),
+            stock.getStockId().getStockId(),
+            stock.getProductId().getProductId(),
             stock.getTotalQuantity(),
             stock.getQuantityAvailable(),
             stock.getProductInput() == null ? List.of() :

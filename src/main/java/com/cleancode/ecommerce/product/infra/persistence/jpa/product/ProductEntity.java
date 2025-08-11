@@ -1,12 +1,10 @@
 package com.cleancode.ecommerce.product.infra.persistence.jpa.product;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -29,21 +27,20 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "product")
+@Table(name = "tb_product")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "type")
+@DiscriminatorColumn(name = "product_type")
 public abstract class ProductEntity {
 
 	@Id
-	protected String id = UUID.randomUUID().toString();
+	protected String product_id = UUID.randomUUID().toString();
 	protected boolean active;
 	protected String name;
 	protected String description;
 	protected BigDecimal price;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "type_coin")
-	protected TypeCoinEntity typeCoin;
+	protected TypeCoinEntity type_coin;
 
 	@Enumerated(EnumType.STRING)
 	protected ProductCategoryEntity category;
@@ -53,10 +50,4 @@ public abstract class ProductEntity {
 	protected List<MidiaEntity> midias;
 	
 	protected BigDecimal pricing;
-
-	@Column(name = "created_at")
-	protected LocalDateTime createdAt;
-
-	@Column(name = "update_at")
-	protected LocalDateTime updateAt;
 }

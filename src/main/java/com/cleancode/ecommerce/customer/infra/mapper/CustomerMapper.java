@@ -69,7 +69,7 @@ public final class CustomerMapper {
 
 	public static Customer toDomain(CustomerEntity entity) {
 		Customer customer = new Customer(
-				new IdCustomer(entity.getCustomer_id()),
+				new CustomerId(entity.getCustomer_id()),
 				new Name(entity.getFull_name()),
 				Gender.valueOf(entity.getGender().name()),
 				new Birth(entity.getBirth_date()),

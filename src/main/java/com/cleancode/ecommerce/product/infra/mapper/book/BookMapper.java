@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Brand;
-import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
-import com.cleancode.ecommerce.product.domain.IdProduct;
+import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.product.domain.books.Author;
 import com.cleancode.ecommerce.product.domain.books.Book;
 import com.cleancode.ecommerce.product.domain.books.CategoryBook;
@@ -31,12 +29,12 @@ import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 public class BookMapper {
 
 	public static Book toDomain(BookEntity entity) {
-		return new Book(new IdProduct(entity.getId()), entity.isActive(), new Name(entity.getName()),
+		return new Book(new ProductId(entity.getProduct_id()), entity.isActive(), new Name(entity.getName()),
 				new Description(entity.getDescription()),
-				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
+				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getType_coin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				MidiaInputMapper.toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()) ,new CreatedAt(entity.getCreatedAt()),
-				new UpdateAt(entity.getUpdateAt()), new Synopsis(entity.getSynopsis()), new Page(entity.getPage()),
+				MidiaInputMapper.toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()),
+				new Synopsis(entity.getSynopsis()), new Page(entity.getPage()),
 				new Author(entity.getAuthor()), new Edition(entity.getEdition()), new Isbn(entity.getIsbn()),
 				CategoryBook.valueOf(entity.getCategoryBook().name()),
 				new Dimension(entity.getHeight(), entity.getWidth(), entity.getLength(), entity.getWeight()),
@@ -46,16 +44,14 @@ public class BookMapper {
 	public static BookEntity toEntity(Book domain) {
 		BookEntity entity = new BookEntity();
 
-		entity.setId(domain.getIdProduct().getIdProduct());
+		entity.setProduct_id(domain.getProductId().getProductId());
 		entity.setActive(domain.isActive());
 		entity.setName(domain.getName().getName());
 		entity.setDescription(domain.getDescription().getDescription());
 		entity.setPrice(domain.getPrice().getPrice());
-		entity.setTypeCoin(TypeCoinEntity.valueOf(domain.getPrice().getCoin().name()));
+		entity.setType_coin(TypeCoinEntity.valueOf(domain.getPrice().getCoin().name()));
 		entity.setCategory(ProductCategoryEntity.valueOf(domain.getProductCategory().name()));
 		entity.setBrand(domain.getBrand().getBrand());
-		entity.setCreatedAt(domain.getCreatedAt().getCreatedAt());
-		entity.setUpdateAt(domain.getUpdateAt().getUpdateAt());
 
 		List<MidiaEntity> imageEntities = domain.getMidia().stream().map(midia -> {
 			MidiaEntity imageEntity = new MidiaEntity();

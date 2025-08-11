@@ -4,5 +4,5 @@ public enum PhoneTypeEntity {
 
 	MOBILE,
 	WHATSAPP,
-	FIXED
+	LANDLINE
 }

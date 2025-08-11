@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.infra.persistence.jpa.product;
+package com.cleancode.ecommerce.stock.infra.persistence;
 
 import java.util.UUID;
 
@@ -11,21 +11,25 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_midia")
-public class MidiaEntity {
-	
+@Table(name = "tb_stock_output")
+public class StockOutputEntity {
+
 	@Id
-	private String midia_id = UUID.randomUUID().toString();
-	private String url;
-	private String description;
+	private String stock_output_id = UUID.randomUUID().toString();
+	
+	private String order_id;	
+	private String product_id;
+	private int quantity;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_id")
-	private ProductEntity product;
+	@JoinColumn(name = "stock_id")
+	private StockEntity stock;
 }

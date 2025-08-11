@@ -12,7 +12,7 @@ import com.cleancode.ecommerce.shared.kernel.Price;
 
 public abstract class Product {
 
-	protected final IdProduct idProduct;
+	protected final ProductId productId;
 	protected boolean active = false;
 	protected Name name;
 	protected Description description;
@@ -21,13 +21,11 @@ public abstract class Product {
 	protected final Brand brand;
 	protected List<Midia> midias = new LinkedList<>();
 	protected Pricing pricing;
-	protected final CreatedAt createdAt;
-	protected UpdateAt updateAt;
-
+	
 	public Product(Name name, Description description, Price price, ProductCategory category, Brand brand,
 			List<Midia> midias, Pricing pricing) {
 
-		this.idProduct = new IdProduct();
+		this.productId = new ProductId();
 		this.name = name;
 		this.description = description;
 		this.price = price;
@@ -35,15 +33,12 @@ public abstract class Product {
 		this.brand = brand;
 		this.midias = midias;
 		this.pricing = pricing;
-		this.createdAt = new CreatedAt();
-		this.updateAt = new UpdateAt();
 	}
 
-	public Product(IdProduct idProduct, boolean active, Name name, Description description, Price price,
-			ProductCategory category, Brand brand, List<Midia> midias, Pricing pricing, CreatedAt createdAt,
-			UpdateAt updateAt) {
+	public Product(ProductId productId, boolean active, Name name, Description description, Price price,
+			ProductCategory category, Brand brand, List<Midia> midias, Pricing pricing) {
 
-		this.idProduct = idProduct;
+		this.productId = productId;
 		this.active = active;
 		this.name = name;
 		this.description = description;
@@ -52,24 +47,16 @@ public abstract class Product {
 		this.brand = brand;
 		this.midias = midias;
 		this.pricing = pricing;
-		this.createdAt = createdAt;
-		this.updateAt = updateAt;
 	}
 
 	public void activate() {
 		this.active = true;
-		registerChange();
 	}
 
 	public void deactivate() {
 		this.active = false;
-		registerChange();
 	}
 
-	private void registerChange() {
-		this.updateAt = UpdateAt.update();
-	}
-	
 	public void productSalesValue (BigDecimal price, TypeCoin coin) {
 		this.price = new Price(price, coin);
 	}
@@ -82,12 +69,10 @@ public abstract class Product {
 
 		if (newPrice != null) {
 			this.price = new Price(newPrice, typeCoin);
-			registerChange();
 		}
 
 		if (newDescription != null && !newDescription.isBlank()) {
 			this.description = new Description(newDescription);
-			registerChange();
 		}
 	}
 
@@ -100,7 +85,6 @@ public abstract class Product {
 
 		this.midias.removeIf(i -> i.getId().equals(id));
 		this.midias.add(new Midia(url, description));
-		registerChange();
 	}
 
 	public void removeMediaById(String id) {
@@ -113,8 +97,8 @@ public abstract class Product {
 		this.midias.removeIf(m -> m.getId().equals(id));
 	}
 
-	public IdProduct getIdProduct() {
-		return idProduct;
+	public ProductId getProductId() {
+		return productId;
 	}
 
 	public boolean isActive() {
@@ -149,18 +133,10 @@ public abstract class Product {
 		return pricing;
 	}
 
-	public CreatedAt getCreatedAt() {
-		return createdAt;
-	}
-
-	public UpdateAt getUpdateAt() {
-		return updateAt;
-	}
-
 	@Override
 	public String toString() {
-		return "Product [idProduct=" + idProduct + ", active=" + active + ", name=" + name + ", description="
-				+ description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", midia=" + midias
-				+ ", createdAt=" + createdAt + ", updateAt=" + updateAt + "]";
+		return "Product [productId=" + productId + ", active=" + active + ", name=" + name + ", description="
+				+ description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", midias="
+				+ midias + ", pricing=" + pricing + "]";
 	}
 }

@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
-import com.cleancode.ecommerce.product.domain.IdProduct;
+import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
 import com.cleancode.ecommerce.stock.domain.Reservations;
 import com.cleancode.ecommerce.stock.domain.ReserveStatus;
@@ -19,12 +19,12 @@ import com.cleancode.ecommerce.stock.domain.Stock;
 
 public class StockTest {
 
-	private IdProduct idProduct;
+	private ProductId idProduct;
 	private Stock stock;
 
 	@BeforeEach
 	void setUp() {
-		idProduct = new IdProduct();
+		idProduct = new ProductId();
 		stock = new Stock(idProduct);
 	}
 

@@ -14,12 +14,13 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type"
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "product_type"
 
 )
 
 @JsonSubTypes({ @JsonSubTypes.Type(value = CreateBoockDto.class, name = "book"),
-		@JsonSubTypes.Type(value = CreateBagDto.class, name = "bag") })
+@JsonSubTypes.Type(value = CreateBagDto.class, name = "bag") 
+})
 public abstract class CreateProductDto implements ProductCreatableInterface {
 
 	@NotBlank(message = "Name is required")

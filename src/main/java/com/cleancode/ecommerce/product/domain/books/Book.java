@@ -4,15 +4,13 @@ import java.util.List;
 import java.util.Objects;
 
 import com.cleancode.ecommerce.product.domain.Brand;
-import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
 import com.cleancode.ecommerce.product.domain.Dimension;
-import com.cleancode.ecommerce.product.domain.IdProduct;
+import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.Midia;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 
@@ -42,12 +40,11 @@ public class Book extends Product {
 		this.publisherDate = publisherDate;
 	}
 	
-	public Book(IdProduct idProduct, boolean active, Name name, Description description, Price price,
-			ProductCategory category, Brand brand, List<Midia> midia, Pricing pricing,CreatedAt createdAt, UpdateAt updateAt,
-			Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn, CategoryBook categoryBook,
+	public Book(ProductId idProduct, boolean active, Name name, Description description, Price price,
+			ProductCategory category, Brand brand, List<Midia> midia, Pricing pricing, Synopsis synopsis, Page page, Author author, Edition edition, Isbn isbn, CategoryBook categoryBook,
 			Dimension dimension, PublisherDate publisherDate) {
 		
-		super(idProduct, active, name, description, price, category, brand, midia, pricing ,createdAt, updateAt);
+		super(idProduct, active, name, description, price, category, brand, midia, pricing);
 		
 		this.synopsis = synopsis;
 		this.page = page;

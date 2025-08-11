@@ -11,7 +11,7 @@ public class ProductDtoFactory {
 
 		if (product instanceof Bag bag) {
 			ListBagDto dto = new ListBagDto();
-			dto.setId(bag.getIdProduct().getIdProduct());
+			dto.setId(bag.getProductId().getProductId());
 			dto.setName(bag.getName().getName());
 			dto.setDescription(bag.getDescription().getDescription());
 			dto.setPrice(bag.getPrice().getPrice());
@@ -26,7 +26,7 @@ public class ProductDtoFactory {
 
 		if (product instanceof Book book) {
 			ListBookDto dto = new ListBookDto();
-			dto.setId(book.getIdProduct().getIdProduct());
+			dto.setId(book.getProductId().getProductId());
 			dto.setName(book.getName().getName());
 			dto.setDescription(book.getDescription().getDescription());
 			dto.setPrice(book.getPrice().getPrice());

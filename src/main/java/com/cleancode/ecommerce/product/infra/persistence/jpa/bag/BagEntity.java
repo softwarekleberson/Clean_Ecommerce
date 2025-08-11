@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "bag")
+@Table(name = "tb_bag")
 @DiscriminatorValue("bag")
 public class BagEntity extends ProductEntity{
 

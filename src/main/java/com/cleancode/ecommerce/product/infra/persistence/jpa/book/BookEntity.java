@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "book")
+@Table(name = "tb_book")
 @DiscriminatorValue("book")
 public class BookEntity extends ProductEntity{
 
