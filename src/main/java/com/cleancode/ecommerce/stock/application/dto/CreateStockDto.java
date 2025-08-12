@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.stock.application.dto;
 
-import com.cleancode.ecommerce.product.domain.IdProduct;
+import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.stock.domain.Stock;
 
 public class CreateStockDto {
@@ -12,6 +12,6 @@ public class CreateStockDto {
 	}
 	
 	public Stock createStock() {
-		return new Stock(new IdProduct(productId));
+		return new Stock(new ProductId(productId));
 	}
 }

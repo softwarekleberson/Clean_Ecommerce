@@ -13,7 +13,7 @@ public class MidiaInputMapper {
 		if (entities == null)
 			return Collections.emptyList();
 
-		return entities.stream().map(img -> new Midia(img.getId(), img.getUrl(), img.getDescription()))
+		return entities.stream().map(img -> new Midia(img.getMidia_id(), img.getUrl(), img.getDescription()))
 				.collect(Collectors.toList());
 	}
 }

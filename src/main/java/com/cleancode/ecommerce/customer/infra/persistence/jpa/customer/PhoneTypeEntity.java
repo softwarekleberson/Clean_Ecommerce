@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.customer.infra.persistence.jpa.customer;
 
-public enum TypePhoneEntity {
+public enum PhoneTypeEntity {
 
 	MOBILE,
 	WHATSAPP,
-	FIXED
+	LANDLINE
 }

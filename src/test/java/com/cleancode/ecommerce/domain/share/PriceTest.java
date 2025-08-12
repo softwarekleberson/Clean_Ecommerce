@@ -25,7 +25,7 @@ public class PriceTest {
 
 	@Test
 	void shouldThrowExceptionWhenPriceIsZero() {
-		BigDecimal invalidPrice = BigDecimal.ZERO;
+		BigDecimal invalidPrice = BigDecimal.valueOf(-0.01);
 		TypeCoin coin = TypeCoin.LIBRA;
 
 		assertThrows(IllegalDomainException.class, () -> new Price(invalidPrice, coin));

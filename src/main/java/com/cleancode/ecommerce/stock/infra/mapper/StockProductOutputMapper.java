@@ -1,0 +1,23 @@
+package com.cleancode.ecommerce.stock.infra.mapper;
+
+import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.stock.domain.OrderId;
+import com.cleancode.ecommerce.stock.domain.ProductOutput;
+import com.cleancode.ecommerce.stock.infra.persistence.StockOutputEntity;
+import com.cleancode.ecommerce.stock.infra.persistence.StockEntity;
+
+public class StockProductOutputMapper {
+
+	public static ProductOutput toDoaim(StockOutputEntity entity) {
+		return new ProductOutput(new OrderId(entity.getOrder_id()), new ProductId(entity.getProduct_id()), entity.getQuantity());
+	}
+
+	public static StockOutputEntity toEntity(ProductOutput domain, StockEntity stockEntity) {
+		StockOutputEntity entity = new StockOutputEntity();
+		entity.setOrder_id(domain.getOrderId().getOrderId());
+		entity.setProduct_id(domain.getProductId().getProductId());
+		entity.setQuantity(domain.getQuantity());
+		entity.setStock(stockEntity);
+		return entity;
+	}
+}

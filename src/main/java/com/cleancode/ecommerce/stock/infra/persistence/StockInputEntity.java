@@ -1,9 +1,12 @@
 package com.cleancode.ecommerce.stock.infra.persistence;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -20,20 +23,18 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "output")
-public class ProductOutputEntity {
+@Table(name = "tb_stock_input")
+public class StockInputEntity {
 
 	@Id
-	private String id = UUID.randomUUID().toString();
-	
-	//Order = Pedido
-	@Column(name = "orders_id")
-	private String orderId;
-	
-	@Column(name = "product_id")
-	private String productId;
-	
+	private String stock_input_id = UUID.randomUUID().toString();	
 	private int quantity;
+	
+	@Enumerated(EnumType.STRING)
+	private ProductQualityEntity product_quality;	
+	private LocalDateTime entry_time = LocalDateTime.now();
+	private BigDecimal purchase_price;
+	private String supplier;
 	
 	@ManyToOne
 	@JoinColumn(name = "stock_id")

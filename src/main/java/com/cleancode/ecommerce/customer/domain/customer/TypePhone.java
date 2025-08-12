@@ -4,5 +4,5 @@ public enum TypePhone {
 
 	MOBILE,
 	WHATSAPP,
-	FIXED
+	LANDLINE
 }

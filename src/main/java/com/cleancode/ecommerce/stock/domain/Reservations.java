@@ -3,22 +3,22 @@ package com.cleancode.ecommerce.stock.domain;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.domain.customer.IdCustomer;
+import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 
 public class Reservations {
 
-	private final IdStock id;
-	private final IdCart cartId;
-	private final IdCustomer customerId;
+	private final StockId id;
+	private final CartId cartId;
+	private final CustomerId customerId;
 	private final Quantity quantity;
 	private final LocalDateTime reservationTime;
 	private ReserveStatus reserveStatus;
 
 	public Reservations(String id, String cartId, String customerId, int quantity) {
 
-		this.id = new IdStock(id);
-		this.cartId = new IdCart(cartId);
-		this.customerId = new IdCustomer(customerId);
+		this.id = new StockId(id);
+		this.cartId = new CartId(cartId);
+		this.customerId = new CustomerId(customerId);
 		this.quantity = new Quantity(quantity);
 		this.reservationTime = LocalDateTime.now();
 		this.reserveStatus = ReserveStatus.ACTIVE;
@@ -36,11 +36,11 @@ public class Reservations {
 		return id.toString();
 	}
 
-	public IdCart getCartId() {
+	public CartId getCartId() {
 		return cartId;
 	}
 
-	public IdCustomer getCustomerId() {
+	public CustomerId getCustomerId() {
 		return customerId;
 	}
 

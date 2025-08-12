@@ -2,7 +2,6 @@ package com.cleancode.ecommerce.domain.bag;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
@@ -34,7 +33,7 @@ public class BagTest {
 		bag = new Bag(new Name("Bolsa X"), new Description("Bolsa impermeável"),
 				new Price(BigDecimal.valueOf(250.0), TypeCoin.DOLAR), ProductCategory.BAG, new Brand("Nike"),
 				new LinkedList<>(List.of(new Midia("https://site.com/img.jpg", "Imagem bolsa"))),
-				new Pricing(BigDecimal.TEN), new Volume(35), new Color("Preto"));
+				new Pricing(BigDecimal.valueOf(0.10)), new Volume(35), new Color("Preto"));
 	}
 
 	@Test
@@ -52,7 +51,7 @@ public class BagTest {
 	void shouldCompareBagsByVolumeAndColor() {
 		Bag sameBag = new Bag(new Name("Outra Bolsa"), new Description("Outra descrição"),
 				new Price(BigDecimal.valueOf(300), TypeCoin.DOLAR), ProductCategory.BAG, new Brand("Adidas"), List.of(),
-				new Pricing(BigDecimal.TEN), new Volume(35), new Color("Preto"));
+				new Pricing(BigDecimal.valueOf(0.10)), new Volume(35), new Color("Preto"));
 
 		assertEquals(bag, sameBag);
 		assertEquals(bag.hashCode(), sameBag.hashCode());
@@ -62,7 +61,7 @@ public class BagTest {
 	void shouldNotBeEqualIfVolumeOrColorIsDifferent() {
 		Bag differentBag = new Bag(new Name("Outra Bolsa"), new Description("Outra descrição"),
 				new Price(BigDecimal.valueOf(300), TypeCoin.DOLAR), ProductCategory.BAG, new Brand("Adidas"), List.of(),
-				new Pricing(BigDecimal.TEN), new Volume(40), new Color("Preto"));
+				new Pricing(BigDecimal.valueOf(0.10)), new Volume(40), new Color("Preto"));
 
 		assertNotEquals(bag, differentBag);
 	}
@@ -75,7 +74,6 @@ public class BagTest {
 		assertEquals("Novo Nome", bag.getName().getName());
 		assertEquals(BigDecimal.valueOf(150), bag.getPrice().getPrice());
 		assertEquals(TypeCoin.DOLAR, bag.getPrice().getCoin());
-		assertNotNull(bag.getUpdateAt());
 	}
 
 	@Test

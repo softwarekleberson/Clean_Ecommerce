@@ -39,7 +39,7 @@ public class CreateProductInputImpl implements CreateProductInput{
 		product = service.activateProductIfStockAvailable(product, stock);
 		product = productPriceService.productPriceService(product, stock);
 		
-		eventPublisher.publish(new ProductActivatedEvent(product.getIdProduct().getIdProduct(), product.isActive()));
+		eventPublisher.publish(new ProductActivatedEvent(product.getProductId().getProductId(), product.isActive()));
 		repository.create(stock);
 		productRepository.create(product);
 		

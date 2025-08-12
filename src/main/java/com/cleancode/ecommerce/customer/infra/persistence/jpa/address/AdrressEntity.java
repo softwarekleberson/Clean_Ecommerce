@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.CustomerEntity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -25,30 +24,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "address")
+@Table(name = "tb_address")
 public abstract class AdrressEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "db_id")
-	protected Long dbId;
+	protected Long address_id;
 	
-	protected String id;
+	protected String public_id;
 	protected String receiver;
 	protected String street;
 	protected String number;
 	protected String neighborhood;
-
-	@Column(name = "zip_code")
-	protected String zipCode;
+	protected String zip_code;
 	protected String observation;
-
-	@Column(name = "street_type")
-	protected String streetType;
-
-	@Column(name = "type_residence")
-	protected String typeResidence;
-
+	protected String street_type;
+	protected String residence_type;
 	protected String city;
 	protected String state;
 	protected String country;
@@ -59,7 +50,7 @@ public abstract class AdrressEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(dbId);
+		return Objects.hash(address_id);
 	}
 
 	@Override
@@ -71,6 +62,6 @@ public abstract class AdrressEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		AdrressEntity other = (AdrressEntity) obj;
-		return Objects.equals(dbId, other.dbId);
+		return Objects.equals(address_id, other.address_id);
 	}
 }

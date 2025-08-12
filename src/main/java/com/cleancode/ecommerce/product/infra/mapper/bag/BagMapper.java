@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.product.domain.Brand;
-import com.cleancode.ecommerce.product.domain.CreatedAt;
 import com.cleancode.ecommerce.product.domain.Description;
-import com.cleancode.ecommerce.product.domain.IdProduct;
+import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.Pricing;
 import com.cleancode.ecommerce.product.domain.ProductCategory;
-import com.cleancode.ecommerce.product.domain.UpdateAt;
 import com.cleancode.ecommerce.product.domain.bag.Bag;
 import com.cleancode.ecommerce.product.domain.bag.Color;
 import com.cleancode.ecommerce.product.domain.bag.Volume;
@@ -30,16 +28,14 @@ public class BagMapper {
 	public static BagEntity toEntity(Bag domain) {
 		BagEntity entity = new BagEntity();
 
-		entity.setId(domain.getIdProduct().getIdProduct());
+		entity.setProduct_id(domain.getProductId().getProductId());
 		entity.setActive(domain.isActive());
 		entity.setName(domain.getName().getName());
 		entity.setDescription(domain.getDescription().getDescription());
 		entity.setPrice(domain.getPrice().getPrice());
-		entity.setTypeCoin(TypeCoinEntity.valueOf(domain.getPrice().getCoin().name()));
+		entity.setType_coin(TypeCoinEntity.valueOf(domain.getPrice().getCoin().name()));
 		entity.setCategory(ProductCategoryEntity.valueOf(domain.getProductCategory().name()));
 		entity.setBrand(domain.getBrand().getBrand());
-		entity.setCreatedAt(domain.getCreatedAt().getCreatedAt());
-		entity.setUpdateAt(domain.getUpdateAt().getUpdateAt());
 
 		List<MidiaEntity> imageEntities = domain.getMidia().stream().map(midia -> {
 			MidiaEntity imageEntity = new MidiaEntity();
@@ -59,12 +55,11 @@ public class BagMapper {
 	}
 
 	public static Bag toDomain(BagEntity entity) {
-		return new Bag(new IdProduct(entity.getId()), entity.isActive(), new Name(entity.getName()),
+		return new Bag(new ProductId(entity.getProduct_id()), entity.isActive(), new Name(entity.getName()),
 				new Description(entity.getDescription()),
-				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getTypeCoin().name())),
+				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getType_coin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
 				MidiaInputMapper.toMidiaList(entity.getMidias()),
-				new Pricing(entity.getPricing()), new CreatedAt(entity.getCreatedAt()),
-				new UpdateAt(entity.getUpdateAt()), new Volume(entity.getVolume()), new Color(entity.getColor()));
+				new Pricing(entity.getPricing()), new Volume(entity.getVolume()), new Color(entity.getColor()));
 	}
 }

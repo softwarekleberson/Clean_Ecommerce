@@ -34,7 +34,7 @@ public class BookTest {
 		return new Book(new Name("Effective Java"), new Description("A comprehensive guide to best practices in Java"),
 				new Price(BigDecimal.valueOf(199.90), TypeCoin.REAL), ProductCategory.BOOKS,
 				new Brand("Addison-Wesley"), List.of(new Midia("https://site.com/cover.jpg", "Cover")),
-				new Pricing(BigDecimal.TEN), new Synopsis("Covers design patterns and idioms."), new Page(416),
+				new Pricing(BigDecimal.valueOf(0.10)), new Synopsis("Covers design patterns and idioms."), new Page(416),
 				new Author("Joshua Bloch"), new Edition("3rd Edition"), new Isbn("9780134685991"),
 				CategoryBook.BIOGRAPHY, new Dimension(23.5, 18.0, 3.0, 1.2),
 				new PublisherDate(LocalDate.of(2018, 1, 6)));
@@ -72,7 +72,7 @@ public class BookTest {
 
 		Book book2 = new Book(new Name("Clean Code"), new Description("Another great book"),
 				new Price(BigDecimal.valueOf(149.90), TypeCoin.REAL), ProductCategory.BOOKS, new Brand("Prentice Hall"),
-				List.of(new Midia("https://site.com/cover2.jpg", "Cover")), new Pricing(BigDecimal.TEN),
+				List.of(new Midia("https://site.com/cover2.jpg", "Cover")), new Pricing(BigDecimal.valueOf(0.10)),
 				new Synopsis("Learn how to write clean code."), new Page(464), new Author("Robert C. Martin"),
 				new Edition("1st Edition"), new Isbn("9780132350884"), CategoryBook.BIOGRAPHY,
 				new Dimension(21.0, 14.8, 2.5, 0.9), new PublisherDate(LocalDate.of(2008, 8, 11)));

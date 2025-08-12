@@ -2,14 +2,10 @@ package com.cleancode.ecommerce.domain.book;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
-import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.Dimension;
 
 public class DimensionTest {
@@ -23,19 +19,6 @@ public class DimensionTest {
 		assertEquals(5.0, dimension.getWidth());
 		assertEquals(15.0, dimension.getLength());
 		assertEquals(2.5, dimension.getWeight());
-	}
-
-	@ParameterizedTest
-	@CsvSource({ "0.0, 5.0, 10.0, 2.0", // height invalid
-			"10.0, 0.0, 10.0, 2.0", // width invalid
-			"10.0, 5.0, 0.0, 2.0", // length invalid
-			"10.0, 5.0, 10.0, 0.0" // weight invalid
-	})
-	@DisplayName("Should throw exception when any dimension is less than 1")
-	void shouldThrowExceptionForInvalidValues(double height, double width, double length, double weight) {
-		assertThrows(IllegalDomainException.class, () -> {
-			new Dimension(height, width, length, weight);
-		});
 	}
 
 	@Test

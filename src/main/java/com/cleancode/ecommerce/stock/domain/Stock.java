@@ -8,27 +8,27 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
-import com.cleancode.ecommerce.product.domain.IdProduct;
+import com.cleancode.ecommerce.product.domain.ProductId;
 
 public class Stock {
 
 	public static final int MIN_QUANTITY = 0;
 
-	private IdStock id;
-	private IdProduct productId;
+	private StockId stockId;
+	private ProductId productId;
 	private int totalQuantity;
 	private int quantityAvailable;
 	private List<Reservations> reservations = new ArrayList<>();
 	private List<ProductInput> productInputs = new ArrayList<>();
 	private List<ProductOutput> productOutputs = new ArrayList<>();
 
-	public Stock(IdProduct productId) {
-		this.id = new IdStock();
+	public Stock(ProductId productId) {
+		this.stockId = new StockId();
 		this.productId = productId;
 	}
 	
-	public Stock(IdStock id, IdProduct productId, int totalQuantity) {
-		this.id = id;
+	public Stock(StockId id, ProductId productId, int totalQuantity) {
+		this.stockId = id;
 		this.productId = productId;
 		this.totalQuantity = totalQuantity;
 		this.quantityAvailable = totalQuantity;
@@ -86,7 +86,7 @@ public class Stock {
 		reservation.confirmOrder();
 
 		this.totalQuantity -= reservation.getQuantity().getQuantity();
-		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new IdProduct(productId), reservation.getQuantity().getQuantity()));
+		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new ProductId(productId), reservation.getQuantity().getQuantity()));
 	}
 	
 	public Reservations getReservationId(String reservationId) {
@@ -97,11 +97,11 @@ public class Stock {
 		return reservation;
 	}
 
-	public IdStock getId() {
-		return id;
+	public StockId getStockId() {
+		return stockId;
 	}
 	
-	public IdProduct getProductId() {
+	public ProductId getProductId() {
 		return productId;
 	}
 
@@ -146,7 +146,7 @@ public class Stock {
 
 	@Override
 	public String toString() {
-		return "Stock [id=" + id + ", productId=" + productId + ", totalQuantity=" + totalQuantity
+		return "Stock [id=" + stockId + ", productId=" + productId + ", totalQuantity=" + totalQuantity
 				+ ", quantityAvailable=" + quantityAvailable + ", reservations=" + reservations + ", productInputs="
 				+ productInputs + ", productOutputs=" + productOutputs + "]";
 	}

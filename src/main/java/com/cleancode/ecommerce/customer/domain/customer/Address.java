@@ -9,7 +9,7 @@ public abstract class Address {
 
 	protected static final int LENGTH_MAX = 255;
 
-	protected String id;
+	protected String publicId;
 	protected String receiver;
 	protected String street;
 	protected String number;
@@ -18,7 +18,7 @@ public abstract class Address {
 	protected String zipCode;
 	protected String observation;
 	protected String streetType;
-	protected String typeResidence;
+	protected String residenceType;
 	protected String city;
 	protected String state;
 	protected String country;
@@ -29,7 +29,7 @@ public abstract class Address {
 		validateInput(receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
 				state, country);
 
-		this.id = (id == null || id.isBlank()) ? UUID.randomUUID().toString() : id;
+		this.publicId = (id == null || id.isBlank()) ? UUID.randomUUID().toString() : id;
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -37,7 +37,7 @@ public abstract class Address {
 		this.zipCode = zipCode;
 		this.observation = observation;
 		this.streetType = streetType;
-		this.typeResidence = typeResidence;
+		this.residenceType = typeResidence;
 		this.city = city;
 		this.state = state;
 		this.country = country;
@@ -88,7 +88,7 @@ public abstract class Address {
 		if (streetType != null && !streetType.isBlank())
 			this.streetType = streetType;
 		if (typeResidence != null && !typeResidence.isBlank())
-			this.typeResidence = typeResidence;
+			this.residenceType = typeResidence;
 		if (city != null && !city.isBlank())
 			this.city = city;
 		if (state != null && !state.isBlank())
@@ -110,8 +110,8 @@ public abstract class Address {
 		return value == null || value.trim().isEmpty();
 	}
 
-	public String getId() {
-		return id;
+	public String getPublicId() {
+		return publicId;
 	}
 
 	public String getReceiver() {
@@ -142,8 +142,8 @@ public abstract class Address {
 		return streetType;
 	}
 
-	public String getTypeResidence() {
-		return typeResidence;
+	public String getResidenceType() {
+		return residenceType;
 	}
 
 	public String getCity() {
@@ -161,7 +161,7 @@ public abstract class Address {
 	@Override
 	public int hashCode() {
 		return Objects.hash(zipCode, city, country, neighborhood, number, observation, receiver, state, street,
-				streetType, typeResidence);
+				streetType, residenceType);
 	}
 
 	@Override
@@ -178,14 +178,14 @@ public abstract class Address {
 				&& Objects.equals(number, other.number) && Objects.equals(observation, other.observation)
 				&& Objects.equals(receiver, other.receiver) && Objects.equals(state, other.state)
 				&& Objects.equals(street, other.street) && Objects.equals(streetType, other.streetType)
-				&& Objects.equals(typeResidence, other.typeResidence);
+				&& Objects.equals(residenceType, other.residenceType);
 	}
 
 	@Override
 	public String toString() {
 		return "Address [receiver=" + receiver + ", street=" + street + ", number=" + number + ", neighborhood="
 				+ neighborhood + ", zipCode=" + zipCode + ", observation=" + observation + ", streetType=" + streetType
-				+ ", typeResidence=" + typeResidence + ", city=" + city + ", state=" + state + ", country=" + country
+				+ ", typeResidence=" + residenceType + ", city=" + city + ", state=" + state + ", country=" + country
 				+ "]";
 	}
 }

@@ -21,9 +21,9 @@ public record ListDeliveryDto(
 		) {
 	
 	public ListDeliveryDto(Delivery delivery) {
-		this(delivery.getId(), delivery.getReceiver(), delivery.getStreet(),
+		this(delivery.getPublicId(), delivery.getReceiver(), delivery.getStreet(),
 			delivery.getNumber(), delivery.getNeighborhood(), delivery.getZipCode(),
-			delivery.getObservation(), delivery.getStreetType(), delivery.getTypeResidence(),
+			delivery.getObservation(), delivery.getStreetType(), delivery.getResidenceType(),
 			delivery.getCity(), delivery.getState(), delivery.getCountry(),
 			delivery.getDeliveryPhrase());
 	}

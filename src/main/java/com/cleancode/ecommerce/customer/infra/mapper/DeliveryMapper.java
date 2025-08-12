@@ -11,19 +11,19 @@ public final class DeliveryMapper {
 	public static DeliveryEntity toEntity(Delivery delivery, CustomerEntity customerEntity) {
 		DeliveryEntity entity = new DeliveryEntity();
 
-		entity.setId(delivery.getId().toString());
+		entity.setPublic_id(delivery.getPublicId().toString());
 		entity.setReceiver(delivery.getReceiver());
 		entity.setStreet(delivery.getStreet());
 		entity.setNumber(delivery.getNumber());
 		entity.setNeighborhood(delivery.getNeighborhood());
-		entity.setZipCode(delivery.getZipCode());
+		entity.setZip_code(delivery.getZipCode());
 		entity.setObservation(delivery.getObservation());
-		entity.setStreetType(delivery.getStreetType());
-		entity.setTypeResidence(delivery.getTypeResidence());
+		entity.setStreet_type(delivery.getStreetType());
+		entity.setResidence_type(delivery.getResidenceType());
 		entity.setCity(delivery.getCity());
 		entity.setState(delivery.getState());
 		entity.setCountry(delivery.getCountry());
-		entity.setDeliveryPhrase(delivery.getDeliveryPhrase());
+		entity.setDelivery_phrase(delivery.getDeliveryPhrase());
 
 		entity.setCustomer(customerEntity);
 
@@ -35,29 +35,29 @@ public final class DeliveryMapper {
 		entity.setStreet(delivery.getStreet());
 		entity.setNumber(delivery.getNumber());
 		entity.setNeighborhood(delivery.getNeighborhood());
-		entity.setZipCode(delivery.getZipCode());
+		entity.setZip_code(delivery.getZipCode());
 		entity.setObservation(delivery.getObservation());
-		entity.setStreetType(delivery.getStreetType());
-		entity.setTypeResidence(delivery.getTypeResidence());
+		entity.setStreet_type(delivery.getStreetType());
+		entity.setResidence_type(delivery.getResidenceType());
 		entity.setCity(delivery.getCity());
 		entity.setState(delivery.getState());
 		entity.setCountry(delivery.getCountry());
-		entity.setDeliveryPhrase(delivery.getDeliveryPhrase());
+		entity.setDelivery_phrase(delivery.getDeliveryPhrase());
 	}
 
 	// Converte de entidade para domínio
 	public static Delivery toDomain(DeliveryEntity entity) {
 		return new Delivery(
-			entity.getId(),
-			entity.getDeliveryPhrase(),
+			entity.getPublic_id(),
+			entity.getDelivery_phrase(),
 			entity.getReceiver(),
 			entity.getStreet(),
 			entity.getNumber(),
 			entity.getNeighborhood(),
-			entity.getZipCode(),
+			entity.getZip_code(),
 			entity.getObservation(),
-			entity.getStreetType(),
-			entity.getTypeResidence(),
+			entity.getStreet_type(),
+			entity.getResidence_type(),
 			entity.getCity(),
 			entity.getState(),
 			entity.getCountry()

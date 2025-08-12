@@ -3,7 +3,6 @@ package com.cleancode.ecommerce.stock.infra.persistence;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,26 +22,19 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "reservation")
+@Table(name = "tb_reservation")
 public class ReservationEntity {
 
 	@Id
-	private String id = UUID.randomUUID().toString();
+	private String reservation_id = UUID.randomUUID().toString();
 	
-	@Column(name = "cart_id")
-	private String cartId;
+	private String cart_id;	
+	private String customer_id;
+	private int quantity;	
+	private LocalDateTime reservation_time;
 	
-	@Column(name = "customer_id")
-	private String customerId;
-	
-	private int quantity;
-	
-	@Column(name = "reservation_time")
-	private LocalDateTime reservationTime;
-	
-	@Column(name = "reserve_status")
 	@Enumerated(EnumType.STRING)
-	private ReserveStatusEntity reserveStatus;
+	private ReserveStatusEntity reserve_status;
 	
 	@ManyToOne
 	@JoinColumn(name = "stock_id")

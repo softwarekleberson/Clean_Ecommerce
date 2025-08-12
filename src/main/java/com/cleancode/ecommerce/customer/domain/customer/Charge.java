@@ -26,7 +26,7 @@ public class Charge extends Address {
 		if (streetType != null && !streetType.isBlank() && inputSize(observation))
 			this.streetType = streetType;
 		if (typeResidence != null && !typeResidence.isBlank())
-			this.typeResidence = typeResidence;
+			this.residenceType = typeResidence;
 		if (city != null && !city.isBlank())
 			this.city = city;
 		if (state != null && !state.isBlank())
