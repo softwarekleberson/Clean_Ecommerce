@@ -8,8 +8,11 @@ import java.util.List;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+import com.cleancode.ecommerce.stock.domain.Quantity;
 
 public class Cart {
 
@@ -41,13 +44,20 @@ public class Cart {
 		return totalPrice = new Price(total, TypeCoin.DOLAR);
 	}
 
-	public void addProductToCart(CartItens item) {
-		if (item == null)
-			throw new IllegalDomainException("Item cannot be null");
-
-		this.cartItens.add(item);
+	public void addProductToCart(ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
+		
+		this.cartItens.add(new CartItens(productId, productName, quantity, unitPrice));
 		calculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
+	}
+
+	public void updateQuantityProduct(String productIdToRemove, ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
+		if (productIdToRemove == null || productIdToRemove.isBlank() || this.cartItens == null) {
+			throw new IllegalDomainException("Cannot remove product this cart: id is null/empty or cart item list is not initialized");
+		}
+		
+		this.cartItens.removeIf(c -> c.getProductId().getProductId().equals(productIdToRemove));
+		this.cartItens.add(new CartItens(productId, productName, quantity, unitPrice));
 	}
 
 	public void removeAllProductToCart() {
@@ -59,14 +69,14 @@ public class Cart {
 	public void removeProductToCart(String productId) {
 		if (productId == null || productId.isBlank() || this.cartItens.isEmpty()) {
 			throw new IllegalDomainException(
-			"Cannot remove product this cart: id is null/empty or cart item list is not initialized");
+					"Cannot remove product this cart: id is null/empty or cart item list is not initialized");
 		}
 
 		boolean removed = this.cartItens.removeIf(c -> productId.equals(c.getProductId().getProductId()));
 
 		if (!removed)
 			throw new IllegalDomainException("Product not found in cart");
-		
+
 		calculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
 	}
