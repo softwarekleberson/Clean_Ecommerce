@@ -12,6 +12,8 @@ import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
 import com.cleancode.ecommerce.stock.domain.Reservations;
 import com.cleancode.ecommerce.stock.domain.ReserveStatus;
@@ -37,7 +39,7 @@ public class StockTest {
 
 	@Test
 	void mustAddProductToStock() {
-		stock.addProductInput(5, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
+		stock.addProductInput(5, ProductQuality.NEW, new Price(BigDecimal.valueOf(100), TypeCoin.DOLAR), "suplier x");
 		assertEquals(5, stock.getTotalQuantity());
 		assertEquals(5, stock.getQuantityAvailable());
 		assertEquals(1, stock.getProductInput().size());
@@ -46,13 +48,13 @@ public class StockTest {
 	@Test
 	void shouldThrowExceptionWhenAddingInvalidQuantity() {
 		assertThrows(IllegalDomainException.class, () -> {
-			stock.addProductInput(0, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
+			stock.addProductInput(0, ProductQuality.NEW, new Price(BigDecimal.valueOf(100), TypeCoin.DOLAR), "suplier x");
 		});
 	}
 
 	@Test
 	void mustCreateReserveandReduceAvailableQuantity() {
-		stock.addProductInput(10, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
+		stock.addProductInput(10, ProductQuality.NEW, new Price(BigDecimal.valueOf(100), TypeCoin.DOLAR), "suplier x");
 		stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
 		assertEquals(5, stock.getQuantityAvailable());
 		assertEquals(1, stock.getReservations().size());
@@ -67,7 +69,7 @@ public class StockTest {
 
 	@Test
 	void mustCancelReservationRestoreAvailableQuantity() {
-		stock.addProductInput(10, ProductQuality.NEW, BigDecimal.valueOf(100), "suplier x");
+		stock.addProductInput(10, ProductQuality.NEW, new Price(BigDecimal.valueOf(100), TypeCoin.DOLAR), "suplier x");
 		Reservations reservations = stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
 		stock.cancelReservation(reservations.getId());
 		Reservations reserveStatus = stock.getReservationId(reservations.getId());
@@ -84,7 +86,7 @@ public class StockTest {
 
 	@Test
 	void mustConfirmOrderReduceTotalStockRegisterOutput() {
-		stock.addProductInput(10, ProductQuality.NEW, BigDecimal.valueOf(100), "xpto");
+		stock.addProductInput(10, ProductQuality.NEW, new Price(BigDecimal.valueOf(100), TypeCoin.DOLAR), "xpto");
 		Reservations reservations = stock.reservation(UUID.randomUUID().toString(), UUID.randomUUID().toString(), 5);
 		stock.confirmOrder(UUID.randomUUID().toString(), UUID.randomUUID().toString(), reservations.getId());
 		Reservations reserveStatus = stock.getReservationId(reservations.getId());
