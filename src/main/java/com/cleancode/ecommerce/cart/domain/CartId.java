@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.stock.domain;
+package com.cleancode.ecommerce.cart.domain;
 
 import java.util.UUID;
 

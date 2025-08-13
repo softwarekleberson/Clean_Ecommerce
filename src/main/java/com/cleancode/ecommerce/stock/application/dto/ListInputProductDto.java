@@ -20,7 +20,7 @@ public record ListInputProductDto(
 		this(input.getQuantity().getQuantity(),
 			input.getProductQuality(),
 			input.getEntryTime(),
-			input.getPurchasePrice().getPurchasePrice(),
+			input.getPurchasePrice().getPrice(),
 			input.getSupplier().getSupplier());
 	}
 }

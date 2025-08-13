@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.stock.domain;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.cleancode.ecommerce.cart.domain.CartId;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 
 public class Reservations {

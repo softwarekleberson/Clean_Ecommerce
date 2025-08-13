@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.stock.domain;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,6 +8,7 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
+import com.cleancode.ecommerce.shared.kernel.Price;
 
 public class Stock {
 
@@ -46,7 +46,7 @@ public class Stock {
 		this.productOutputs.addAll(productOutput);
 	}
 
-	public void addProductInput(int quantity, ProductQuality productQuality, BigDecimal purchasePrice, String supplier) {
+	public void addProductInput(int quantity, ProductQuality productQuality, Price purchasePrice, String supplier) {
 
 		if (quantity <= MIN_QUANTITY) {
 			throw new IllegalDomainException("quntity must be positive");

@@ -5,6 +5,7 @@ import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.event.ProductActivatedEvent;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
+import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.stock.application.dto.CreateInputStockDto;
 import com.cleancode.ecommerce.stock.application.dto.ListStockDto;
 import com.cleancode.ecommerce.stock.application.service.ProductActivationService;
@@ -31,7 +32,7 @@ public class CreateProductInputImpl implements CreateProductInput{
 	@Override
 	public ListStockDto execute (CreateInputStockDto dto) {
 		Stock stock = repository.getStock(dto.getProductId());
-		stock.addProductInput(dto.getQuantity(), dto.getProductQuality(), dto.getPurchasePrice(), dto.getSupplier());
+		stock.addProductInput(dto.getQuantity(), dto.getProductQuality(), new Price(dto.getPurchasePrice(), dto.getCoin()), dto.getSupplier());
 
 		Product product = productRepository.listProduct(dto.getProductId())
 	    .orElseThrow(() -> new IllegalDomainException("Product with id : " + dto.getProductId() + "not found"));

@@ -17,7 +17,7 @@ public class ProductPriceServiceImpl implements ProductPriceService {
 
 		List<ProductInput> inputs = stock.getProductInput();
 		for (ProductInput input : inputs) {
-			totalPurchasePrice = totalPurchasePrice.add(input.getPurchasePrice().getPurchasePrice());
+			totalPurchasePrice = totalPurchasePrice.add(input.getPurchasePrice().getPrice());
 		}
 
 		BigDecimal averagePurchasePrice = BigDecimal.ZERO;
