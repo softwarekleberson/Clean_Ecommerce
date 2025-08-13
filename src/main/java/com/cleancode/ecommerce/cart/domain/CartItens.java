@@ -10,9 +10,9 @@ import com.cleancode.ecommerce.stock.domain.Quantity;
 public class CartItens {
 
 	private final ProductId productId;
-	private Name productName;
-	private Quantity quantity;
-	private Price unitPrice;
+	private final Name productName;
+	private final Quantity quantity;
+	private final Price unitPrice;
 	private Price subtotal;
 
 	public CartItens(ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
@@ -21,11 +21,10 @@ public class CartItens {
 		this.productName = productName;
 		this.quantity = quantity;
 		this.unitPrice = unitPrice;
-		
-		subtotal();
+		this.subtotal = calculeteSubtotal();
 	}
 
-	public Price subtotal() {
+	public Price calculeteSubtotal() {
 		BigDecimal total = this.unitPrice.getPrice().multiply(BigDecimal.valueOf(this.quantity.getQuantity()));
 		this.subtotal = new Price(total, this.unitPrice.getCoin());
 		return this.subtotal;
