@@ -22,7 +22,7 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional
 	@Override
-	public Product create(Product product) {
+	public Product save(Product product) {
 		ProductEntity entity = ProductMapper.toEntity(product);
 		jpa.save(entity);
 		Product domain = ProductMapper.toDomain(entity);

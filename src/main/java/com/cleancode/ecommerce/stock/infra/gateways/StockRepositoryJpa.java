@@ -19,7 +19,7 @@ public class StockRepositoryJpa implements StockRepository {
 
 	@Transactional
 	@Override
-	public Stock create(Stock stoke) {
+	public Stock save(Stock stoke) {
 		StockEntity entity = StockMapper.toEntity(stoke);
 		jpa.save(entity);
 		Stock domain = StockMapper.toDomain(entity);

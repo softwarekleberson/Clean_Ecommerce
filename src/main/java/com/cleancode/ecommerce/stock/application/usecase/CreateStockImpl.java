@@ -25,7 +25,7 @@ public class CreateStockImpl implements CreateStock {
 		("Product with id : " + dto.getProductId() + "not found"));
 
 		Stock stock = dto.createStock();
-		stockRepository.create(stock);
+		stockRepository.save(stock);
 		
 		return new ListStockDto(stock);
 	}

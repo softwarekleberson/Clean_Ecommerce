@@ -41,8 +41,8 @@ public class CreateProductInputImpl implements CreateProductInput{
 		product = productPriceService.productPriceService(product, stock);
 		
 		eventPublisher.publish(new ProductActivatedEvent(product.getProductId().getProductId(), product.isActive()));
-		repository.create(stock);
-		productRepository.create(product);
+		repository.save(stock);
+		productRepository.save(product);
 		
 		return new ListStockDto(stock);
 	}

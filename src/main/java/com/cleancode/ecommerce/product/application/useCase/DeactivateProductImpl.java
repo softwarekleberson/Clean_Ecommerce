@@ -23,6 +23,6 @@ public class DeactivateProductImpl implements DeactivateProduct{
 		product.deactivate();
 		
 		eventPublisher.publish(new ProductDeactivatedEvent(productId, product.isActive()));
-		productRepository.create(product);
+		productRepository.save(product);
 	}
 }
