@@ -31,7 +31,7 @@ public class CreateProductInputImpl implements CreateProductInput{
 
 	@Override
 	public ListStockDto execute (CreateInputStockDto dto) {
-		Stock stock = repository.getStock(dto.getProductId());
+		Stock stock = repository.getStock(dto.getProductId()).orElseThrow(() -> new IllegalDomainException("Stock with id:" + dto.getProductId() + " not found "));
 		stock.addProductInput(dto.getQuantity(), dto.getProductQuality(), new Price(dto.getPurchasePrice(), dto.getCoin()), dto.getSupplier());
 
 		Product product = productRepository.listProduct(dto.getProductId())
