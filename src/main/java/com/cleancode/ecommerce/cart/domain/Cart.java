@@ -44,9 +44,9 @@ public class Cart {
 		this.totalPrice = new Price(total, coin);
 	}
 
-	public void addProductToCart(ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
+	public void addProductToCart(String productId, String productName, int quantity, BigDecimal unitPrice, TypeCoin coin) {
 
-		this.cartItens.add(new CartItens(productId, productName, quantity, unitPrice));
+		this.cartItens.add(new CartItens(new ProductId(productId), new Name(productName), new Quantity(quantity), new Price(unitPrice, coin)));
 		recalculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
 	}
