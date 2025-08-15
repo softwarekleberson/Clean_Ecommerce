@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.infra.notification;
+package com.cleancode.ecommerce.event.infra.notification;
 
 public interface EmailService {
 

@@ -5,11 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.event.EventPublisher;
+import com.cleancode.ecommerce.event.infra.notification.EmailService;
+import com.cleancode.ecommerce.event.infra.notification.SpringEventPublisher;
 import com.cleancode.ecommerce.product.application.useCase.handler.NewProductEventHandler;
 import com.cleancode.ecommerce.product.application.useCase.handler.ProductActivatedEventHandler;
 import com.cleancode.ecommerce.product.application.useCase.handler.ProductDeactivatedEventHandler;
-import com.cleancode.ecommerce.product.infra.notification.EmailService;
-import com.cleancode.ecommerce.product.infra.notification.SpringEventPublisher;
 
 @Configuration
 public class EventProductConfig {

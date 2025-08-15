@@ -4,7 +4,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 
 import com.cleancode.ecommerce.event.ProductDeactivatedEvent;
-import com.cleancode.ecommerce.product.infra.notification.EmailService;
+import com.cleancode.ecommerce.event.infra.notification.EmailService;
 
 public class ProductDeactivatedEventHandler {
 
