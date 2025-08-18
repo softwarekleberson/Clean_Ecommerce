@@ -16,96 +16,141 @@ import com.cleancode.ecommerce.stock.domain.Quantity;
 
 public class Cart {
 
-	private final CartId cartId;
-	private final CustomerId customerId;
-	private List<CartItens> cartItens = new ArrayList<>();
-	private final LocalDateTime createdAt;
-	private LocalDateTime updatedAt;
-	private Price totalPrice;
+    private final CartId cartId;
+    private final CustomerId customerId;
+    private final List<CartItens> cartItens;
+    private final LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private Price totalPrice;
 
-	public Cart(CustomerId customerId) {
+    public Cart(CartId id ,CustomerId customerId) {
+        if (customerId == null) {
+            throw new IllegalDomainException("Customer ID cannot be null");
+        }
 
-		if (customerId == null)
-			throw new IllegalDomainException("Customer ID cannot be null");
+        this.cartId = id;
+        this.customerId = customerId;
+        this.cartItens = new ArrayList<>();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+        recalculateTotalPrice();
+    }
 
-		this.cartId = new CartId();
-		this.customerId = customerId;
-		this.createdAt = LocalDateTime.now();
-		this.updatedAt = LocalDateTime.now();
-	}
+    public Cart(CartId cartId, CustomerId customerId, List<CartItens> cartItens,
+                LocalDateTime createdAt, LocalDateTime updatedAt) {
 
-	private void recalculateTotalPrice() {
-		BigDecimal total = cartItens.stream()
-		.map(item -> item.getSubtotal().getPrice())
-		.reduce(BigDecimal.ZERO,
-		BigDecimal::add);
+        if (cartId == null || customerId == null) {
+            throw new IllegalDomainException("Cart ID and Customer ID cannot be null");
+        }
 
-		TypeCoin coin = cartItens.isEmpty() ? TypeCoin.DOLAR : cartItens.get(0).getUnitPrice().getCoin();
-		this.totalPrice = new Price(total, coin);
-	}
+        this.cartId = cartId;
+        this.customerId = customerId;
+        this.cartItens = new ArrayList<>(cartItens != null ? cartItens : new ArrayList<>());
+        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
+        this.updatedAt = updatedAt != null ? updatedAt : LocalDateTime.now();
+        recalculateTotalPrice();
+    }
 
-	public void addProductToCart(String productId, String productName, int quantity, BigDecimal unitPrice, TypeCoin coin) {
+    private void recalculateTotalPrice() {
+        BigDecimal total = cartItens.stream()
+                .map(item -> item.getSubtotal().getPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-		this.cartItens.add(new CartItens(new ProductId(productId), new Name(productName), new Quantity(quantity), new Price(unitPrice, coin)));
-		recalculateTotalPrice();
-		this.updatedAt = LocalDateTime.now();
-	}
+        TypeCoin coin = cartItens.isEmpty()
+                ? TypeCoin.DOLAR 
+                : cartItens.get(0).getUnitPrice().getCoin();
 
-	public void updateQuantityProduct(String productIdToRemove, ProductId productId, Name productName,
-			Quantity quantity, Price unitPrice) {
-		if (productIdToRemove == null || productIdToRemove.isBlank() || this.cartItens == null) {
-			throw new IllegalDomainException(
-					"Cannot remove product this cart: id is null/empty or cart item list is not initialized");
-		}
+        this.totalPrice = new Price(total, coin);
+    }
 
-		this.cartItens.removeIf(c -> c.getProductId().getProductId().equals(productIdToRemove));
-		this.cartItens.add(new CartItens(productId, productName, quantity, unitPrice));
-		recalculateTotalPrice();
-		this.updatedAt = LocalDateTime.now();
-	}
+    public void addProductToCart(ProductId productId, Name name, Quantity quantity, Price unitPrice) {
+        if (productId == null || name == null || quantity == null || unitPrice == null) {
+            throw new IllegalDomainException("Product data cannot be null");
+        }
 
-	public void removeAllProductToCart() {
-		this.cartItens.clear();
-		recalculateTotalPrice();
-		this.updatedAt = LocalDateTime.now();
-	}
+        CartItens existingItem = findItemByProductId(productId);
 
-	public void removeProductToCart(String productId) {
-		if (productId == null || productId.isBlank() || this.cartItens.isEmpty()) {
-			throw new IllegalDomainException(
-					"Cannot remove product this cart: id is null/empty or cart item list is not initialized");
-		}
+        if (existingItem != null) {
+            existingItem.increaseQuantity(quantity);
+        } else {
+            cartItens.add(new CartItens(productId, name, quantity, unitPrice));
+        }
 
-		boolean removed = this.cartItens.removeIf(c -> productId.equals(c.getProductId().getProductId()));
+        recalculateTotalPrice();
+        this.updatedAt = LocalDateTime.now();        
+    }
 
-		if (!removed)
-			throw new IllegalDomainException("Product not found in cart");
+    public void changeProductQuantity(ProductId productId, Quantity newQuantity) {
+        if (productId == null || newQuantity == null) {
+            throw new IllegalDomainException("Product ID and quantity cannot be null");
+        }
 
-		recalculateTotalPrice();
-		this.updatedAt = LocalDateTime.now();
-	}
+        CartItens item = findItemByProductId(productId);
 
-	public CartId getCartId() {
-		return cartId;
-	}
+        if (item == null) {
+            throw new IllegalDomainException("Product not found in cart");
+        }
 
-	public CustomerId getCustomerId() {
-		return customerId;
-	}
+        item.changeQuantity(newQuantity);
+        recalculateTotalPrice();
+        this.updatedAt = LocalDateTime.now();
+    }
 
-	public List<CartItens> getCartItens() {
-		return Collections.unmodifiableList(this.cartItens);
-	}
+    public void removeAllProducts() {
+        cartItens.clear();
+        recalculateTotalPrice();
+        this.updatedAt = LocalDateTime.now();
+    }
 
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
+    public void removeProductFromCart(ProductId productId) {
+        if (productId == null) {
+            throw new IllegalDomainException("Product ID cannot be null");
+        }
 
-	public LocalDateTime getUpdatedAt() {
-		return updatedAt;
-	}
+        boolean removed = cartItens.removeIf(c -> c.getProductId().equals(productId));
 
-	public Price getTotalPrice() {
-		return totalPrice;
+        if (!removed) {
+            throw new IllegalDomainException("Product not found in cart");
+        }
+
+        recalculateTotalPrice();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    private CartItens findItemByProductId(ProductId productId) {
+        return cartItens.stream()
+                .filter(c -> c.getProductId().equals(productId))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public CartId getCartId() {
+        return cartId;
+    }
+
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
+
+    public List<CartItens> getCartItens() {
+        return Collections.unmodifiableList(this.cartItens);
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Price getTotalPrice() {
+        return totalPrice;
+    }
+
+	@Override
+	public String toString() {
+		return "Cart [cartId=" + cartId + ", customerId=" + customerId + ", cartItens=" + cartItens + ", createdAt="
+				+ createdAt + ", updatedAt=" + updatedAt + ", totalPrice=" + totalPrice + "]";
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,34 +26,36 @@ public class CartItemEntity {
 
 	@Id
 	private String cart_item = UUID.randomUUID().toString();
-	
+
 	private String product_id;
 	private String product_name;
 	private int quantity;
 	private BigDecimal unit_price;
-	private TypeCoinEntity subtotal;
-	
+
+	@Enumerated(EnumType.STRING)
+	private TypeCoinEntity coin;
+
+	private BigDecimal subtotal;
+
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
 	private CartEntity cart;
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cart, cart_item, product_id, product_name, quantity, subtotal, unit_price);
+		return Objects.hash(cart, cart_item, product_id, product_name, quantity, coin, unit_price, subtotal);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		CartItemEntity other = (CartItemEntity) obj;
-		return Objects.equals(cart, other.cart) && Objects.equals(cart_item, other.cart_item)
-				&& Objects.equals(product_id, other.product_id) && Objects.equals(product_name, other.product_name)
-				&& quantity == other.quantity && subtotal == other.subtotal
-				&& Objects.equals(unit_price, other.unit_price);
+		return quantity == other.quantity && Objects.equals(cart, other.cart)
+				&& Objects.equals(cart_item, other.cart_item) && Objects.equals(product_id, other.product_id)
+				&& Objects.equals(product_name, other.product_name) && Objects.equals(unit_price, other.unit_price)
+				&& Objects.equals(subtotal, other.subtotal) && coin == other.coin;
 	}
 }

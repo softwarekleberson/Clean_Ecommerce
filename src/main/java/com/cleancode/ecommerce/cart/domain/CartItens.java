@@ -9,44 +9,59 @@ import com.cleancode.ecommerce.stock.domain.Quantity;
 
 public class CartItens {
 
-	private final ProductId productId;
-	private final Name productName;
-	private final Quantity quantity;
-	private final Price unitPrice;
-	private Price subtotal;
+    private final ProductId productId;
+    private final Name productName;
+    private Quantity quantity;  
+    private final Price unitPrice;
 
-	public CartItens(ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
-		
-		this.productId = productId;
-		this.productName = productName;
-		this.quantity = quantity;
-		this.unitPrice = unitPrice;
-		this.subtotal = calculeteSubtotal();
-	}
+    public CartItens(ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
+        if (productId == null || productName == null || quantity == null || unitPrice == null) {
+            throw new IllegalArgumentException("Product data cannot be null");
+        }
 
-	public Price calculeteSubtotal() {
-		BigDecimal total = this.unitPrice.getPrice().multiply(BigDecimal.valueOf(this.quantity.getQuantity()));
-		this.subtotal = new Price(total, this.unitPrice.getCoin());
-		return this.subtotal;
-	}
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+    }
 
-	public ProductId getProductId() {
-		return productId;
-	}
+    public Price calculateSubtotal() {
+        BigDecimal total = this.unitPrice.getPrice()
+                .multiply(BigDecimal.valueOf(this.quantity.getQuantity()));
+        return new Price(total, this.unitPrice.getCoin());
+    }
 
-	public Name getProductName() {
-		return productName;
-	}
+    public void increaseQuantity(Quantity additional) {
+        if (additional.getQuantity() <= 0) {
+            throw new IllegalArgumentException("Quantity to add must be positive");
+        }
+        this.quantity = new Quantity(this.quantity.getQuantity() + additional.getQuantity());
+    }
 
-	public Quantity getQuantity() {
-		return quantity;
-	}
+    public void changeQuantity(Quantity newQuantity) {
+        if (newQuantity.getQuantity() <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        this.quantity = newQuantity;
+    }
 
-	public Price getUnitPrice() {
-		return unitPrice;
-	}
+    public ProductId getProductId() {
+        return productId;
+    }
 
-	public Price getSubtotal() {
-		return subtotal;
-	}
+    public Name getProductName() {
+        return productName;
+    }
+
+    public Quantity getQuantity() {
+        return quantity;
+    }
+
+    public Price getUnitPrice() {
+        return unitPrice;
+    }
+
+    public Price getSubtotal() {
+        return calculateSubtotal();
+    }
 }

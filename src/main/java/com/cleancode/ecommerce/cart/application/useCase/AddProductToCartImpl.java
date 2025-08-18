@@ -1,17 +1,24 @@
 package com.cleancode.ecommerce.cart.application.useCase;
 
+import java.util.UUID;
+
 import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
 import com.cleancode.ecommerce.cart.application.dtos.output.ListCartDto;
 import com.cleancode.ecommerce.cart.application.service.ValidateProductHasStock;
 import com.cleancode.ecommerce.cart.application.useCase.contract.AddProductToCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
+import com.cleancode.ecommerce.cart.domain.CartId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.product.domain.Product;
+import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
+import com.cleancode.ecommerce.shared.kernel.Name;
+import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.stock.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.Stock;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 
@@ -22,8 +29,9 @@ public class AddProductToCartImpl implements AddProductToCart {
 	private final StockRepository stockRepository;
 	private final CartRepository cartRepository;
 	private final ValidateProductHasStock validateProduct;
-	
-	public AddProductToCartImpl(CustomerRepository customerRepository, ProductRepository productRepository, StockRepository stockRepository, CartRepository cartRepository, ValidateProductHasStock validateProduct) {
+
+	public AddProductToCartImpl(CustomerRepository customerRepository, ProductRepository productRepository,
+			StockRepository stockRepository, CartRepository cartRepository, ValidateProductHasStock validateProduct) {
 		this.customerRepository = customerRepository;
 		this.productRepository = productRepository;
 		this.stockRepository = stockRepository;
@@ -33,49 +41,48 @@ public class AddProductToCartImpl implements AddProductToCart {
 
 	@Override
 	public ListCartDto execute(CreateCartDto dto) {
-		
+
 		Customer customer = findCustomer(dto);
 		Product product = findProduct(dto);
 		Stock stock = findStock(dto, product);
 		Cart cart = getCartOrCreate(dto);
+
+		Stock stockAfterReservation = validateProduct.reserve(stock, dto.getQuantity(), customer.getId().getValue(),
+				cart.getCartId().getCartId());
+
+		cart.addProductToCart(new ProductId(product.getProductId().getProductId()),
+				new Name(product.getName().getName()), new Quantity(dto.getQuantity()),
+				new Price(product.getPrice().getPrice(), product.getPrice().getCoin()));
 		
-		Stock stockAfterReservation = validateProduct.reserve(stock, dto.getQuantity(), customer.getId().getValue(), cart.getCartId().getCartId());
-		
-		cart.addProductToCart (
-			product.getProductId().getProductId(),
-			product.getName().getName(),
-			dto.getQuantity(),
-			product.getPrice().getPrice(),
-			product.getPrice().getCoin()
-		);
-				
 		stockRepository.save(stockAfterReservation);
 		cartRepository.save(cart);
 		return new ListCartDto(cart);
 	}
 
 	private Cart getCartOrCreate(CreateCartDto dto) {
-		Cart cart = cartRepository.getCartCustomer(dto.getCustomerId())
-					.orElseGet(() -> {
-					Cart newCart = new Cart(new CustomerId(dto.getCustomerId()));
-					cartRepository.save(newCart);
-						return newCart;
-					});
+		Cart cart = cartRepository.getCartCustomer(dto.getCustomerId()).orElseGet(() -> {
+			Cart newCart = new Cart(new CartId(UUID.randomUUID().toString()) ,new CustomerId(dto.getCustomerId()));
+			cartRepository.save(newCart);
+			return newCart;
+		});
 		return cart;
 	}
 
 	private Stock findStock(CreateCartDto dto, Product product) {
-		Stock stock = stockRepository.getStock(product.getProductId().getProductId()).orElseThrow(() -> new IllegalDomainException("Stock with id :" + dto.getProductId() + " not found "));
+		Stock stock = stockRepository.getStock(product.getProductId().getProductId())
+				.orElseThrow(() -> new IllegalDomainException("Stock with id :" + dto.getProductId() + " not found "));
 		return stock;
 	}
 
 	private Product findProduct(CreateCartDto dto) {
-		Product product = productRepository.listProduct(dto.getProductId()).orElseThrow(() -> new IllegalArgumentException("Product with id : " + dto.getProductId() + " not found"));
+		Product product = productRepository.listProduct(dto.getProductId()).orElseThrow(
+				() -> new IllegalArgumentException("Product with id : " + dto.getProductId() + " not found"));
 		return product;
 	}
 
 	private Customer findCustomer(CreateCartDto dto) {
-		Customer customer = customerRepository.getCustomerById(dto.getCustomerId()).orElseThrow(() -> new IllegalArgumentException("Customer with id : " + dto.getCustomerId() + " not found"));
+		Customer customer = customerRepository.getCustomerById(dto.getCustomerId()).orElseThrow(
+				() -> new IllegalArgumentException("Customer with id : " + dto.getCustomerId() + " not found"));
 		return customer;
-	}	
+	}
 }
