@@ -1,6 +1,15 @@
 package com.cleancode.ecommerce.domain.cart;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.cleancode.ecommerce.cart.domain.Cart;
+import com.cleancode.ecommerce.cart.domain.CartId;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
@@ -8,101 +17,110 @@ import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.cleancode.ecommerce.stock.domain.Quantity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+public class CartTest {
 
-import static org.junit.jupiter.api.Assertions.*;
+	private CartId cartId;
+	private CustomerId customerId;
+	private ProductId productId;
+	private Name productName;
+	private Quantity quantity;
+	private Price price;
 
-class CartTest {
+	@BeforeEach
+	void setUp() {
+		cartId = new CartId("cart-123");
+		customerId = new CustomerId("cust-123");
+		productId = new ProductId("prod-123");
+		productName = new Name("Notebook");
+		quantity = new Quantity(2);
+		price = new Price(new BigDecimal("100.00"), TypeCoin.DOLAR);
+	}
 
-    private CustomerId customerId;
-    private Cart cart;
+	@Test
+	void shouldCreateCartSuccessfully() {
+		Cart cart = new Cart(cartId, customerId);
+		assertNotNull(cart.getCartId());
+		assertNotNull(cart.getCustomerId());
+		assertEquals(BigDecimal.ZERO, cart.getTotalPrice().getPrice());
+	}
 
-    @BeforeEach
-    void setUp() {
-        customerId = new CustomerId("cust-123");
-        cart = new Cart(customerId);
-    }
+	@Test
+	void shouldThrowExceptionWhenCustomerIsNull() {
+		assertThrows(IllegalDomainException.class, () -> new Cart(cartId, null));
+	}
 
-    @Test
-    void shouldCreateCartSuccessfully() {
-        assertNotNull(cart.getCartId());
-        assertEquals(customerId, cart.getCustomerId());
-        assertTrue(cart.getCartItens().isEmpty());
-        assertNotNull(cart.getCreatedAt());
-        assertNotNull(cart.getUpdatedAt());
-    }
+	@Test
+	void shouldAddProductToCart() {
+		Cart cart = new Cart(cartId, customerId);
+		cart.addProductToCart(productId, productName, quantity, price);
 
-    @Test
-    void shouldThrowExceptionWhenCustomerIdIsNull() {
-        assertThrows(IllegalDomainException.class, () -> new Cart(null));
-    }
+		assertEquals(1, cart.getCartItens().size());
+		assertEquals(new BigDecimal("200.00"), cart.getTotalPrice().getPrice());
+	}
 
-    @Test
-    void shouldAddProductToCart() {
-        cart.addProductToCart("p1", "Product 1", 2, BigDecimal.valueOf(10), TypeCoin.DOLAR);
+	@Test
+	void shouldIncreaseQuantityWhenProductAlreadyExists() {
+		Cart cart = new Cart(cartId, customerId);
+		cart.addProductToCart(productId, productName, new Quantity(1), price);
+		cart.addProductToCart(productId, productName, new Quantity(2), price);
 
-        assertEquals(1, cart.getCartItens().size());
-        assertEquals(BigDecimal.valueOf(20), cart.getTotalPrice().getPrice());
-        assertEquals(TypeCoin.DOLAR, cart.getTotalPrice().getCoin());
-    }
+		assertEquals(1, cart.getCartItens().size());
+		assertEquals(new BigDecimal("300.00"), cart.getTotalPrice().getPrice());
+	}
 
-    @Test
-    void shouldUpdateQuantityProduct() {
-        cart.addProductToCart("p1", "Product 1", 1, BigDecimal.valueOf(5), TypeCoin.DOLAR);
-        cart.updateQuantityProduct("p1",
-                new ProductId("p1"),
-                new Name("Product 1"),
-                new Quantity(3),
-                new Price(BigDecimal.valueOf(5), TypeCoin.DOLAR));
+	@Test
+	void shouldChangeProductQuantity() {
+		Cart cart = new Cart(cartId, customerId);
+		cart.addProductToCart(productId, productName, new Quantity(1), price);
+		cart.changeProductQuantity(productId, new Quantity(5));
 
-        assertEquals(1, cart.getCartItens().size());
-        assertEquals(BigDecimal.valueOf(15), cart.getTotalPrice().getPrice());
-    }
+		assertEquals(new BigDecimal("500.00"), cart.getTotalPrice().getPrice());
+	}
 
-    @Test
-    void shouldThrowExceptionWhenUpdatingWithInvalidData() {
-        assertThrows(IllegalDomainException.class, () ->
-                cart.updateQuantityProduct(null,
-                        new ProductId("p1"),
-                        new Name("Product 1"),
-                        new Quantity(2),
-                        new Price(BigDecimal.valueOf(5), TypeCoin.DOLAR)));
-    }
+	@Test
+	void shouldThrowExceptionWhenChangingQuantityForNonexistentProduct() {
+		Cart cart = new Cart(cartId, customerId);
+		assertThrows(IllegalDomainException.class,
+				() -> cart.changeProductQuantity(new ProductId("invalid"), new Quantity(3)));
+	}
 
-    @Test
-    void shouldRemoveAllProductsFromCart() {
-        cart.addProductToCart("p1", "Product 1", 2, BigDecimal.valueOf(10), TypeCoin.DOLAR);
-        cart.addProductToCart("p2", "Product 2", 1, BigDecimal.valueOf(15), TypeCoin.DOLAR);
+	@Test
+	void shouldRemoveProductFromCart() {
+		Cart cart = new Cart(cartId, customerId);
+		cart.addProductToCart(productId, productName, quantity, price);
+		cart.removeProductFromCart(productId);
 
-        cart.removeAllProductToCart();
+		assertEquals(0, cart.getCartItens().size());
+		assertEquals(BigDecimal.ZERO, cart.getTotalPrice().getPrice());
+	}
 
-        assertTrue(cart.getCartItens().isEmpty());
-        assertEquals(BigDecimal.ZERO, cart.getTotalPrice().getPrice());
-    }
+	@Test
+	void shouldThrowExceptionWhenRemovingNonexistentProduct() {
+		Cart cart = new Cart(cartId, customerId);
+		assertThrows(IllegalDomainException.class, () -> cart.removeProductFromCart(productId));
+	}
 
-    @Test
-    void shouldRemoveSpecificProductFromCart() {
-        cart.addProductToCart("p1", "Product 1", 2, BigDecimal.valueOf(10), TypeCoin.DOLAR);
-        cart.addProductToCart("p2", "Product 2", 1, BigDecimal.valueOf(15), TypeCoin.DOLAR);
+	@Test
+	void shouldRemoveAllProducts() {
+		Cart cart = new Cart(cartId, customerId);
+		cart.addProductToCart(productId, productName, quantity, price);
+		cart.removeAllProducts();
 
-        cart.removeProductToCart("p1");
+		assertEquals(0, cart.getCartItens().size());
+		assertEquals(BigDecimal.ZERO, cart.getTotalPrice().getPrice());
+	}
 
-        assertEquals(1, cart.getCartItens().size());
-        assertEquals("p2", cart.getCartItens().get(0).getProductId().getProductId());
-    }
+	@Test
+	void shouldKeepCreatedAtAndUpdateUpdatedAt() throws InterruptedException {
+		Cart cart = new Cart(cartId, customerId);
+		LocalDateTime createdAt = cart.getCreatedAt();
+		LocalDateTime updatedAtBefore = cart.getUpdatedAt();
 
-    @Test
-    void shouldThrowExceptionWhenRemovingProductWithInvalidId() {
-        assertThrows(IllegalDomainException.class, () -> cart.removeProductToCart(null));
-        assertThrows(IllegalDomainException.class, () -> cart.removeProductToCart(""));
-    }
+		Thread.sleep(10); 
+		cart.addProductToCart(productId, productName, quantity, price);
 
-    @Test
-    void shouldThrowExceptionWhenRemovingProductNotFound() {
-        cart.addProductToCart("p1", "Product 1", 1, BigDecimal.valueOf(10), TypeCoin.DOLAR);
-        assertThrows(IllegalDomainException.class, () -> cart.removeProductToCart("p2"));
-    }
+		assertEquals(createdAt, cart.getCreatedAt());
+		assertTrue(cart.getUpdatedAt().isAfter(updatedAtBefore));
+	}
 }

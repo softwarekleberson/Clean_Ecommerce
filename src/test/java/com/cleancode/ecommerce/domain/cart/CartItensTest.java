@@ -1,70 +1,90 @@
 package com.cleancode.ecommerce.domain.cart;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.math.BigDecimal;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import com.cleancode.ecommerce.cart.domain.CartItens;
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.cleancode.ecommerce.stock.domain.Quantity;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public class CartItensTest {
 
 	private ProductId productId;
 	private Name productName;
 	private Quantity quantity;
 	private Price unitPrice;
-	private CartItens cartItem;
 
 	@BeforeEach
 	void setUp() {
-		productId = new ProductId("prod-1");
-		productName = new Name("Produto Teste");
-		quantity = new Quantity(3);
-		unitPrice = new Price(BigDecimal.valueOf(15), TypeCoin.DOLAR);
-		cartItem = new CartItens(productId, productName, quantity, unitPrice);
+		productId = new ProductId("prod-123");
+		productName = new Name("Smartphone");
+		quantity = new Quantity(2);
+		unitPrice = new Price(new BigDecimal("50.00"), TypeCoin.DOLAR);
 	}
 
 	@Test
-	void shouldCalculateCorrectSubtotal() {
-		Price subtotal = cartItem.getSubtotal();
+	void shouldCreateCartItemSuccessfully() {
+		CartItens item = new CartItens(productId, productName, quantity, unitPrice);
 
-		assertEquals(new BigDecimal("45"), subtotal.getPrice());
+		assertEquals(productId, item.getProductId());
+		assertEquals(productName, item.getProductName());
+		assertEquals(quantity.getQuantity(), item.getQuantity().getQuantity());
+		assertEquals(unitPrice, item.getUnitPrice());
+	}
+
+	@Test
+	void shouldThrowExceptionWhenCreatingCartItemWithNullValues() {
+		assertThrows(IllegalArgumentException.class, () -> new CartItens(null, productName, quantity, unitPrice));
+		assertThrows(IllegalArgumentException.class, () -> new CartItens(productId, null, quantity, unitPrice));
+		assertThrows(IllegalArgumentException.class, () -> new CartItens(productId, productName, null, unitPrice));
+		assertThrows(IllegalArgumentException.class, () -> new CartItens(productId, productName, quantity, null));
+	}
+
+	@Test
+	void shouldCalculateSubtotalCorrectly() {
+		CartItens item = new CartItens(productId, productName, quantity, unitPrice);
+		Price subtotal = item.calculateSubtotal();
+
+		assertEquals(new BigDecimal("100.00"), subtotal.getPrice());
 		assertEquals(TypeCoin.DOLAR, subtotal.getCoin());
 	}
 
 	@Test
-	void shouldRecalculateSubtotalWhenCalled() {
-		Price newPrice = cartItem.calculeteSubtotal();
-		assertEquals(new BigDecimal("45"), newPrice.getPrice());
+	void shouldIncreaseQuantityCorrectly() {
+		CartItens item = new CartItens(productId, productName, quantity, unitPrice);
+		item.increaseQuantity(new Quantity(3));
+
+		assertEquals(5, item.getQuantity().getQuantity());
+		assertEquals(new BigDecimal("250.00"), item.getSubtotal().getPrice());
 	}
 
 	@Test
-	void shouldReturnCorrectProductId() {
-		assertEquals(productId, cartItem.getProductId());
-		assertEquals("prod-1", cartItem.getProductId().getProductId());
+	void shouldThrowExceptionWhenIncreaseQuantityWithNonPositive() {
+		CartItens item = new CartItens(productId, productName, quantity, unitPrice);
+		assertThrows(IllegalDomainException.class, () -> item.increaseQuantity(new Quantity(0)));
+		assertThrows(IllegalDomainException.class, () -> item.increaseQuantity(new Quantity(-2)));
 	}
 
 	@Test
-	void shouldReturnCorrectProductName() {
-		assertEquals(productName, cartItem.getProductName());
-		assertEquals("Produto Teste", cartItem.getProductName().getName());
+	void shouldChangeQuantityCorrectly() {
+		CartItens item = new CartItens(productId, productName, quantity, unitPrice);
+		item.changeQuantity(new Quantity(10));
+
+		assertEquals(10, item.getQuantity().getQuantity());
+		assertEquals(new BigDecimal("500.00"), item.getSubtotal().getPrice());
 	}
 
 	@Test
-	void shouldReturnCorrectQuantity() {
-		assertEquals(quantity, cartItem.getQuantity());
-		assertEquals(3, cartItem.getQuantity().getQuantity());
-	}
-
-	@Test
-	void shouldReturnCorrectUnitPrice() {
-		assertEquals(unitPrice, cartItem.getUnitPrice());
-		assertEquals(new BigDecimal("15"), cartItem.getUnitPrice().getPrice());
+	void shouldThrowExceptionWhenChangeQuantityToInvalidValue() {
+		CartItens item = new CartItens(productId, productName, quantity, unitPrice);
+		assertThrows(IllegalDomainException.class, () -> item.changeQuantity(new Quantity(0)));
+		assertThrows(IllegalDomainException.class, () -> item.changeQuantity(new Quantity(-1)));
 	}
 }
