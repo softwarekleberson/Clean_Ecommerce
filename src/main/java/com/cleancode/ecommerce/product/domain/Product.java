@@ -61,14 +61,10 @@ public abstract class Product {
 		this.price = new Price(price, coin);
 	}
 
-	public void reviseDetails(String newDescription, String newName, BigDecimal newPrice, TypeCoin typeCoin) {
+	public void reviseDetails(String newDescription, String newName) {
 
 		if (newName != null && !newName.isBlank()) {
 			this.name = new Name(newName);
-		}
-
-		if (newPrice != null) {
-			this.price = new Price(newPrice, typeCoin);
 		}
 
 		if (newDescription != null && !newDescription.isBlank()) {

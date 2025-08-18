@@ -12,6 +12,8 @@ import com.cleancode.ecommerce.product.application.useCase.ListAllProduct;
 import com.cleancode.ecommerce.product.application.useCase.ListAllProductImpl;
 import com.cleancode.ecommerce.product.application.useCase.ListProduct;
 import com.cleancode.ecommerce.product.application.useCase.ListProductImpl;
+import com.cleancode.ecommerce.product.application.useCase.ReviseDetails;
+import com.cleancode.ecommerce.product.application.useCase.ReviseDetailsImpl;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 
 @Configuration
@@ -20,6 +22,11 @@ public class ProductConfig {
 	@Bean
 	public CreateProduct createProduct(ProductRepository productRepository, EventPublisher eventPublisher) {
 		return new CreateProductImpl(productRepository, eventPublisher);
+	}
+	
+	@Bean
+	public ReviseDetails reviseDetails(ProductRepository productRepository) {
+		return new ReviseDetailsImpl(productRepository);
 	}
 
 	@Bean
