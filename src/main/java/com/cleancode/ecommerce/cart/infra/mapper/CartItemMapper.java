@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.cart.infra.mapper;
 
+import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.CartItens;
 import com.cleancode.ecommerce.cart.infra.persistence.CartEntity;
 import com.cleancode.ecommerce.cart.infra.persistence.CartItemEntity;
@@ -14,6 +15,7 @@ public class CartItemMapper {
 
 	public static CartItemEntity toEntity(CartItens item, CartEntity cartEntity) {
 		CartItemEntity entity = new CartItemEntity();
+		entity.setCart_item(item.getCartItemId().getCartItemId());
 		entity.setCart(cartEntity);
 		entity.setProduct_id(item.getProductId().getProductId());
 		entity.setProduct_name(item.getProductName().getName());
@@ -25,7 +27,7 @@ public class CartItemMapper {
 	}
 
 	public static CartItens toDomain(CartItemEntity entity) {
-		return new CartItens(new ProductId(entity.getProduct_id()), new Name(entity.getProduct_name()),
+		return new CartItens(new CartItemId(entity.getCart_item()) ,new ProductId(entity.getProduct_id()), new Name(entity.getProduct_name()),
 				new Quantity(entity.getQuantity()),
 				new Price(entity.getUnit_price(), TypeCoin.valueOf(entity.getCoin().name())));
 	}

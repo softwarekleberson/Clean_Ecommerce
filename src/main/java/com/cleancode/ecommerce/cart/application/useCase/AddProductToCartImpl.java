@@ -8,6 +8,7 @@ import com.cleancode.ecommerce.cart.application.service.ValidateProductHasStock;
 import com.cleancode.ecommerce.cart.application.useCase.contract.AddProductToCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartId;
+import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
@@ -50,10 +51,10 @@ public class AddProductToCartImpl implements AddProductToCart {
 		Stock stockAfterReservation = validateProduct.reserve(stock, dto.getQuantity(), customer.getId().getValue(),
 				cart.getCartId().getCartId());
 
-		cart.addProductToCart(new ProductId(product.getProductId().getProductId()),
+		cart.addProductToCart(new CartItemId(), new ProductId(product.getProductId().getProductId()),
 				new Name(product.getName().getName()), new Quantity(dto.getQuantity()),
 				new Price(product.getPrice().getPrice(), product.getPrice().getCoin()));
-		
+
 		stockRepository.save(stockAfterReservation);
 		cartRepository.save(cart);
 		return new ListCartDto(cart);
@@ -61,7 +62,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 
 	private Cart getCartOrCreate(CreateCartDto dto) {
 		Cart cart = cartRepository.getCartCustomer(dto.getCustomerId()).orElseGet(() -> {
-			Cart newCart = new Cart(new CartId(UUID.randomUUID().toString()) ,new CustomerId(dto.getCustomerId()));
+			Cart newCart = new Cart(new CartId(UUID.randomUUID().toString()), new CustomerId(dto.getCustomerId()));
 			cartRepository.save(newCart);
 			return newCart;
 		});

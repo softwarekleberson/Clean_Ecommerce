@@ -2,7 +2,6 @@ package com.cleancode.ecommerce.cart.infra.persistence;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -25,7 +24,7 @@ import lombok.Setter;
 public class CartItemEntity {
 
 	@Id
-	private String cart_item = UUID.randomUUID().toString();
+	private String cart_item;
 
 	private String product_id;
 	private String product_name;

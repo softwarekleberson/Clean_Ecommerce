@@ -9,16 +9,18 @@ import com.cleancode.ecommerce.stock.domain.Quantity;
 
 public class CartItens {
 
+	private final CartItemId cartItemId;
     private final ProductId productId;
     private final Name productName;
     private Quantity quantity;  
     private final Price unitPrice;
 
-    public CartItens(ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
-        if (productId == null || productName == null || quantity == null || unitPrice == null) {
+    public CartItens(CartItemId cartItemId, ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
+        if (cartItemId == null || productId == null || productName == null || quantity == null || unitPrice == null) {
             throw new IllegalArgumentException("Product data cannot be null");
         }
 
+        this.cartItemId = cartItemId;
         this.productId = productId;
         this.productName = productName;
         this.quantity = quantity;
@@ -44,6 +46,10 @@ public class CartItens {
         }
         this.quantity = newQuantity;
     }
+    
+    public CartItemId getCartItemId() {
+		return cartItemId;
+	}
 
     public ProductId getProductId() {
         return productId;

@@ -63,29 +63,29 @@ public class Cart {
         this.totalPrice = new Price(total, coin);
     }
 
-    public void addProductToCart(ProductId productId, Name name, Quantity quantity, Price unitPrice) {
+    public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, Quantity quantity, Price unitPrice) {
         if (productId == null || name == null || quantity == null || unitPrice == null) {
             throw new IllegalDomainException("Product data cannot be null");
         }
 
-        CartItens existingItem = findItemByProductId(productId);
+        CartItens existingItem = findItemByCartItem(cartItemId);
 
         if (existingItem != null) {
             existingItem.increaseQuantity(quantity);
         } else {
-            cartItens.add(new CartItens(productId, name, quantity, unitPrice));
+            cartItens.add(new CartItens(cartItemId ,productId, name, quantity, unitPrice));
         }
 
         recalculateTotalPrice();
         this.updatedAt = LocalDateTime.now();        
     }
 
-    public void changeProductQuantity(ProductId productId, Quantity newQuantity) {
-        if (productId == null || newQuantity == null) {
+    public void changeProductQuantity(CartItemId cartItemId, Quantity newQuantity) {
+        if (cartItemId == null || newQuantity == null) {
             throw new IllegalDomainException("Product ID and quantity cannot be null");
         }
 
-        CartItens item = findItemByProductId(productId);
+        CartItens item = findItemByCartItem(cartItemId);
 
         if (item == null) {
             throw new IllegalDomainException("Product not found in cart");
@@ -117,9 +117,9 @@ public class Cart {
         this.updatedAt = LocalDateTime.now();
     }
 
-    private CartItens findItemByProductId(ProductId productId) {
+    private CartItens findItemByCartItem(CartItemId cartItemId) {
         return cartItens.stream()
-                .filter(c -> c.getProductId().equals(productId))
+                .filter(c -> c.getCartItemId().equals(cartItemId))
                 .findFirst()
                 .orElse(null);
     }

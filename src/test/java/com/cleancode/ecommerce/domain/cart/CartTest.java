@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.cart.domain.Cart;
 import com.cleancode.ecommerce.cart.domain.CartId;
+import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
@@ -20,6 +21,7 @@ import com.cleancode.ecommerce.stock.domain.Quantity;
 
 public class CartTest {
 
+	private CartItemId cartItemId;
 	private CartId cartId;
 	private CustomerId customerId;
 	private ProductId productId;
@@ -29,6 +31,7 @@ public class CartTest {
 
 	@BeforeEach
 	void setUp() {
+		cartItemId = new CartItemId("cartItemId-123");
 		cartId = new CartId("cart-123");
 		customerId = new CustomerId("cust-123");
 		productId = new ProductId("prod-123");
@@ -53,7 +56,7 @@ public class CartTest {
 	@Test
 	void shouldAddProductToCart() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(productId, productName, quantity, price);
+		cart.addProductToCart(cartItemId, productId, productName, quantity, price);
 
 		assertEquals(1, cart.getCartItens().size());
 		assertEquals(new BigDecimal("200.00"), cart.getTotalPrice().getPrice());
@@ -62,8 +65,8 @@ public class CartTest {
 	@Test
 	void shouldIncreaseQuantityWhenProductAlreadyExists() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(productId, productName, new Quantity(1), price);
-		cart.addProductToCart(productId, productName, new Quantity(2), price);
+		cart.addProductToCart(cartItemId, productId, productName, new Quantity(1), price);
+		cart.addProductToCart(cartItemId, productId, productName, new Quantity(2), price);
 
 		assertEquals(1, cart.getCartItens().size());
 		assertEquals(new BigDecimal("300.00"), cart.getTotalPrice().getPrice());
@@ -72,8 +75,8 @@ public class CartTest {
 	@Test
 	void shouldChangeProductQuantity() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(productId, productName, new Quantity(1), price);
-		cart.changeProductQuantity(productId, new Quantity(5));
+		cart.addProductToCart(cartItemId, productId, productName, new Quantity(1), price);
+		cart.changeProductQuantity(cartItemId, new Quantity(5));
 
 		assertEquals(new BigDecimal("500.00"), cart.getTotalPrice().getPrice());
 	}
@@ -82,13 +85,13 @@ public class CartTest {
 	void shouldThrowExceptionWhenChangingQuantityForNonexistentProduct() {
 		Cart cart = new Cart(cartId, customerId);
 		assertThrows(IllegalDomainException.class,
-				() -> cart.changeProductQuantity(new ProductId("invalid"), new Quantity(3)));
+				() -> cart.changeProductQuantity(new CartItemId("invalid"), new Quantity(3)));
 	}
 
 	@Test
 	void shouldRemoveProductFromCart() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(productId, productName, quantity, price);
+		cart.addProductToCart(cartItemId, productId, productName, quantity, price);
 		cart.removeProductFromCart(productId);
 
 		assertEquals(0, cart.getCartItens().size());
@@ -104,7 +107,7 @@ public class CartTest {
 	@Test
 	void shouldRemoveAllProducts() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(productId, productName, quantity, price);
+		cart.addProductToCart(cartItemId, productId, productName, quantity, price);
 		cart.removeAllProducts();
 
 		assertEquals(0, cart.getCartItens().size());
@@ -118,7 +121,7 @@ public class CartTest {
 		LocalDateTime updatedAtBefore = cart.getUpdatedAt();
 
 		Thread.sleep(10); 
-		cart.addProductToCart(productId, productName, quantity, price);
+		cart.addProductToCart(cartItemId, productId, productName, quantity, price);
 
 		assertEquals(createdAt, cart.getCreatedAt());
 		assertTrue(cart.getUpdatedAt().isAfter(updatedAtBefore));
