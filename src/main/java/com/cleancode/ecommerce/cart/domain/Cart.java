@@ -13,6 +13,7 @@ import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.cleancode.ecommerce.stock.domain.Quantity;
+import com.cleancode.ecommerce.stock.domain.ReservationId;
 
 public class Cart {
 
@@ -63,7 +64,7 @@ public class Cart {
         this.totalPrice = new Price(total, coin);
     }
 
-    public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, Quantity quantity, Price unitPrice) {
+    public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, Quantity quantity, Price unitPrice, ReservationId reservationId) {
         if (productId == null || name == null || quantity == null || unitPrice == null) {
             throw new IllegalDomainException("Product data cannot be null");
         }
@@ -73,7 +74,7 @@ public class Cart {
         if (existingItem != null) {
             existingItem.increaseQuantity(quantity);
         } else {
-            cartItens.add(new CartItens(cartItemId ,productId, name, quantity, unitPrice));
+            cartItens.add(new CartItens(cartItemId ,productId, name, quantity, unitPrice, reservationId));
         }
 
         recalculateTotalPrice();

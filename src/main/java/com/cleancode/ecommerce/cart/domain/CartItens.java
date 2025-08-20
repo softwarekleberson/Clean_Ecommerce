@@ -6,6 +6,7 @@ import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.stock.domain.Quantity;
+import com.cleancode.ecommerce.stock.domain.ReservationId;
 
 public class CartItens {
 
@@ -14,9 +15,10 @@ public class CartItens {
     private final Name productName;
     private Quantity quantity;  
     private final Price unitPrice;
+    private final ReservationId reservationId;
 
-    public CartItens(CartItemId cartItemId, ProductId productId, Name productName, Quantity quantity, Price unitPrice) {
-        if (cartItemId == null || productId == null || productName == null || quantity == null || unitPrice == null) {
+    public CartItens(CartItemId cartItemId, ProductId productId, Name productName, Quantity quantity, Price unitPrice, ReservationId reservationId) {
+        if (cartItemId == null || productId == null || productName == null || quantity == null || unitPrice == null || reservationId == null) {
             throw new IllegalArgumentException("Product data cannot be null");
         }
 
@@ -25,6 +27,7 @@ public class CartItens {
         this.productName = productName;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
+        this.reservationId = reservationId;
     }
 
     public Price calculateSubtotal() {
@@ -54,6 +57,10 @@ public class CartItens {
     public ProductId getProductId() {
         return productId;
     }
+    
+    public String getReservationId() {
+		return reservationId.getReservationId();
+	}
 
     public Name getProductName() {
         return productName;

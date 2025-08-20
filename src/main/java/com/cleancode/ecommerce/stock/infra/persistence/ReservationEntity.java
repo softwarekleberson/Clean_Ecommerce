@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.stock.infra.persistence;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -26,7 +25,7 @@ import lombok.ToString;
 public class ReservationEntity {
 
 	@Id
-	private String reservation_id = UUID.randomUUID().toString();
+	private String reservation_id;
 	
 	private String cart_id;	
 	private String customer_id;

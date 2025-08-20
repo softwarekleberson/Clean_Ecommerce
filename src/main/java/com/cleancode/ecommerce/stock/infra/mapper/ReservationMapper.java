@@ -13,6 +13,7 @@ public class ReservationMapper {
 	
 	public static ReservationEntity toEntity (Reservations domain, StockEntity stockEntity) {
 		ReservationEntity entity = new ReservationEntity();
+		entity.setReservation_id(domain.getReservationId());
 		entity.setCart_id(domain.getCartId().getCartId());
 		entity.setCustomer_id(domain.getCustomerId().getValue());
 		entity.setQuantity(domain.getQuantity().getQuantity());

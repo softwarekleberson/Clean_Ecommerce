@@ -7,6 +7,7 @@ import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
 public record ListCartItensDto(
 
+		String reservationId,
 		String cartItemId,
 		String productId,
 		String productName,
@@ -18,7 +19,8 @@ public record ListCartItensDto(
 							) {
 
 	public ListCartItensDto(CartItens itens) {
-		this(itens.getCartItemId().getCartItemId(),
+		this(itens.getReservationId(),
+			 itens.getCartItemId().getCartItemId(),
 			 itens.getProductId().getProductId(),
 			 itens.getProductName().getName(),
 			 itens.getQuantity().getQuantity(),

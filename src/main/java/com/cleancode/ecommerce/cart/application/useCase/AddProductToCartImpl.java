@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
 import com.cleancode.ecommerce.cart.application.dtos.output.ListCartDto;
+import com.cleancode.ecommerce.cart.application.service.ReservationResult;
 import com.cleancode.ecommerce.cart.application.service.ValidateProductHasStock;
 import com.cleancode.ecommerce.cart.application.useCase.contract.AddProductToCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
@@ -20,6 +21,7 @@ import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
 import com.cleancode.ecommerce.stock.domain.Quantity;
+import com.cleancode.ecommerce.stock.domain.ReservationId;
 import com.cleancode.ecommerce.stock.domain.Stock;
 import com.cleancode.ecommerce.stock.domain.repository.StockRepository;
 
@@ -48,14 +50,20 @@ public class AddProductToCartImpl implements AddProductToCart {
 		Stock stock = findStock(dto, product);
 		Cart cart = getCartOrCreate(dto);
 
-		Stock stockAfterReservation = validateProduct.reserve(stock, dto.getQuantity(), customer.getId().getValue(),
-				cart.getCartId().getCartId());
+		ReservationResult stockAfterReservation = 
+		validateProduct.reserve(stock, dto.getQuantity(),
+		customer.getId().getValue(),
+		cart.getCartId().getCartId());
+		
+		cart.addProductToCart(
+				new CartItemId(),
+				new ProductId(product.getProductId().getProductId()),
+				new Name(product.getName().getName()),
+				new Quantity(dto.getQuantity()),
+				new Price(product.getPrice().getPrice(), product.getPrice().getCoin()),
+				new ReservationId(stockAfterReservation.reservationId()));
 
-		cart.addProductToCart(new CartItemId(), new ProductId(product.getProductId().getProductId()),
-				new Name(product.getName().getName()), new Quantity(dto.getQuantity()),
-				new Price(product.getPrice().getPrice(), product.getPrice().getCoin()));
-
-		stockRepository.save(stockAfterReservation);
+		stockRepository.save(stockAfterReservation.stock());
 		cartRepository.save(cart);
 		return new ListCartDto(cart);
 	}

@@ -24,7 +24,7 @@ import lombok.Setter;
 public class CartItemEntity {
 
 	@Id
-	private String cart_item;
+	private String cart_item_id;
 
 	private String product_id;
 	private String product_name;
@@ -35,6 +35,8 @@ public class CartItemEntity {
 	private TypeCoinEntity coin;
 
 	private BigDecimal subtotal;
+	
+	private String reservation_id;
 
 	@ManyToOne
 	@JoinColumn(name = "cart_id")
@@ -42,7 +44,7 @@ public class CartItemEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cart, cart_item, product_id, product_name, quantity, coin, unit_price, subtotal);
+		return Objects.hash(cart, cart_item_id, product_id, product_name, quantity, coin, unit_price, subtotal);
 	}
 
 	@Override
@@ -53,7 +55,7 @@ public class CartItemEntity {
 			return false;
 		CartItemEntity other = (CartItemEntity) obj;
 		return quantity == other.quantity && Objects.equals(cart, other.cart)
-				&& Objects.equals(cart_item, other.cart_item) && Objects.equals(product_id, other.product_id)
+				&& Objects.equals(cart_item_id, other.cart_item_id) && Objects.equals(product_id, other.product_id)
 				&& Objects.equals(product_name, other.product_name) && Objects.equals(unit_price, other.unit_price)
 				&& Objects.equals(subtotal, other.subtotal) && coin == other.coin;
 	}

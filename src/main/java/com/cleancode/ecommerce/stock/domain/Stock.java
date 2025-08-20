@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
@@ -63,14 +62,14 @@ public class Stock {
 			throw new IllegalDomainException("Insufficient stock");
 		}
 
-		Reservations reservation = new Reservations(UUID.randomUUID().toString() ,customerId, cartId, quantity);
+		Reservations reservation = new Reservations(cartId ,customerId, quantity);
 		this.quantityAvailable -= quantity;
 		this.reservations.add(reservation);
 		return reservation;
 	}
 
 	public void cancelReservation(String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getId().equals(reservationId))
+		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
 				.findFirst().orElseThrow(() -> new IllegalDomainException("Reservation not found"));
 
 		reservation.cancel();
@@ -80,7 +79,7 @@ public class Stock {
 	public void confirmOrder(String orderId, String productId ,String reservationId) {
 		Reservations reservation = reservations.stream()
 
-				.filter(r -> r.getId().equals(reservationId)).findFirst()
+				.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Reservation not found"));
 
 		reservation.confirmOrder();
@@ -91,7 +90,7 @@ public class Stock {
 	
 	public Reservations getReservationId(String reservationId) {
 		Reservations reservation = reservations.stream()
-		.filter(r -> r.getId().equals(reservationId)).findFirst()
+		.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
 		.orElseThrow(() -> new IllegalDomainException("Reservation not found"));
 
 		return reservation;
