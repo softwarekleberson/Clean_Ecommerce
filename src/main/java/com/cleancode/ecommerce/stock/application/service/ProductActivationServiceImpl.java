@@ -5,12 +5,14 @@ import com.cleancode.ecommerce.stock.domain.Stock;
 
 public class ProductActivationServiceImpl implements ProductActivationService {
 
+	private final int INVENTORY_CONTROL = 0;
+	
 	public Product activateProductIfStockAvailable(Product product, Stock stock) {
 
-		if (stock.getTotalQuantity() > 0) {
+		if (stock.getTotalQuantity() > INVENTORY_CONTROL) {
 			product.activate();
-		} else {
-			product.deactivate();
+		} else if (stock.getTotalQuantity() <= INVENTORY_CONTROL) {
+			product.productStatusPolicyAutomaticDeactivation();
 		}
 		return product;
 	}
