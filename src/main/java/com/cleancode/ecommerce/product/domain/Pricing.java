@@ -19,7 +19,7 @@ public class Pricing {
 
 		this.pricing = pricing;
 	}
-
+	
 	public BigDecimal getPricing() {
 		return pricing;
 	}

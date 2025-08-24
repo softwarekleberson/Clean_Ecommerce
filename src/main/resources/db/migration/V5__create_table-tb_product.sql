@@ -9,6 +9,8 @@ CREATE TABLE tb_product (
     category VARCHAR(50) NOT NULL COMMENT 'Category to which the product belongs',
     brand VARCHAR(255) NOT NULL COMMENT 'Brand of the product',
     pricing DECIMAL(19,2) NOT NULL COMMENT 'Purchase or production cost of the product',
+    justification VARCHAR(255) COMMENT 'justification for product activation and inactivation', 
+    product_status VARCHAR(50) COMMENT 'Activation or inactivation category',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation timestamp',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Record last update timestamp'
 );

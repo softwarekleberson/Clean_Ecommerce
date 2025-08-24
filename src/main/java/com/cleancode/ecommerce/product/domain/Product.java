@@ -21,7 +21,8 @@ public abstract class Product {
 	protected final Brand brand;
 	protected List<Midia> midias = new LinkedList<>();
 	protected Pricing pricing;
-	
+	protected ProductStatusPolicy productStatusPolicy;
+
 	public Product(Name name, Description description, Price price, ProductCategory category, Brand brand,
 			List<Midia> midias, Pricing pricing) {
 
@@ -57,8 +58,27 @@ public abstract class Product {
 		this.active = false;
 	}
 
-	public void productSalesValue (BigDecimal price, TypeCoin coin) {
-		this.price = new Price(price, coin);
+	public void productStatusPolicyActivation(String justification, ProductStatusCategory category) {
+		this.productStatusPolicy = ProductStatusPolicy.activation(justification, category);
+		this.active = true;
+	}
+
+	public void productStatusPolicyManualDeactivation(String justification, ProductStatusCategory category) {
+		this.productStatusPolicy = ProductStatusPolicy.manualDeactivation(justification, category);
+		this.active = false;
+	}
+
+	public void productStatusPolicyAutomaticDeactivation() {
+		this.productStatusPolicy = ProductStatusPolicy.automaticDeactivation();
+		this.active = false;
+	}
+
+	public void salePriceWithinMarginPolicy(BigDecimal pricing, BigDecimal highestPurchasePrice, TypeCoin typeCoin) {
+		this.price = Price.salePriceWithinMarginPolicy(pricing, highestPurchasePrice, typeCoin);
+	}
+	
+	public void aboveMarginSalesPricePolicy (BigDecimal newPrice) {
+		this.price = Price.PriceAboveMarginProfit(this.price.getPrice(), newPrice, this.price.getCoin());
 	}
 
 	public void reviseDetails(String newDescription, String newName) {
@@ -92,6 +112,10 @@ public abstract class Product {
 
 		this.midias.removeIf(m -> m.getId().equals(id));
 	}
+	
+	public ProductStatusPolicy getProductStatusPolicy() {
+		return productStatusPolicy;
+	}
 
 	public ProductId getProductId() {
 		return productId;
@@ -124,7 +148,7 @@ public abstract class Product {
 	public List<Midia> getMidia() {
 		return Collections.unmodifiableList(this.midias);
 	}
-	
+
 	public Pricing getPricing() {
 		return pricing;
 	}

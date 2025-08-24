@@ -15,6 +15,7 @@ import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.bag.BagEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductCategoryEntity;
+import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductStatusCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.TypeCoinEntity;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
@@ -47,6 +48,14 @@ public class BagMapper {
 
 		entity.setMidias(imageEntities);
 		entity.setPricing(domain.getPricing().getPricing());
+		if (domain.getProductStatusPolicy() != null) {
+			entity.setJustification(domain.getProductStatusPolicy().getJustification());
+
+			if (domain.getProductStatusPolicy().getCategory() != null) {
+				entity.setProduct_status(
+						ProductStatusCategoryEntity.valueOf(domain.getProductStatusPolicy().getCategory().name()));
+			}
+		}
 
 		entity.setVolume(domain.getVolume().getVolume());
 		entity.setColor(domain.getColor().getColor());
@@ -59,7 +68,7 @@ public class BagMapper {
 				new Description(entity.getDescription()),
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getType_coin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
-				MidiaInputMapper.toMidiaList(entity.getMidias()),
-				new Pricing(entity.getPricing()), new Volume(entity.getVolume()), new Color(entity.getColor()));
+				MidiaInputMapper.toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()),
+				new Volume(entity.getVolume()), new Color(entity.getColor()));
 	}
 }

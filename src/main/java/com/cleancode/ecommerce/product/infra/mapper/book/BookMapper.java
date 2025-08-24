@@ -21,6 +21,7 @@ import com.cleancode.ecommerce.product.infra.mapper.MidiaInputMapper;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.book.BookEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.MidiaEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductCategoryEntity;
+import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductStatusCategoryEntity;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.TypeCoinEntity;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
@@ -34,8 +35,8 @@ public class BookMapper {
 				new Price(entity.getPrice(), TypeCoin.valueOf(entity.getType_coin().name())),
 				ProductCategory.valueOf(entity.getCategory().name()), new Brand(entity.getBrand()),
 				MidiaInputMapper.toMidiaList(entity.getMidias()), new Pricing(entity.getPricing()),
-				new Synopsis(entity.getSynopsis()), new Page(entity.getPage()),
-				new Author(entity.getAuthor()), new Edition(entity.getEdition()), new Isbn(entity.getIsbn()),
+				new Synopsis(entity.getSynopsis()), new Page(entity.getPage()), new Author(entity.getAuthor()),
+				new Edition(entity.getEdition()), new Isbn(entity.getIsbn()),
 				CategoryBook.valueOf(entity.getCategoryBook().name()),
 				new Dimension(entity.getHeight(), entity.getWidth(), entity.getLength(), entity.getWeight()),
 				new PublisherDate(entity.getPublisherDate()));
@@ -61,6 +62,14 @@ public class BookMapper {
 			return imageEntity;
 		}).collect(Collectors.toList());
 		entity.setMidias(imageEntities);
+		if (domain.getProductStatusPolicy() != null) {
+			entity.setJustification(domain.getProductStatusPolicy().getJustification());
+
+			if (domain.getProductStatusPolicy().getCategory() != null) {
+				entity.setProduct_status(
+						ProductStatusCategoryEntity.valueOf(domain.getProductStatusPolicy().getCategory().name()));
+			}
+		}
 
 		entity.setPricing(domain.getPricing().getPricing());
 		entity.setSynopsis(domain.getSynopsis().getSynopsis());

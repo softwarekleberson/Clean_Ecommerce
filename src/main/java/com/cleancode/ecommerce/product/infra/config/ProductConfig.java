@@ -4,10 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.event.EventPublisher;
+import com.cleancode.ecommerce.product.application.useCase.ManualProductActivation;
+import com.cleancode.ecommerce.product.application.useCase.ManualProductActivationImpl;
 import com.cleancode.ecommerce.product.application.useCase.CreateProduct;
 import com.cleancode.ecommerce.product.application.useCase.CreateProductImpl;
-import com.cleancode.ecommerce.product.application.useCase.DeactivateProduct;
-import com.cleancode.ecommerce.product.application.useCase.DeactivateProductImpl;
+import com.cleancode.ecommerce.product.application.useCase.IncreaseSellingPriceAboveProfitMargin;
+import com.cleancode.ecommerce.product.application.useCase.IncreaseSellingPriceAboveProfitMarginImpl;
+import com.cleancode.ecommerce.product.application.useCase.ManualProductDeactivation;
+import com.cleancode.ecommerce.product.application.useCase.ManualProductDeactivationImpl;
 import com.cleancode.ecommerce.product.application.useCase.ListAllProduct;
 import com.cleancode.ecommerce.product.application.useCase.ListAllProductImpl;
 import com.cleancode.ecommerce.product.application.useCase.ListProduct;
@@ -28,6 +32,11 @@ public class ProductConfig {
 	public ReviseDetails reviseDetails(ProductRepository productRepository) {
 		return new ReviseDetailsImpl(productRepository);
 	}
+	
+	@Bean
+	public IncreaseSellingPriceAboveProfitMargin increaseSelling (ProductRepository productRepository) {
+		return new IncreaseSellingPriceAboveProfitMarginImpl(productRepository);
+	}
 
 	@Bean
 	public ListAllProduct listAllProduct(ProductRepository productRepository) {
@@ -40,7 +49,12 @@ public class ProductConfig {
 	}
 	
 	@Bean
-	public DeactivateProduct deactivateProduct (ProductRepository productRepository, EventPublisher eventPublisher) {
-		return new DeactivateProductImpl(productRepository, eventPublisher);
+	public ManualProductDeactivation deactivateProduct (ProductRepository productRepository, EventPublisher eventPublisher) {
+		return new ManualProductDeactivationImpl(productRepository, eventPublisher);
+	}
+	
+	@Bean
+	public ManualProductActivation activateManually (ProductRepository productRepository) {
+		return new ManualProductActivationImpl(productRepository);
 	}
 }
