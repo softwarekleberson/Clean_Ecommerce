@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.stock.domain.Stock;
 
 public interface ValidateProductHasStock {
 
-	public ReservationResult reserve (Stock stock, int quantity, String customerId, String cartId);
+	public ReservationResultDto reserve (Stock stock, int quantity, String customerId, String cartId);
 }

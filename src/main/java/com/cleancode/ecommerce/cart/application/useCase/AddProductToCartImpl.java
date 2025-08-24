@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
 import com.cleancode.ecommerce.cart.application.dtos.output.ListCartDto;
-import com.cleancode.ecommerce.cart.application.service.ReservationResult;
+import com.cleancode.ecommerce.cart.application.service.ReservationResultDto;
 import com.cleancode.ecommerce.cart.application.service.ValidateProductHasStock;
 import com.cleancode.ecommerce.cart.application.useCase.contract.AddProductToCart;
 import com.cleancode.ecommerce.cart.domain.Cart;
@@ -50,7 +50,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 		Stock stock = findStock(dto, product);
 		Cart cart = getCartOrCreate(dto);
 
-		ReservationResult stockAfterReservation = 
+		ReservationResultDto stockAfterReservation = 
 		validateProduct.reserve(stock, dto.getQuantity(),
 		customer.getId().getValue(),
 		cart.getCartId().getCartId());
