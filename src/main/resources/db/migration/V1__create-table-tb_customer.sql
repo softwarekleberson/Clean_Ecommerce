@@ -12,7 +12,6 @@ CREATE TABLE tb_customer (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Record creation timestamp',
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Record last update timestamp',
     
-    CONSTRAINT uq_tb_customer_cpf UNIQUE (cpf),
     CONSTRAINT uq_tb_customer_email UNIQUE (email)
 );
 
