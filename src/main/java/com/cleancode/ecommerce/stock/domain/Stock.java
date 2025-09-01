@@ -8,6 +8,7 @@ import java.util.Objects;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Price;
+import com.cleancode.ecommerce.stock.domain.exception.IllegalReservationException;
 
 public class Stock {
 
@@ -59,7 +60,7 @@ public class Stock {
 
 	public Reservations reservation(String cartId, String customerId, int quantity) {
 		if (quantity > this.quantityAvailable) {
-			throw new IllegalDomainException("Insufficient stock");
+			throw new IllegalReservationException("Insufficient stock");
 		}
 
 		Reservations reservation = new Reservations(cartId ,customerId, quantity);
@@ -70,7 +71,7 @@ public class Stock {
 
 	public void cancelReservation(String reservationId) {
 		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
-				.findFirst().orElseThrow(() -> new IllegalDomainException("Reservation not found"));
+				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
 
 		reservation.cancel();
 		this.quantityAvailable += reservation.getQuantity().getQuantity();
@@ -78,9 +79,8 @@ public class Stock {
 
 	public void confirmOrder(String orderId, String productId ,String reservationId) {
 		Reservations reservation = reservations.stream()
-
-				.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
-				.orElseThrow(() -> new IllegalDomainException("Reservation not found"));
+		.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
+		.orElseThrow(() -> new IllegalReservationException("Reservation not found"));
 
 		reservation.confirmOrder();
 
@@ -91,7 +91,7 @@ public class Stock {
 	public Reservations getReservationId(String reservationId) {
 		Reservations reservation = reservations.stream()
 		.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
-		.orElseThrow(() -> new IllegalDomainException("Reservation not found"));
+		.orElseThrow(() -> new IllegalReservationException("Reservation not found"));
 
 		return reservation;
 	}

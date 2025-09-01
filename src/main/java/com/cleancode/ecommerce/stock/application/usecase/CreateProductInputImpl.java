@@ -34,7 +34,7 @@ public class CreateProductInputImpl implements CreateProductInput{
 		Stock stock = repository.getStock(dto.getProductId()).orElseThrow(() -> new IllegalDomainException("Stock with id:" + dto.getProductId() + " not found "));
 		stock.addProductInput(dto.getQuantity(), dto.getProductQuality(), new Price(dto.getPurchasePrice(), dto.getCoin()), dto.getSupplier());
 
-		Product product = productRepository.listProduct(dto.getProductId())
+		Product product = productRepository.ListActiveProduct(dto.getProductId())
 	    .orElseThrow(() -> new IllegalDomainException("Product with id : " + dto.getProductId() + "not found"));
 		
 		product = service.activateProductIfStockAvailable(product, stock);

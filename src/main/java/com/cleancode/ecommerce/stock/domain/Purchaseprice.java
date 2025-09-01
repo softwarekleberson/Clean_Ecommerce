@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.stock.domain;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
 public class Purchaseprice {
 
@@ -10,7 +10,7 @@ public class Purchaseprice {
 
 	public Purchaseprice(BigDecimal purchasePrice) {
 		if (purchasePrice.compareTo(BigDecimal.ZERO) <= 0) {
-			throw new IllegalDomainException("the value purchase price need positive");
+			throw new IllegalStockException("the value purchase price need positive");
 		}
 
 		this.purchasePrice = purchasePrice;
