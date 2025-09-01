@@ -1,62 +1,102 @@
-package com.cleancode.ecommerce.customer.domain.card;
+package com.cleancode.ecommerce.payment.domain.card;
 
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
+import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+
 public class Card {
 
+	private CustomerId customerId;
 	private UUID id;
-	private String printedName;
-	private String code;
-	private String numberCard;
+	private boolean main;
+	private PrintedName printedName;
+	private Code code;
+	private NumberCard numberCard;
 	private LocalDate expirationDate;
 	private Flag flag;
-	private Type type;
 	
-	public Card(String printedName, String code, String numberCard, LocalDate expirationDate, Flag flag,
-			Type type) {
+	public Card(CustomerId customerId, UUID id, boolean main, PrintedName printedName, Code code, NumberCard numberCard,
+			LocalDate expirationDate, Flag flag) {
 		
-		this.id = UUID.randomUUID();
+		this.customerId = customerId;
+		this.id = id;
+		this.main = main;
 		this.printedName = printedName;
 		this.code = code;
 		this.numberCard = numberCard;
 		this.expirationDate = expirationDate;
 		this.flag = flag;
-		this.type = type;
+	}
+
+	public CustomerId getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(CustomerId customerId) {
+		this.customerId = customerId;
 	}
 
 	public UUID getId() {
 		return id;
 	}
 
-	public String getPrintedName() {
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public boolean isMain() {
+		return main;
+	}
+
+	public void setMain(boolean main) {
+		this.main = main;
+	}
+
+	public PrintedName getPrintedName() {
 		return printedName;
 	}
 
-	public String getCode() {
+	public void setPrintedName(PrintedName printedName) {
+		this.printedName = printedName;
+	}
+
+	public Code getCode() {
 		return code;
 	}
 
-	public String getNumberCard() {
+	public void setCode(Code code) {
+		this.code = code;
+	}
+
+	public NumberCard getNumberCard() {
 		return numberCard;
+	}
+
+	public void setNumberCard(NumberCard numberCard) {
+		this.numberCard = numberCard;
 	}
 
 	public LocalDate getExpirationDate() {
 		return expirationDate;
 	}
 
+	public void setExpirationDate(LocalDate expirationDate) {
+		this.expirationDate = expirationDate;
+	}
+
 	public Flag getFlag() {
 		return flag;
 	}
 
-	public Type getType() {
-		return type;
+	public void setFlag(Flag flag) {
+		this.flag = flag;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, expirationDate, flag, id, numberCard, printedName, type);
+		return Objects.hash(code, customerId, expirationDate, flag, main, numberCard, printedName);
 	}
 
 	@Override
@@ -68,8 +108,8 @@ public class Card {
 		if (getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		return Objects.equals(code, other.code) && Objects.equals(expirationDate, other.expirationDate)
-				&& flag == other.flag && Objects.equals(id, other.id) && Objects.equals(numberCard, other.numberCard)
-				&& Objects.equals(printedName, other.printedName) && type == other.type;
+		return Objects.equals(code, other.code) && Objects.equals(customerId, other.customerId)
+				&& Objects.equals(expirationDate, other.expirationDate) && flag == other.flag && main == other.main
+				&& Objects.equals(numberCard, other.numberCard) && Objects.equals(printedName, other.printedName);
 	}
 }
