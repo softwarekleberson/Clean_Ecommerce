@@ -56,7 +56,7 @@ public abstract class Address {
 			throw new IllegalDomainException("Neighborhood is requerid");
 		if (isZipCode(zipCode))
 			throw new IllegalDomainException("Zip code must be in the format xxxxx-xxx");
-		if (inputSize(observation) || isValid(observation))
+		if (isValid(observation))
 			throw new IllegalDomainException("Observation needs max length 400 caracters");
 		if (isValid(streetType))
 			throw new IllegalDomainException("Street type is requerid");
@@ -83,7 +83,7 @@ public abstract class Address {
 			this.neighborhood = neighborhood;
 		if (zipCode != null && !zipCode.isBlank() && isZipCode(zipCode))
 			this.zipCode = zipCode;
-		if (observation != null && !observation.isBlank() && inputSize(observation))
+		if (observation != null && !observation.isBlank())
 			this.observation = observation;
 		if (streetType != null && !streetType.isBlank())
 			this.streetType = streetType;
@@ -95,10 +95,6 @@ public abstract class Address {
 			this.state = state;
 		if (country != null && !country.isBlank())
 			this.country = country;
-	}
-
-	protected boolean inputSize(String value) {
-		return value.length() > LENGTH_MAX;
 	}
 
 	protected boolean isZipCode(String zipCode) {

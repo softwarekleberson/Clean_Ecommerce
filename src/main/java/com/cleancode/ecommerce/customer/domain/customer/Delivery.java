@@ -12,7 +12,7 @@ public class Delivery extends Address{
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 		super(id, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city, state, country);
 		
-		if(isValid(deliveryPhrase) || inputSize(deliveryPhrase)) throw new IllegalDomainException("Delivery Phrase is requerid");
+		if(isValid(deliveryPhrase)) throw new IllegalDomainException("Delivery Phrase is requerid");
 		this.deliveryPhrase = deliveryPhrase;
 	}
 	
@@ -29,7 +29,7 @@ public class Delivery extends Address{
 			this.neighborhood = neighborhood;
 		if (zipCode != null && !zipCode.isBlank() && isZipCode(zipCode))
 			this.zipCode = zipCode;
-		if (observation != null && !observation.isBlank() && inputSize(observation))
+		if (observation != null && !observation.isBlank())
 			this.observation = observation;
 		if (streetType != null && !streetType.isBlank())
 			this.streetType = streetType;
@@ -41,7 +41,7 @@ public class Delivery extends Address{
 			this.state = state;
 		if (country != null && !country.isBlank())
 			this.country = country;
-		if (deliveryPhrase != null && !deliveryPhrase.isBlank() && inputSize(deliveryPhrase))
+		if (deliveryPhrase != null && !deliveryPhrase.isBlank())
 			this.deliveryPhrase = deliveryPhrase;
 	}
 
