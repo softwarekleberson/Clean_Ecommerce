@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.CartId;
-import com.cleancode.ecommerce.cart.domain.CartItemId;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.order.domain.cart.Cart;
+import com.cleancode.ecommerce.order.domain.cart.CartId;
+import com.cleancode.ecommerce.order.domain.cart.CartItemId;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;

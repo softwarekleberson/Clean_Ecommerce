@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.cart.domain.CartItemId;
-import com.cleancode.ecommerce.cart.domain.CartItens;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.order.domain.cart.CartItemId;
+import com.cleancode.ecommerce.order.domain.cart.CartItens;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
