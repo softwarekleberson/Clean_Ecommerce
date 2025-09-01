@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.customer.application.dtos.customer;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ public record ListCustomerDto(
 		
 		String id,
 		boolean active,
+		LocalDate birth,
 		String name,
 		Gender gender,
 		Email email,
@@ -25,7 +27,8 @@ public record ListCustomerDto(
 
 	public ListCustomerDto(Customer customer) {
 		this(customer.getId().getValue(),
-			 customer.checkActivationRequirements(),	
+			 customer.checkActivationRequirements(),
+			 customer.getBirth().getBirth(),
 			 customer.getName().getName(),
 			 customer.getGender(),
 			 customer.getContact().getEmail(),
