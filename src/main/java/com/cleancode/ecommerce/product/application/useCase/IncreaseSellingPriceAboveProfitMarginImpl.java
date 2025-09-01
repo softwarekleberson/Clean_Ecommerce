@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.product.application.useCase;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceDto;
+import com.cleancode.ecommerce.product.application.useCase.contract.IncreaseSellingPriceAboveProfitMargin;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 
@@ -15,7 +16,7 @@ public class IncreaseSellingPriceAboveProfitMarginImpl implements IncreaseSellin
 
 	@Override
 	public void execute(String productId, ModifySellingPriceDto dto) {
-		Product product = repository.listProduct(productId)
+		Product product = repository.ListActiveProduct(productId)
 				.orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
 		
 		product.aboveMarginSalesPricePolicy(dto.newPrice());

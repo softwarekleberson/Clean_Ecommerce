@@ -29,7 +29,6 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 	@NotBlank(message = "Description is required")
 	private String description;
 	
-	@NotNull(message = "Price is required")
 	private BigDecimal price;
 	
 	@NotNull(message = "Type coin is required")
@@ -48,12 +47,12 @@ public abstract class CreateProductDto implements ProductCreatableInterface {
 	@NotNull(message = "Pricing is required")
 	private BigDecimal pricing;
 
-	public CreateProductDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
+	public CreateProductDto(String name, String description, TypeCoin typeCoin,
 			ProductCategory category, String brand, List<MidiaInputDto> midias, BigDecimal pricing) {
 
 		this.name = name;
 		this.description = description;
-		this.price = price;
+		this.price = BigDecimal.ZERO;
 		this.typeCoin = typeCoin;
 		this.category = category;
 		this.brand = brand;

@@ -31,16 +31,21 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Product> listAll() {
-		List<ProductEntity> entity = jpa.findAll();
-		return entity.stream()
-				   .map(ProductMapper::toDomain)
-				   .toList();
+	public List<Product> ListAllProductActive() {
+		List<ProductEntity> entity = jpa.findByActiveTrue();
+		return entity.stream().map(ProductMapper::toDomain).toList();
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public Optional<Product> listProduct(String idProduct) {
-		return jpa.findById(idProduct).map(ProductMapper::toDomain);  
+	public List<Product> ListAllProductNotActive() {
+		List<ProductEntity> entity = jpa.findByActiveFalse();
+		return entity.stream().map(ProductMapper::toDomain).toList();
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Optional<Product> ListActiveProduct(String productId) {
+		return jpa.findByProductIdAndActiveTrue(productId).map(ProductMapper::toDomain);
 	}
 }

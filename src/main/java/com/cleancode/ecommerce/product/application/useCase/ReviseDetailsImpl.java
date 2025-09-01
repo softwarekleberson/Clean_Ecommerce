@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.product.application.useCase;
 
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.application.dto.input.ReviseDetailsDto;
+import com.cleancode.ecommerce.product.application.useCase.contract.ReviseDetails;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 
@@ -14,7 +15,7 @@ public class ReviseDetailsImpl implements ReviseDetails{
 	}
 
 	public void execute(String productId, ReviseDetailsDto dto) {
-		Product product = repository.listProduct(productId)
+		Product product = repository.ListActiveProduct(productId)
 				.orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
 		
 		product.reviseDetails(dto.newName(), dto.newDescription());

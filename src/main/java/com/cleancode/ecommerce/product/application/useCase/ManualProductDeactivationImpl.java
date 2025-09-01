@@ -4,6 +4,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.event.ProductDeactivatedEvent;
 import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChangeDto;
+import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductDeactivation;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 
@@ -19,7 +20,7 @@ public class ManualProductDeactivationImpl implements ManualProductDeactivation{
 	
 	@Override
 	public void execute(String productId, ProductStatusChangeDto dto) {
-		Product product = productRepository.listProduct(productId)
+		Product product = productRepository.ListActiveProduct(productId)
 	    .orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
 		product.productStatusPolicyManualDeactivation(dto.justification(), dto.category());
 		

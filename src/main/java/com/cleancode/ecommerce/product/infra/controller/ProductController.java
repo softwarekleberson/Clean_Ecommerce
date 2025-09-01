@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.product.infra.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,32 +18,37 @@ import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceD
 import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChangeDto;
 import com.cleancode.ecommerce.product.application.dto.input.ReviseDetailsDto;
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
-import com.cleancode.ecommerce.product.application.useCase.ManualProductActivation;
-import com.cleancode.ecommerce.product.application.useCase.CreateProduct;
-import com.cleancode.ecommerce.product.application.useCase.IncreaseSellingPriceAboveProfitMargin;
-import com.cleancode.ecommerce.product.application.useCase.ManualProductDeactivation;
-import com.cleancode.ecommerce.product.application.useCase.ListAllProduct;
-import com.cleancode.ecommerce.product.application.useCase.ListProduct;
-import com.cleancode.ecommerce.product.application.useCase.ReviseDetails;
+import com.cleancode.ecommerce.product.application.useCase.contract.CreateProduct;
+import com.cleancode.ecommerce.product.application.useCase.contract.IncreaseSellingPriceAboveProfitMargin;
+import com.cleancode.ecommerce.product.application.useCase.contract.ListActiveProduct;
+import com.cleancode.ecommerce.product.application.useCase.contract.ListAllProductActive;
+import com.cleancode.ecommerce.product.application.useCase.contract.ListAllProductsInactive;
+import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductActivation;
+import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductDeactivation;
+import com.cleancode.ecommerce.product.application.useCase.contract.ReviseDetails;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "*")
 public class ProductController {
 
 	private final CreateProduct createProduct;
-	private final ListAllProduct listAllProduct;
-	private final ListProduct listProduct;
+	private final ListAllProductActive listAllProduct;
+	private final ListActiveProduct listProduct;
 	private final ReviseDetails reviseDetails;
 	private final ManualProductDeactivation manualProductDeactivation;
 	private final ManualProductActivation manualProductActivation;
 	private final IncreaseSellingPriceAboveProfitMargin increaseSellingPriceAboveProfitMargin;
-
-	public ProductController(CreateProduct createProduct, ListAllProduct listAllProduct, ListProduct listProduct,
+	private final ListAllProductsInactive listAllProductsInactive;
+	
+	public ProductController(CreateProduct createProduct, ListAllProductActive listAllProduct, ListActiveProduct listProduct,
 			ReviseDetails reviseDetails, ManualProductDeactivation manualProductDeactivation,
 			ManualProductActivation manualProductActivation,
-			IncreaseSellingPriceAboveProfitMargin increaseSellingPriceAboveProfitMargin) {
+			IncreaseSellingPriceAboveProfitMargin increaseSellingPriceAboveProfitMargin,
+			ListAllProductsInactive listAllProductsInactive) {
+		
 		this.createProduct = createProduct;
 		this.listAllProduct = listAllProduct;
 		this.listProduct = listProduct;
@@ -50,6 +56,7 @@ public class ProductController {
 		this.manualProductDeactivation = manualProductDeactivation;
 		this.manualProductActivation = manualProductActivation;
 		this.increaseSellingPriceAboveProfitMargin = increaseSellingPriceAboveProfitMargin;
+		this.listAllProductsInactive = listAllProductsInactive;
 	}
 
 	@PostMapping
@@ -66,6 +73,11 @@ public class ProductController {
 	@GetMapping
 	public ResponseEntity<List<ListProductDto>> getAllProducts() {
 		return ResponseEntity.ok(listAllProduct.execute());
+	}
+	
+	@GetMapping("/inactive")
+	public ResponseEntity<List<ListProductDto>> getAllProductsinative() {
+		return ResponseEntity.ok(listAllProductsInactive.execute());
 	}
 
 	@PutMapping("/{productId}")

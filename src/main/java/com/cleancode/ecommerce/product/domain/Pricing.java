@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.product.domain;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.product.domain.exception.IllegalPricingException;
 
 public class Pricing {
 
@@ -10,11 +10,11 @@ public class Pricing {
 
 	public Pricing(BigDecimal pricing) {
 		if (pricing == null) {
-			throw new IllegalDomainException("Pricing cannot be null");
+			throw new IllegalPricingException("Pricing cannot be null");
 		}
 		
 		if (pricing.compareTo(BigDecimal.ZERO) < 0 || pricing.compareTo(BigDecimal.ONE) > 0) {
-		    throw new IllegalDomainException("Pricing must be between 0 and 1 inclusive");
+		    throw new IllegalPricingException("Pricing must be between 0 and 1 inclusive");
 		}
 
 		this.pricing = pricing;

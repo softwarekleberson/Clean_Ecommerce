@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.product.application.useCase;
+package com.cleancode.ecommerce.product.application.useCase.contract;
 
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 
-public interface ListProduct {
+public interface ListActiveProduct {
 
 	ListProductDto execute(String idProduct);
 }

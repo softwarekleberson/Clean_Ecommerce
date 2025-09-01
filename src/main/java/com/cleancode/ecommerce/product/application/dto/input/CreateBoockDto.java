@@ -64,12 +64,12 @@ public class CreateBoockDto extends CreateProductDto {
 	@PastOrPresent
 	private LocalDate publisherDate;
 
-	public CreateBoockDto(String name, String description, BigDecimal price, TypeCoin typeCoin,
+	public CreateBoockDto(String name, String description, TypeCoin typeCoin,
 			ProductCategory category, String brand, List<MidiaInputDto> midias, BigDecimal pricing, String synopsis,
 			int page, String author, String edition, String isbn, CategoryBook categoryBoock, double height,
 			double width, double length, double weight, LocalDate publisherDate) {
 
-		super(name, description, price, typeCoin, ProductCategory.BOOKS, brand, midias, pricing);
+		super(name, description, typeCoin, ProductCategory.BOOKS, brand, midias, pricing);
 		this.synopsis = synopsis;
 		this.page = page;
 		this.author = author;

@@ -27,9 +27,9 @@ public class CreateBagDto extends CreateProductDto {
 	@Min(0)
 	private double volume;
 
-	public CreateBagDto(String name, String description, BigDecimal price, TypeCoin typeCoin, ProductCategory category,
+	public CreateBagDto(String name, String description, TypeCoin typeCoin, ProductCategory category,
 			String brand, List<MidiaInputDto> midias, BigDecimal pricing, String color, double volume) {
-		super(name, description, price, typeCoin, ProductCategory.BAG, brand, midias, pricing);
+		super(name, description, typeCoin, ProductCategory.BAG, brand, midias, pricing);
 		this.color = color;
 		this.volume = volume;
 	}

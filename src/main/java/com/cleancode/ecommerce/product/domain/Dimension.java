@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.product.domain;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.product.domain.exception.IllegalDimensionException;
 
 public class Dimension {
 
@@ -14,19 +14,19 @@ public class Dimension {
 
 	public Dimension(double height, double width, double length, double weight) {
 		if (height < NUMBER_MIM_DIMENSION) {
-			throw new IllegalDomainException("Number page not be less than 0");
+			throw new IllegalDimensionException("Number page not be less than 0");
 		}
 
 		if (width < NUMBER_MIM_DIMENSION) {
-			throw new IllegalDomainException("Width page not be less than 0");
+			throw new IllegalDimensionException("Width page not be less than 0");
 		}
 
 		if (length < NUMBER_MIM_DIMENSION) {
-			throw new IllegalDomainException("Length page not be less than 0");
+			throw new IllegalDimensionException("Length page not be less than 0");
 		}
 
 		if (weight < NUMBER_MIM_DIMENSION) {
-			throw new IllegalDomainException("Weight page not be less than 0");
+			throw new IllegalDimensionException("Weight page not be less than 0");
 		}
 
 		this.height = height;

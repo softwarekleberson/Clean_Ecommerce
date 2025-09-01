@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.product.application.useCase;
+package com.cleancode.ecommerce.product.application.useCase.contract;
 
 import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceDto;
 
