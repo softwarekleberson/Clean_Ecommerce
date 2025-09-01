@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.cart.infra.persistence;
+package com.cleancode.ecommerce.order.infra.persistence;
 
 import java.math.BigDecimal;
 import java.util.Objects;

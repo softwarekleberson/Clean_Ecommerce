@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.cart.domain;
+package com.cleancode.ecommerce.order.domain.cart;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,6 +9,7 @@ import java.util.Optional;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.order.domain.cart.exception.IllegalCartException;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
@@ -42,7 +43,7 @@ public class Cart {
 			LocalDateTime updatedAt) {
 
 		if (cartId == null || customerId == null) {
-			throw new IllegalDomainException("Cart ID and Customer ID cannot be null");
+			throw new IllegalCartException("Cart ID and Customer ID cannot be null");
 		}
 
 		this.cartId = cartId;
@@ -66,7 +67,7 @@ public class Cart {
 			Price unitPrice, ReservationId reservationId) {
 
 		if (productId == null || name == null || quantity == null || unitPrice == null) {
-			throw new IllegalDomainException("Product data cannot be null");
+			throw new IllegalCartException("Product data cannot be null");
 		}
 
 		Optional.ofNullable(findItemByCartItem(cartItemId))
@@ -79,13 +80,13 @@ public class Cart {
 
 	public void changeProductQuantity(CartItemId cartItemId, Quantity newQuantity) {
 		if (cartItemId == null || newQuantity == null) {
-			throw new IllegalDomainException("Product ID and quantity cannot be null");
+			throw new IllegalCartException("Product ID and quantity cannot be null");
 		}
 
 		CartItens item = findItemByCartItem(cartItemId);
 
 		if (item == null) {
-			throw new IllegalDomainException("Product not found in cart");
+			throw new IllegalCartException("Product not found in cart");
 		}
 
 		item.changeQuantity(newQuantity);
@@ -101,13 +102,13 @@ public class Cart {
 
 	public void removeProductFromCart(ProductId productId) {
 		if (productId == null) {
-			throw new IllegalDomainException("Product ID cannot be null");
+			throw new IllegalCartException("Product ID cannot be null");
 		}
 
 		boolean removed = cartItens.removeIf(c -> c.getProductId().equals(productId));
 
 		if (!removed) {
-			throw new IllegalDomainException("Product not found in cart");
+			throw new IllegalCartException("Product not found in cart");
 		}
 
 		recalculateTotalPrice();

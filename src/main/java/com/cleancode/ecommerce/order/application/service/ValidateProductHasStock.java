@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.cart.application.service;
+package com.cleancode.ecommerce.order.application.service;
 
 import com.cleancode.ecommerce.stock.domain.Stock;
 

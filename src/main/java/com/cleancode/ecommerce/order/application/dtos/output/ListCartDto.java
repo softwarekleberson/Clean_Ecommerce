@@ -1,11 +1,11 @@
-package com.cleancode.ecommerce.cart.application.dtos.output;
+package com.cleancode.ecommerce.order.application.dtos.output;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.cleancode.ecommerce.cart.domain.Cart;
+import com.cleancode.ecommerce.order.domain.cart.Cart;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
 public record ListCartDto(

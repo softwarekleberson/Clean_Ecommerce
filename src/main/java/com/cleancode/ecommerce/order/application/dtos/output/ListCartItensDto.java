@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.cart.application.dtos.output;
+package com.cleancode.ecommerce.order.application.dtos.output;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.cart.domain.CartItens;
+import com.cleancode.ecommerce.order.domain.cart.CartItens;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
 public record ListCartItensDto(

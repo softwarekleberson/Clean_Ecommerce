@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.cart.infra.persistence;
+package com.cleancode.ecommerce.order.infra.persistence;
 
 public enum TypeCoinEntity {
 

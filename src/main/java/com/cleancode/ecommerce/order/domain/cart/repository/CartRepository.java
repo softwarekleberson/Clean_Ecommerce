@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.cart.domain.repository;
+package com.cleancode.ecommerce.order.domain.cart.repository;
 
 import java.util.Optional;
 
-import com.cleancode.ecommerce.cart.domain.Cart;
+import com.cleancode.ecommerce.order.domain.cart.Cart;
 
 public interface CartRepository {
 

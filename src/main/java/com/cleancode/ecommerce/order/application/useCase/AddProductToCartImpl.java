@@ -1,20 +1,20 @@
-package com.cleancode.ecommerce.cart.application.useCase;
+package com.cleancode.ecommerce.order.application.useCase;
 
 import java.util.UUID;
 
-import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
-import com.cleancode.ecommerce.cart.application.dtos.output.ListCartDto;
-import com.cleancode.ecommerce.cart.application.service.ReservationResultDto;
-import com.cleancode.ecommerce.cart.application.service.ValidateProductHasStock;
-import com.cleancode.ecommerce.cart.application.useCase.contract.AddProductToCart;
-import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.CartId;
-import com.cleancode.ecommerce.cart.domain.CartItemId;
-import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.order.application.dtos.input.CreateCartDto;
+import com.cleancode.ecommerce.order.application.dtos.output.ListCartDto;
+import com.cleancode.ecommerce.order.application.service.ReservationResultDto;
+import com.cleancode.ecommerce.order.application.service.ValidateProductHasStock;
+import com.cleancode.ecommerce.order.application.useCase.contract.AddProductToCart;
+import com.cleancode.ecommerce.order.domain.cart.Cart;
+import com.cleancode.ecommerce.order.domain.cart.CartId;
+import com.cleancode.ecommerce.order.domain.cart.CartItemId;
+import com.cleancode.ecommerce.order.domain.cart.repository.CartRepository;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
@@ -84,7 +84,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 	}
 
 	private Product findProduct(CreateCartDto dto) {
-		Product product = productRepository.listProduct(dto.getProductId()).orElseThrow(
+		Product product = productRepository.ListActiveProduct(dto.getProductId()).orElseThrow(
 				() -> new IllegalArgumentException("Product with id : " + dto.getProductId() + " not found"));
 		return product;
 	}

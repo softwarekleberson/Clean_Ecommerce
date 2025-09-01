@@ -1,15 +1,14 @@
-package com.cleancode.ecommerce.cart.infra.gateway;
+package com.cleancode.ecommerce.order.infra.gateway;
 
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
-
-import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.repository.CartRepository;
-import com.cleancode.ecommerce.cart.infra.mapper.CartMapper;
-import com.cleancode.ecommerce.cart.infra.persistence.CartEntity;
-
 import org.springframework.transaction.annotation.Transactional;
+
+import com.cleancode.ecommerce.order.domain.cart.Cart;
+import com.cleancode.ecommerce.order.domain.cart.repository.CartRepository;
+import com.cleancode.ecommerce.order.infra.mapper.CartMapper;
+import com.cleancode.ecommerce.order.infra.persistence.CartEntity;
 
 @Repository
 public class CartRepositoryJpa implements CartRepository {

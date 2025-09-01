@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.cart.domain;
+package com.cleancode.ecommerce.order.domain.cart;
 
 import java.math.BigDecimal;
 

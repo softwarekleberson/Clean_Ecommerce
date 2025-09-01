@@ -1,7 +1,7 @@
-package com.cleancode.ecommerce.cart.application.useCase.contract;
+package com.cleancode.ecommerce.order.application.useCase.contract;
 
-import com.cleancode.ecommerce.cart.application.dtos.input.CreateCartDto;
-import com.cleancode.ecommerce.cart.application.dtos.output.ListCartDto;
+import com.cleancode.ecommerce.order.application.dtos.input.CreateCartDto;
+import com.cleancode.ecommerce.order.application.dtos.output.ListCartDto;
 
 public interface AddProductToCart {
 

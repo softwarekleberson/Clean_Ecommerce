@@ -1,15 +1,15 @@
-package com.cleancode.ecommerce.cart.infra.mapper;
+package com.cleancode.ecommerce.order.infra.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.cleancode.ecommerce.cart.domain.Cart;
-import com.cleancode.ecommerce.cart.domain.CartId;
-import com.cleancode.ecommerce.cart.domain.CartItens;
-import com.cleancode.ecommerce.cart.infra.persistence.CartEntity;
-import com.cleancode.ecommerce.cart.infra.persistence.CartItemEntity;
-import com.cleancode.ecommerce.cart.infra.persistence.TypeCoinEntity;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.order.domain.cart.Cart;
+import com.cleancode.ecommerce.order.domain.cart.CartId;
+import com.cleancode.ecommerce.order.domain.cart.CartItens;
+import com.cleancode.ecommerce.order.infra.persistence.CartEntity;
+import com.cleancode.ecommerce.order.infra.persistence.CartItemEntity;
+import com.cleancode.ecommerce.order.infra.persistence.TypeCoinEntity;
 
 public class CartMapper {
 
