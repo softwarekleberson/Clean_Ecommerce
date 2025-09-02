@@ -1,27 +1,25 @@
 package com.cleancode.ecommerce.payment.domain.card;
 
-import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 
 public class Card {
 
 	private CustomerId customerId;
-	private UUID id;
+	private CardId id;
 	private boolean main;
 	private PrintedName printedName;
 	private Code code;
 	private NumberCard numberCard;
-	private LocalDate expirationDate;
+	private ExpirationDate expirationDate;
 	private Flag flag;
-	
-	public Card(CustomerId customerId, UUID id, boolean main, PrintedName printedName, Code code, NumberCard numberCard,
-			LocalDate expirationDate, Flag flag) {
-		
+
+	public Card(CustomerId customerId, boolean main, PrintedName printedName, Code code,
+			NumberCard numberCard, ExpirationDate expirationDate, Flag flag) {
+
+		this.id = new CardId();
 		this.customerId = customerId;
-		this.id = id;
 		this.main = main;
 		this.printedName = printedName;
 		this.code = code;
@@ -34,64 +32,32 @@ public class Card {
 		return customerId;
 	}
 
-	public void setCustomerId(CustomerId customerId) {
-		this.customerId = customerId;
-	}
-
-	public UUID getId() {
+	public CardId getId() {
 		return id;
-	}
-
-	public void setId(UUID id) {
-		this.id = id;
 	}
 
 	public boolean isMain() {
 		return main;
 	}
 
-	public void setMain(boolean main) {
-		this.main = main;
-	}
-
 	public PrintedName getPrintedName() {
 		return printedName;
-	}
-
-	public void setPrintedName(PrintedName printedName) {
-		this.printedName = printedName;
 	}
 
 	public Code getCode() {
 		return code;
 	}
 
-	public void setCode(Code code) {
-		this.code = code;
-	}
-
 	public NumberCard getNumberCard() {
 		return numberCard;
 	}
 
-	public void setNumberCard(NumberCard numberCard) {
-		this.numberCard = numberCard;
-	}
-
-	public LocalDate getExpirationDate() {
+	public ExpirationDate getExpirationDate() {
 		return expirationDate;
-	}
-
-	public void setExpirationDate(LocalDate expirationDate) {
-		this.expirationDate = expirationDate;
 	}
 
 	public Flag getFlag() {
 		return flag;
-	}
-
-	public void setFlag(Flag flag) {
-		this.flag = flag;
 	}
 
 	@Override
