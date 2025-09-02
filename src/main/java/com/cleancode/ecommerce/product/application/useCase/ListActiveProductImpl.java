@@ -17,7 +17,7 @@ public class ListActiveProductImpl implements ListActiveProduct {
 
 	@Override
 	public ListProductDto execute(String idProduct) {
-		Product product = repository.ListActiveProduct(idProduct)
+		Product product = repository.findById(idProduct)
 	   .orElseThrow(() -> new IllegalDomainException("Product with id : " + idProduct + "not found"));
 		
 		return ProductDtoFactory.listAllProduct(product);

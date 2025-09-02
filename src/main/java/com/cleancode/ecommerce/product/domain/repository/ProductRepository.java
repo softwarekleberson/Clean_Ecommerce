@@ -10,5 +10,5 @@ public interface ProductRepository {
 	Product save(Product product);
 	List<Product> ListAllProductActive();
 	List<Product> ListAllProductNotActive();
-	Optional<Product> ListActiveProduct(String idProduct);
+	Optional<Product> findById(String idProduct);
 }

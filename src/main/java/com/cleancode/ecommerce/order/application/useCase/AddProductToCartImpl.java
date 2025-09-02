@@ -84,7 +84,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 	}
 
 	private Product findProduct(CreateCartDto dto) {
-		Product product = productRepository.ListActiveProduct(dto.getProductId()).orElseThrow(
+		Product product = productRepository.findById(dto.getProductId()).orElseThrow(
 				() -> new IllegalArgumentException("Product with id : " + dto.getProductId() + " not found"));
 		return product;
 	}

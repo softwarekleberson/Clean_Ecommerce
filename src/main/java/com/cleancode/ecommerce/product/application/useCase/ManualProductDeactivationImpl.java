@@ -20,7 +20,7 @@ public class ManualProductDeactivationImpl implements ManualProductDeactivation{
 	
 	@Override
 	public void execute(String productId, ProductStatusChangeDto dto) {
-		Product product = productRepository.ListActiveProduct(productId)
+		Product product = productRepository.findById(productId)
 	    .orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
 		product.productStatusPolicyManualDeactivation(dto.justification(), dto.category());
 		

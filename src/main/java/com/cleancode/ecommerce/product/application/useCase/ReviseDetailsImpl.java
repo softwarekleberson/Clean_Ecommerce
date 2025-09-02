@@ -15,7 +15,7 @@ public class ReviseDetailsImpl implements ReviseDetails{
 	}
 
 	public void execute(String productId, ReviseDetailsDto dto) {
-		Product product = repository.ListActiveProduct(productId)
+		Product product = repository.findById(productId)
 				.orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
 		
 		product.reviseDetails(dto.newName(), dto.newDescription());

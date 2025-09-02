@@ -45,7 +45,7 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Optional<Product> ListActiveProduct(String productId) {
-		return jpa.findByProductIdAndActiveTrue(productId).map(ProductMapper::toDomain);
+	public Optional<Product> findById(String productId) {
+		return jpa.findById(productId).map(ProductMapper::toDomain);
 	}
 }

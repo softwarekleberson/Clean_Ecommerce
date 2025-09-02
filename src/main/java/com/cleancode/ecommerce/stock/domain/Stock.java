@@ -26,23 +26,23 @@ public class Stock {
 		this.stockId = new StockId();
 		this.productId = productId;
 	}
-	
+
 	public Stock(StockId id, ProductId productId, int totalQuantity) {
 		this.stockId = id;
 		this.productId = productId;
 		this.totalQuantity = totalQuantity;
 		this.quantityAvailable = totalQuantity;
 	}
-	
-	public void addReservations (List<Reservations> reservations) {
+
+	public void addReservations(List<Reservations> reservations) {
 		this.reservations.addAll(reservations);
 	}
-	
-	public void addProductInput (List<ProductInput> productInput) {
+
+	public void addProductInput(List<ProductInput> productInput) {
 		this.productInputs.addAll(productInput);
 	}
-	
-	public void addProductOutput (List<ProductOutput> productOutput) {
+
+	public void addProductOutput(List<ProductOutput> productOutput) {
 		this.productOutputs.addAll(productOutput);
 	}
 
@@ -63,10 +63,19 @@ public class Stock {
 			throw new IllegalReservationException("Insufficient stock");
 		}
 
-		Reservations reservation = new Reservations(cartId ,customerId, quantity);
-		this.quantityAvailable -= quantity;
+		Reservations reservation = new Reservations(cartId, customerId, quantity);
+
 		this.reservations.add(reservation);
+		lowQuantityAvailableReserved(quantity);
+
 		return reservation;
+	}
+
+	private void lowQuantityAvailableReserved(int quantity) {
+		int totalReserved = this.reservations.stream().mapToInt(r -> r.getQuantity().getQuantity()).sum();
+		System.out.println("Total quantity reserved: " + totalReserved);
+
+		this.quantityAvailable -= totalReserved;
 	}
 
 	public void cancelReservation(String reservationId) {
@@ -77,21 +86,20 @@ public class Stock {
 		this.quantityAvailable += reservation.getQuantity().getQuantity();
 	}
 
-	public void confirmOrder(String orderId, String productId ,String reservationId) {
-		Reservations reservation = reservations.stream()
-		.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
-		.orElseThrow(() -> new IllegalReservationException("Reservation not found"));
+	public void confirmOrder(String orderId, String productId, String reservationId) {
+		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
+				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
 
 		reservation.confirmOrder();
 
 		this.totalQuantity -= reservation.getQuantity().getQuantity();
-		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new ProductId(productId), reservation.getQuantity().getQuantity()));
+		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new ProductId(productId),
+				reservation.getQuantity().getQuantity()));
 	}
-	
+
 	public Reservations getReservationId(String reservationId) {
-		Reservations reservation = reservations.stream()
-		.filter(r -> r.getReservationId().equals(reservationId)).findFirst()
-		.orElseThrow(() -> new IllegalReservationException("Reservation not found"));
+		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
+				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
 
 		return reservation;
 	}
@@ -99,7 +107,7 @@ public class Stock {
 	public StockId getStockId() {
 		return stockId;
 	}
-	
+
 	public ProductId getProductId() {
 		return productId;
 	}
@@ -111,7 +119,7 @@ public class Stock {
 	public int getQuantityAvailable() {
 		return quantityAvailable;
 	}
-	
+
 	public List<Reservations> getReservations() {
 		return Collections.unmodifiableList(this.reservations);
 	}
