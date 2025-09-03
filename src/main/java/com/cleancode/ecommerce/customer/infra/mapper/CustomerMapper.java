@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.customer.infra.mapper;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.cleancode.ecommerce.customer.domain.card.Card;
 import com.cleancode.ecommerce.customer.domain.customer.*;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.*;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
@@ -61,6 +62,21 @@ public final class CustomerMapper {
 					.ifPresentOrElse(
 							existing -> ChargeMapper.updateEntity(charge, existing),
 							() -> entity.getChargeEntities().add(ChargeMapper.toEntity(charge, entity))
+					);
+		}
+		
+		Set<String> domainCardIds = domain.getCards().stream()
+			    .map(card -> card.getCardId().getCardId()) 
+			    .collect(Collectors.toSet());
+		entity.getCardEntities().removeIf(e -> !domainCardIds.contains(e.getCard_id()));
+
+		for (Card card : domain.getCards()) {
+			entity.getCardEntities().stream()
+					.filter(existing -> existing.getCard_id().equals(card.getCardId().getCardId()))
+					.findFirst()
+					.ifPresentOrElse(
+							existing -> CardMapper.updateEntity(card, existing),
+							() -> entity.getCardEntities().add(CardMapper.toEntity(card, entity))
 					);
 		}
 

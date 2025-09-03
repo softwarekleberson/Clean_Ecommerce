@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.customer.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.cleancode.ecommerce.customer.application.useCase.CreateCardImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
@@ -15,6 +16,7 @@ import com.cleancode.ecommerce.customer.application.useCase.UpdateCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdatePasswordImpl;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCard;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
@@ -35,6 +37,11 @@ public class CustomerConfig {
 	public CreateCustomer createCustomer(CustomerRepository repository, PasswordValidationCheck passwordValidation,
 			EventPublisher eventPublisher) {
 		return new CreateCustomerImpl(repository, passwordValidation, eventPublisher);
+	}
+	
+	@Bean
+	public CreateCustomerCard createCustomerCard(CustomerRepository repository) {
+		return new CreateCardImpl(repository);
 	}
 	
 	@Bean

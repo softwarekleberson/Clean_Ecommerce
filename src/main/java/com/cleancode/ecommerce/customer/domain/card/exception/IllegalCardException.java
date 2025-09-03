@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.payment.domain.card.exception;
+package com.cleancode.ecommerce.customer.domain.card.exception;
 
 public class IllegalCardException extends RuntimeException{
 

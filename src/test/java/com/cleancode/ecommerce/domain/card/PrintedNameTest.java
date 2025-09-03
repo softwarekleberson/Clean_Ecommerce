@@ -7,8 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.payment.domain.card.PrintedName;
-import com.cleancode.ecommerce.payment.domain.card.exception.IllegalCardException;
+import com.cleancode.ecommerce.customer.domain.card.PrintedName;
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 
 public class PrintedNameTest {
 

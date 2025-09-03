@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.payment.domain.card.ExpirationDate;
-import com.cleancode.ecommerce.payment.domain.card.exception.IllegalCardException;
+import com.cleancode.ecommerce.customer.domain.card.ExpirationDate;
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 
 public class ExpirationDateTest {
 

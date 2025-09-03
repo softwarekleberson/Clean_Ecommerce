@@ -1,12 +1,15 @@
-package com.cleancode.ecommerce.payment.domain.card;
+package com.cleancode.ecommerce.customer.domain.card;
 
-import com.cleancode.ecommerce.payment.domain.card.exception.IllegalCardException;
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 
 public class NumberCard {
 
-	private String numberCard;
+	private final String numberCard;
 
 	public NumberCard(String numberCard) {
+		if (numberCard == null || !numberCard.matches("\\d{16}")) {
+			throw new IllegalCardException("Card number must have exactly 16 digits");
+		}
 
 		int sum = 0;
 		boolean toggle = false;
@@ -24,7 +27,7 @@ public class NumberCard {
 		}
 
 		if (sum % 10 != 0) {
-			throw new IllegalCardException("Number card required 16 numbers valid");
+			throw new IllegalCardException("Invalid card number (Luhn check failed)");
 		}
 
 		this.numberCard = numberCard;

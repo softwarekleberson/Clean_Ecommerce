@@ -1,0 +1,57 @@
+package com.cleancode.ecommerce.customer.application.dtos.card;
+
+import java.time.LocalDate;
+
+import com.cleancode.ecommerce.customer.domain.card.Card;
+import com.cleancode.ecommerce.customer.domain.card.Code;
+import com.cleancode.ecommerce.customer.domain.card.ExpirationDate;
+import com.cleancode.ecommerce.customer.domain.card.Flag;
+import com.cleancode.ecommerce.customer.domain.card.NumberCard;
+import com.cleancode.ecommerce.customer.domain.card.PrintedName;
+
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
+public class CreateCardDto {
+
+	private boolean main;
+
+	@NotBlank(message = "Printed name is required")
+	private String printedName;
+
+	@NotBlank(message = "Code is required")
+	@Size(min = 3, max = 4, message = "Code must have 3 or 4 digits")
+	@Pattern(regexp = "\\d{3,4}", message = "Code must be numeric")
+	private String code;
+
+	@NotBlank(message = "Number card is required")
+	@Size(min = 16, max = 19, message = "Number card must have between 16 and 19 digits")
+	@Pattern(regexp = "\\d{16,19}", message = "Number card must contain only digits")
+	private String numberCard;
+
+	@NotNull(message = "Expiration date is required")
+	@FutureOrPresent(message = "Expiration date must be in the present or future")
+	private LocalDate expirationDate;
+
+	@NotNull(message = "Accepted Flags: MASTERCARD, VISA, ELO")
+	private Flag flag;
+
+	public CreateCardDto(boolean main, String printedName, String code, String numberCard, LocalDate expirationDate,
+			Flag flag) {
+
+		this.main = main;
+		this.printedName = printedName;
+		this.code = code;
+		this.numberCard = numberCard;
+		this.expirationDate = expirationDate;
+		this.flag = flag;
+	}
+
+	public Card createCard() {
+		return new Card(main, new PrintedName(printedName), new Code(code), new NumberCard(numberCard),
+				new ExpirationDate(expirationDate), flag);
+	}
+}

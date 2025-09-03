@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalCpfException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
@@ -78,6 +79,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(IllegalStockException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalStockException ex) {
 		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception stock",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalCardException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalCardException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception card",
 				ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}

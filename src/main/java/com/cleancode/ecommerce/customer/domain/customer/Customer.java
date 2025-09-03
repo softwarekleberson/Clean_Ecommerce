@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.util.List;
 
+import com.cleancode.ecommerce.customer.domain.card.Card;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
 import com.cleancode.ecommerce.shared.kernel.Email;
@@ -23,6 +24,7 @@ public class Customer {
 	private Password password;
 	private List<Delivery> deliveries = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
+	private List<Card> cards = new ArrayList<>();
 
 	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
 		this.id = id;
@@ -84,6 +86,10 @@ public class Customer {
 
 	public Phone getFullPhone() {
 		return this.contact.getFullPhone();
+	}
+	
+	public void registerCard (Card card) {
+		this.cards.add(card);
 	}
 
 	public void registerDelivery(Delivery delivery) {
@@ -168,5 +174,9 @@ public class Customer {
 
 	public List<Charge> getCharges() {
 		return Collections.unmodifiableList(this.charges);
+	}
+	
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(this.cards);
 	}
 }

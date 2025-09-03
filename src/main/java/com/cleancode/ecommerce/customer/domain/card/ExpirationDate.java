@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.payment.domain.card;
+package com.cleancode.ecommerce.customer.domain.card;
 
 import java.time.LocalDate;
 
-import com.cleancode.ecommerce.payment.domain.card.exception.IllegalCardException;
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 
 public class ExpirationDate {
 

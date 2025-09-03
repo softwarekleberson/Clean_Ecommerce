@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.payment.domain.card;
+package com.cleancode.ecommerce.customer.domain.card;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.payment.domain.card.exception.IllegalCardException;
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 
 public class PrintedName {
 

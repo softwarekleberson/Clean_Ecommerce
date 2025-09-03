@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.cleancode.ecommerce.payment.domain.card.Code;
-import com.cleancode.ecommerce.payment.domain.card.exception.IllegalCardException;
+import com.cleancode.ecommerce.customer.domain.card.Code;
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 
 class CodeTest {
 

@@ -1,13 +1,10 @@
-package com.cleancode.ecommerce.payment.domain.card;
+package com.cleancode.ecommerce.customer.domain.card;
 
 import java.util.Objects;
 
-import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
-
 public class Card {
 
-	private CustomerId customerId;
-	private CardId id;
+	private CardId cardId;
 	private boolean main;
 	private PrintedName printedName;
 	private Code code;
@@ -15,11 +12,10 @@ public class Card {
 	private ExpirationDate expirationDate;
 	private Flag flag;
 
-	public Card(CustomerId customerId, boolean main, PrintedName printedName, Code code,
-			NumberCard numberCard, ExpirationDate expirationDate, Flag flag) {
+	public Card(boolean main, PrintedName printedName, Code code, NumberCard numberCard, ExpirationDate expirationDate,
+			Flag flag) {
 
-		this.id = new CardId();
-		this.customerId = customerId;
+		this.cardId = new CardId();
 		this.main = main;
 		this.printedName = printedName;
 		this.code = code;
@@ -28,12 +24,8 @@ public class Card {
 		this.flag = flag;
 	}
 
-	public CustomerId getCustomerId() {
-		return customerId;
-	}
-
-	public CardId getId() {
-		return id;
+	public CardId getCardId() {
+		return cardId;
 	}
 
 	public boolean isMain() {
@@ -62,7 +54,7 @@ public class Card {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, customerId, expirationDate, flag, main, numberCard, printedName);
+		return Objects.hash(cardId, code, expirationDate, flag, main, numberCard, printedName);
 	}
 
 	@Override
@@ -74,7 +66,7 @@ public class Card {
 		if (getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		return Objects.equals(code, other.code) && Objects.equals(customerId, other.customerId)
+		return Objects.equals(cardId, other.cardId) && Objects.equals(code, other.code)
 				&& Objects.equals(expirationDate, other.expirationDate) && flag == other.flag && main == other.main
 				&& Objects.equals(numberCard, other.numberCard) && Objects.equals(printedName, other.printedName);
 	}

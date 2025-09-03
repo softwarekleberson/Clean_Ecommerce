@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.payment.domain.card;
+package com.cleancode.ecommerce.customer.domain.card;
 
 import java.util.UUID;
 
