@@ -87,9 +87,15 @@ public class Customer {
 	public Phone getFullPhone() {
 		return this.contact.getFullPhone();
 	}
-	
-	public void registerCard (Card card) {
-		this.cards.add(card);
+
+	public void registerCard(Card newCard) {
+		if (newCard.isMain()) {
+			List<Card> updatedCards = this.cards.stream().map(c -> new Card(false, c.getPrintedName(), c.getCode(),
+					c.getNumberCard(), c.getExpirationDate(), c.getFlag())).toList();
+			this.cards.clear();
+			this.cards.addAll(updatedCards);
+		}
+		this.cards.add(newCard);
 	}
 
 	public void registerDelivery(Delivery delivery) {
@@ -175,7 +181,7 @@ public class Customer {
 	public List<Charge> getCharges() {
 		return Collections.unmodifiableList(this.charges);
 	}
-	
+
 	public List<Card> getCards() {
 		return Collections.unmodifiableList(this.cards);
 	}
