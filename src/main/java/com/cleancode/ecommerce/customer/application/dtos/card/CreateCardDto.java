@@ -28,8 +28,6 @@ public class CreateCardDto {
 	private String code;
 
 	@NotBlank(message = "Number card is required")
-	@Size(min = 16, max = 19, message = "Number card must have between 16 and 19 digits")
-	@Pattern(regexp = "\\d{16,19}", message = "Number card must contain only digits")
 	private String numberCard;
 
 	@NotNull(message = "Expiration date is required")

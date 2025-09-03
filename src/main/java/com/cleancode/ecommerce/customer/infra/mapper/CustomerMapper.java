@@ -108,6 +108,10 @@ public final class CustomerMapper {
 		if (entity.getChargeEntities() != null) {
 			entity.getChargeEntities().forEach(e -> customer.registerCharge(ChargeMapper.toDomain(e)));
 		}
+		
+		if (entity.getCardEntities() != null) {
+		    entity.getCardEntities().forEach(e -> customer.registerCard(CardMapper.toDomain(e)));
+		}
 
 		return customer;
 	}
