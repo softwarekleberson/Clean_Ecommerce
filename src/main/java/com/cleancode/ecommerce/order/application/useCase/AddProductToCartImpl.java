@@ -7,7 +7,7 @@ import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.order.application.dtos.input.CreateCartDto;
-import com.cleancode.ecommerce.order.application.dtos.output.ListCartDto;
+import com.cleancode.ecommerce.order.application.dtos.output.CartDto;
 import com.cleancode.ecommerce.order.application.service.ReservationResultDto;
 import com.cleancode.ecommerce.order.application.service.ValidateProductHasStock;
 import com.cleancode.ecommerce.order.application.useCase.contract.AddProductToCart;
@@ -43,7 +43,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 	}
 
 	@Override
-	public ListCartDto execute(CreateCartDto dto) {
+	public CartDto execute(CreateCartDto dto) {
 
 		Customer customer = findCustomer(dto);
 		Product product = findProduct(dto);
@@ -65,7 +65,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 
 		stockRepository.save(stockAfterReservation.stock());
 		cartRepository.save(cart);
-		return new ListCartDto(cart);
+		return new CartDto(cart);
 	}
 
 	private Cart getCartOrCreate(CreateCartDto dto) {
