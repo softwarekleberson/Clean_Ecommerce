@@ -3,10 +3,21 @@ package com.cleancode.ecommerce.stock.infra.gateways;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.cleancode.ecommerce.stock.infra.persistence.StockEntity;
 
-public interface StockJpa extends JpaRepository<StockEntity, String>{
+public interface StockJpa extends JpaRepository<StockEntity, String> {
 
 	Optional<StockEntity> findByProductId(String id);
+
+	@Query("""
+			    SELECT s
+			    FROM StockEntity s
+			    INNER JOIN FETCH s.reservations r
+			    WHERE s.stock_id = :stockId
+			""")
+	Optional<StockEntity> findByStockIdWithReservations(@Param("stockId") String stockId);
+
 }

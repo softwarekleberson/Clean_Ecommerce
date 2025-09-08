@@ -32,4 +32,9 @@ public class StockRepositoryJpa implements StockRepository {
 	public Optional <Stock> getStock(String id) {
 		return jpa.findByProductId(id).map(StockMapper::toDomain);
 	}
+
+	@Override
+	public Optional<Stock> getStockByCartItem(String cartItemId) {
+		return Optional.empty();
+	}
 }
