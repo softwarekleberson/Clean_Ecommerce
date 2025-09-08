@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
@@ -63,6 +62,10 @@ public class Cart {
 		this.totalPrice = new Price(total, coin);
 	}
 
+	/**
+	 * Adiciona um novo produto ao carrinho. Lança exceção se o produto já existir
+	 * no carrinho.
+	 */
 	public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, Quantity quantity,
 			Price unitPrice, ReservationId reservationId) {
 
@@ -70,26 +73,29 @@ public class Cart {
 			throw new IllegalCartException("Product data cannot be null");
 		}
 
-		Optional.ofNullable(findItemByCartItem(cartItemId))
-		.ifPresentOrElse(item -> item.increaseQuantity(quantity),
-		 () -> cartItens.add(new CartItens(cartItemId, productId, name, quantity, unitPrice, reservationId)));
+		boolean exists = cartItens.stream().anyMatch(item -> item.getCartItemId().equals(cartItemId));
+
+		if (exists) {
+			throw new IllegalCartException("Product already in cart. Use changeProductQuantity instead.");
+		}
+
+		cartItens.add(new CartItens(cartItemId, productId, name, quantity, unitPrice, reservationId));
 
 		recalculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
 	}
 
+	/**
+	 * Altera a quantidade de um produto já existente no carrinho.
+	 */
 	public void changeProductQuantity(CartItemId cartItemId, Quantity newQuantity) {
 		if (cartItemId == null || newQuantity == null) {
 			throw new IllegalCartException("Product ID and quantity cannot be null");
 		}
 
-		CartItens item = findItemByCartItem(cartItemId);
-
-		if (item == null) {
-			throw new IllegalCartException("Product not found in cart");
-		}
-
+		CartItens item = findItemByCartItem(cartItemId); // lança exceção se não encontrar
 		item.changeQuantity(newQuantity);
+
 		recalculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();
 	}
@@ -100,12 +106,12 @@ public class Cart {
 		this.updatedAt = LocalDateTime.now();
 	}
 
-	public void removeProductFromCart(ProductId productId) {
-		if (productId == null) {
+	public void removeProductFromCart(CartItemId cartItemId) {
+		if (cartItemId == null) {
 			throw new IllegalCartException("Product ID cannot be null");
 		}
 
-		boolean removed = cartItens.removeIf(c -> c.getProductId().equals(productId));
+		boolean removed = cartItens.removeIf(c -> c.getCartItemId().equals(cartItemId));
 
 		if (!removed) {
 			throw new IllegalCartException("Product not found in cart");
@@ -116,7 +122,8 @@ public class Cart {
 	}
 
 	private CartItens findItemByCartItem(CartItemId cartItemId) {
-		return cartItens.stream().filter(c -> c.getCartItemId().equals(cartItemId)).findFirst().orElse(null);
+		return cartItens.stream().filter(c -> c.getCartItemId().equals(cartItemId)).findFirst()
+				.orElseThrow(() -> new IllegalCartException("Not found item by cart Item"));
 	}
 
 	public CartId getCartId() {
