@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 import com.cleancode.ecommerce.order.domain.cart.Cart;
 import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 
-public record ListCartDto(
+public record CartDto(
 		
 		String cartId,
 		String customerId,
@@ -20,7 +20,7 @@ public record ListCartDto(
 		
 		) {
 
-	public ListCartDto (Cart cart) {
+	public CartDto (Cart cart) {
 		this(cart.getCartId().getCartId(),
 			 cart.getCustomerId().getValue(),
 			
