@@ -5,13 +5,13 @@ CREATE TABLE tb_address (
     street VARCHAR(255) NOT NULL,
     number VARCHAR(50) NOT NULL,
     neighborhood VARCHAR(255) NOT NULL,
-    zip_code VARCHAR(20) NOT NULL,
+    zip_code CHAR(9) NOT NULL,
     observation VARCHAR(255),
     street_type VARCHAR(255) NOT NULL,
     residence_type VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    state VARCHAR(255) NOT NULL,
-    country VARCHAR(255) NOT NULL,
+    city VARCHAR(150) NOT NULL,
+    state VARCHAR(150) NOT NULL,
+    country VARCHAR(150) NOT NULL,
     customer_id VARCHAR(36), 
 
     CONSTRAINT fk_tb_address_customer

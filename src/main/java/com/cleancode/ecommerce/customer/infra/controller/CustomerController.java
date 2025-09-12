@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.customer.infra.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +19,7 @@ import com.cleancode.ecommerce.customer.application.dtos.address.CreateDeliveryD
 import com.cleancode.ecommerce.customer.application.dtos.address.UpdateAddressDto;
 import com.cleancode.ecommerce.customer.application.dtos.card.CreateCardDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListAllCustomersDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
@@ -26,6 +29,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDelivery;
+import com.cleancode.ecommerce.customer.application.useCase.contract.ListAllCustomers;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCustomer;
@@ -50,11 +54,12 @@ public class CustomerController {
 	private final UpdateCharge updateCharge;
 	private final UpdateDelivery updateDelivery;
 	private final CreateCustomerCard createCard;
+	private final ListAllCustomers listAllCustomers;
 
 	public CustomerController(CreateCustomer createCustomer, CreateCustomerDelivery createCustomerDelivery,
 			CreateCustomerCharge createCustomerCharge, ListCustomer listCustomer, UpdateCustomer updateCustomer,
 			UpdatePassword updatePassword, DeleteCharge deleteCharge, DeleteDelivery deleteDelivery,
-			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard) {
+			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard, ListAllCustomers listAllCustomers) {
 		
 		this.createCustomer = createCustomer;
 		this.createCustomerDelivery = createCustomerDelivery;
@@ -67,6 +72,7 @@ public class CustomerController {
 		this.updateCharge = updateCharge;
 		this.updateDelivery = updateDelivery;
 		this.createCard = createCard;
+		this.listAllCustomers = listAllCustomers;
 	}
 
 	// ----------------------
@@ -77,6 +83,11 @@ public class CustomerController {
 	public ResponseEntity<ListCustomerDto> createCustomer(@Valid @RequestBody CreateCustomerDto dto) {
 		var created = createCustomer.execute(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(created);
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<ListAllCustomersDto>> listAllCustomers() {
+	    return ResponseEntity.ok(listAllCustomers.execute());
 	}
 
 	@GetMapping("/{id}")

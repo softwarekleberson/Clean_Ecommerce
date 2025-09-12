@@ -98,7 +98,7 @@ public abstract class Address {
 	}
 
 	protected boolean isZipCode(String zipCode) {
-		String zipCodeRegex = "^\\d{5}-\\d{3}$";
+		String zipCodeRegex = "^\\d{8}$";
 		return !zipCode.matches(zipCodeRegex);
 	}
 

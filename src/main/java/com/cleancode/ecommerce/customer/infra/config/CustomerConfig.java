@@ -9,6 +9,7 @@ import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDelive
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.DeleteChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.DeleteDeliveryImpl;
+import com.cleancode.ecommerce.customer.application.useCase.ListAllCustomersImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.PasswordValidationCheckImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateChargeImpl;
@@ -21,6 +22,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDelivery;
+import com.cleancode.ecommerce.customer.application.useCase.contract.ListAllCustomers;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCharge;
@@ -62,6 +64,11 @@ public class CustomerConfig {
 	@Bean
 	public ListCustomer listCustomer(CustomerRepository repository) {
 		return new ListCustomerImpl(repository);
+	}
+	
+	@Bean
+	public ListAllCustomers listAllCustomers(CustomerRepository repository) {
+		return new ListAllCustomersImpl(repository);
 	}
 
 	@Bean

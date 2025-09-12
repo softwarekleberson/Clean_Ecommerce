@@ -62,10 +62,6 @@ public class Cart {
 		this.totalPrice = new Price(total, coin);
 	}
 
-	/**
-	 * Adiciona um novo produto ao carrinho. Lança exceção se o produto já existir
-	 * no carrinho.
-	 */
 	public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, Quantity quantity,
 			Price unitPrice, ReservationId reservationId) {
 
@@ -85,9 +81,6 @@ public class Cart {
 		this.updatedAt = LocalDateTime.now();
 	}
 
-	/**
-	 * Altera a quantidade de um produto já existente no carrinho.
-	 */
 	public void changeProductQuantity(CartItemId cartItemId, Quantity newQuantity) {
 		if (cartItemId == null || newQuantity == null) {
 			throw new IllegalCartException("Product ID and quantity cannot be null");

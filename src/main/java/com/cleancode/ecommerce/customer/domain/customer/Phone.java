@@ -9,37 +9,41 @@ public class Phone {
 	private final String ddd;
 	private final String phone;
 	private final TypePhone typePhone;
-	
-	public Phone (String ddd, String phone, TypePhone typePhone) {
-		if(ddd == null || ddd.trim().isEmpty()) {
-			throw new IllegalContactException("Ddd needs 2 digits ");
+
+	public Phone(String ddd, String phone, TypePhone typePhone) {
+		if (ddd == null || ddd.trim().isEmpty()) {
+			throw new IllegalContactException("DDD cannot be null or empty.");
 		}
-		
-		if(phone == null || phone.trim().isEmpty()) {
-			throw new IllegalContactException("Phone needs 9 digits ");
+
+		if (phone == null || phone.trim().isEmpty()) {
+			throw new IllegalContactException("Phone cannot be null or empty.");
 		}
-		
-		if(!ddd.matches("\\d{2}") || !phone.matches("\\d{9}")) {
-			throw new IllegalContactException("DDD needs 2 digits and Phone needs 9 digits ");
+
+		if (!ddd.matches("\\d{2}")) {
+			throw new IllegalContactException("DDD must have exactly 2 digits.");
 		}
-		
+
+		if (!phone.matches("\\d{8,9}")) {
+			throw new IllegalContactException("Phone must have 8 or 9 digits.");
+		}
+
 		this.ddd = ddd;
 		this.phone = phone;
 		this.typePhone = typePhone;
 	}
-	
+
 	public String getDdd() {
 		return ddd;
 	}
-	
+
 	public String getPhone() {
 		return phone;
 	}
-	
+
 	public TypePhone getTypePhone() {
 		return typePhone;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(ddd, phone, typePhone);
