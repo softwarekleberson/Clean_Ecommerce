@@ -12,8 +12,9 @@ public class Card {
 	private ExpirationDate expirationDate;
 	private Flag flag;
 
-	public Card(boolean main, PrintedName printedName, Code code, NumberCard numberCard, ExpirationDate expirationDate,
-			Flag flag) {
+	public Card(boolean main, PrintedName printedName,
+			Code code, NumberCard numberCard,
+			ExpirationDate expirationDate, Flag flag) {
 
 		this.cardId = new CardId();
 		this.main = main;

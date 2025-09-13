@@ -3,7 +3,6 @@ package com.cleancode.ecommerce.customer.application.customer.useCase;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateCustomerImpl;
-import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
@@ -39,13 +38,13 @@ class UpdateCustomerImplTest {
                 new Birth(LocalDate.of(1990, 1, 1)),
                 new Cpf("123.456.789-01"),
                 new Contact(new Phone("11", "999999999", TypePhone.LANDLINE), new Email("john@example.com")),
-                new Password("password123")
+                new Password("password123"),
+                new SystemClientStatus(true)
         );
     }
 
     @Test
     void shouldUpdateCustomerSuccessfully() {
-        // Arrange
         Customer customer = buildCustomer();
         when(repository.getCustomerById("123")).thenReturn(java.util.Optional.of(customer));
 
@@ -56,10 +55,8 @@ class UpdateCustomerImplTest {
         when(dto.phone()).thenReturn("888888888");
         when(dto.typePhone()).thenReturn(TypePhone.LANDLINE);
 
-        // Act
         ListCustomerDto result = updateCustomerUseCase.execute("123", dto);
 
-        // Assert
         assertEquals("Jane Doe", customer.getName().getName());
         assertEquals(LocalDate.of(1995, 5, 15), customer.getBirth().getBirth());
         assertEquals("21", customer.getContact().getDDD());
@@ -75,10 +72,8 @@ class UpdateCustomerImplTest {
 
     @Test
     void shouldThrowWhenCustomerNotFound() {
-        // Arrange
         when(repository.getCustomerById("999")).thenReturn(java.util.Optional.empty());
 
-        // Act & Assert
         IllegalDomainException exception = assertThrows(
                 IllegalDomainException.class,
                 () -> updateCustomerUseCase.execute("999", mock(UpdateCustomerDto.class))

@@ -16,6 +16,7 @@ public class Customer {
 
 	private CustomerId id;
 	private boolean active = false;
+	private SystemClientStatus systemClientStatus;
 	private Name name;
 	private Gender gender;
 	private Birth birth;
@@ -26,7 +27,7 @@ public class Customer {
 	private List<Charge> charges = new ArrayList<>();
 	private List<Card> cards = new ArrayList<>();
 
-	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password, SystemClientStatus systemClientStatus) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
@@ -34,6 +35,7 @@ public class Customer {
 		this.cpf = cpf;
 		this.contact = contact;
 		this.password = password;
+		this.systemClientStatus = systemClientStatus;
 	}
 
 	public void assignId(String id) {
@@ -74,12 +76,20 @@ public class Customer {
 	private boolean meetsActivationCriteria() {
 		return !charges.isEmpty() && !deliveries.isEmpty();
 	}
+	
+	public void changeActivationStatusByAdmin() {
+		this.systemClientStatus = SystemClientStatus.changeStatus(this.systemClientStatus.isSystemClientStatus());
+	}
 
 	public boolean checkActivationRequirements() {
 		this.active = meetsActivationCriteria();
 		return this.active;
 	}
 
+	public boolean getSystemClientStatus() {
+		return systemClientStatus.isSystemClientStatus();
+	}
+	
 	public Email getEmail() {
 		return this.contact.getEmail();
 	}

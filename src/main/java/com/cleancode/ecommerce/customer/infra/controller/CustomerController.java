@@ -23,6 +23,7 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.ListAllCustome
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
+import com.cleancode.ecommerce.customer.application.useCase.contract.ChangeActivationStatusAdm;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCard;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
@@ -55,11 +56,13 @@ public class CustomerController {
 	private final UpdateDelivery updateDelivery;
 	private final CreateCustomerCard createCard;
 	private final ListAllCustomers listAllCustomers;
+	private final ChangeActivationStatusAdm changeActivationStatusAdm;
 
 	public CustomerController(CreateCustomer createCustomer, CreateCustomerDelivery createCustomerDelivery,
 			CreateCustomerCharge createCustomerCharge, ListCustomer listCustomer, UpdateCustomer updateCustomer,
 			UpdatePassword updatePassword, DeleteCharge deleteCharge, DeleteDelivery deleteDelivery,
-			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard, ListAllCustomers listAllCustomers) {
+			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard,
+			ListAllCustomers listAllCustomers, ChangeActivationStatusAdm changeActivationStatusAdm) {
 		
 		this.createCustomer = createCustomer;
 		this.createCustomerDelivery = createCustomerDelivery;
@@ -73,6 +76,7 @@ public class CustomerController {
 		this.updateDelivery = updateDelivery;
 		this.createCard = createCard;
 		this.listAllCustomers = listAllCustomers;
+		this.changeActivationStatusAdm = changeActivationStatusAdm;
 	}
 
 	// ----------------------
@@ -98,6 +102,12 @@ public class CustomerController {
 	@PutMapping("/{id}")
 	public ResponseEntity<ListCustomerDto> updateCustomer(@PathVariable String id, @RequestBody UpdateCustomerDto dto) {
 		return ResponseEntity.ok(updateCustomer.execute(id, dto));
+	}
+	
+	@PutMapping("/{id}/adm")
+	public ResponseEntity<Void> changeActivationStatusAdm(@PathVariable String id) {
+		changeActivationStatusAdm.execute(id);
+		return ResponseEntity.noContent().build();
 	}
 
 	@PutMapping("/{id}/password")

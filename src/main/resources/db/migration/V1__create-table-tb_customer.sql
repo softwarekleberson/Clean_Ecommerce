@@ -1,6 +1,7 @@
 CREATE TABLE tb_customer (
 	customer_id VARCHAR(36) PRIMARY KEY COMMENT 'Unique identifier for the customer',
-    cpf VARCHAR(15) NOT NULL COMMENT 'Brazilian CPF document number and (., -)',
+    system_client_status BOOLEAN DEFAULT TRUE,
+	cpf VARCHAR(15) NOT NULL COMMENT 'Brazilian CPF document number and (., -)',
     full_name VARCHAR(150) NOT NULL COMMENT 'Customer full name',
     birth_date DATE NOT NULL COMMENT 'Customer birth date',
     password_hash VARCHAR(512) NOT NULL COMMENT 'Hashed customer password',

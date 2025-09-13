@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.customer.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.cleancode.ecommerce.customer.application.useCase.ChangeActivationStatusAdmImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCardImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDeliveryImpl;
@@ -16,6 +17,7 @@ import com.cleancode.ecommerce.customer.application.useCase.UpdateChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdatePasswordImpl;
+import com.cleancode.ecommerce.customer.application.useCase.contract.ChangeActivationStatusAdm;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCard;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
@@ -99,5 +101,10 @@ public class CustomerConfig {
 	@Bean
 	public UpdateDelivery updateDelivery(CustomerRepository repositor) {
 		return new UpdateDeliveryImpl(repositor);
+	}
+	
+	@Bean
+	public ChangeActivationStatusAdm changeActivationStatusAdm(CustomerRepository repositor) {
+		return new ChangeActivationStatusAdmImpl(repositor);
 	}
 }

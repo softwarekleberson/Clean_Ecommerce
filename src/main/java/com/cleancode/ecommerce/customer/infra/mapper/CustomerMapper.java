@@ -29,10 +29,12 @@ public final class CustomerMapper {
 
 		Phone phone = domain.getFullPhone();
 		entity.setPhone(new PhoneEntity(phone.getDdd(), phone.getPhone(), PhoneTypeEntity.valueOf(phone.getTypePhone().name())));
-
+		
 		Email email = domain.getEmail();
 		entity.setEmail(new EmailEntity(email.getEmail()));
 
+		entity.setSystem_client_status(domain.getSystemClientStatus());
+		
 		Set<String> domainDeliveryIds = domain.getDeliverys().stream()
 				.map(Delivery::getPublicId)
 				.collect(Collectors.toSet());
@@ -98,7 +100,8 @@ public final class CustomerMapper {
 						),
 						new Email(entity.getEmail().getEmail())
 				),
-				new Password(entity.getPassword_hash())
+				new Password(entity.getPassword_hash()),
+				new SystemClientStatus(entity.isSystem_client_status())
 		);
 
 		if (entity.getDeliveryEntities() != null) {

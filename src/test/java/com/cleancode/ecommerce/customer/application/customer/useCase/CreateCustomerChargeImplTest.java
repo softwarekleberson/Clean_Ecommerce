@@ -34,7 +34,8 @@ class CreateCustomerChargeImplTest {
 		return new Customer(new CustomerId("123"), new Name("João Silva"), Gender.MALE,
 				new Birth(LocalDate.of(1990, 1, 1)), new Cpf("438.287.059-50"),
 				new Contact(new Phone("11", "999999999", TypePhone.MOBILE), new Email("joao@email.com")),
-				new Password("senha123"));
+				new Password("senha123"),
+				new SystemClientStatus(true));
 	}
 
 	@Test
@@ -43,7 +44,7 @@ class CreateCustomerChargeImplTest {
 		when(repository.getCustomerById("123")).thenReturn(Optional.of(customer));
 
 		CreateChargeDto dto = mock(CreateChargeDto.class);
-		Charge charge = new Charge("c1", "Maria", "Rua X", "123", "Centro", "12345-678", "Obs", "Rua", "Casa",
+		Charge charge = new Charge("c1", "Maria", "Rua X", "123", "Centro", "12345678", "Obs", "Rua", "Casa",
 				"São Paulo", "SP", "Brasil");
 		when(dto.createCharge()).thenReturn(charge);
 

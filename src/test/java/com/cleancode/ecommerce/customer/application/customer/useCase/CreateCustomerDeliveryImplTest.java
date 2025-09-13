@@ -38,7 +38,8 @@ class CreateCustomerDeliveryImplTest {
                 new Birth(LocalDate.of(1990, 1, 1)),
                 new Cpf("123.456.789-01"),
                 new Contact(new Phone("11", "999999999", TypePhone.LANDLINE), new Email("joao@email.com")),
-                new Password("senha123")
+                new Password("senha123"),
+                new SystemClientStatus(true)
         );
     }
 
@@ -50,7 +51,7 @@ class CreateCustomerDeliveryImplTest {
 
         CreateDeliveryDto dto = mock(CreateDeliveryDto.class);
         Delivery delivery = new Delivery("d1", "Frase Entrega", "Maria", "Rua A", "123",
-                "Centro", "12345-678", "Obs", "Rua", "Casa", "São Paulo", "SP", "Brasil");
+                "Centro", "12345678", "Obs", "Rua", "Casa", "São Paulo", "SP", "Brasil");
         when(dto.createDelivery()).thenReturn(delivery);
 
         // Act

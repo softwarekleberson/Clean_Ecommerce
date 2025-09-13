@@ -9,6 +9,7 @@ import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
+import com.cleancode.ecommerce.customer.domain.customer.SystemClientStatus;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
@@ -44,10 +45,13 @@ class CreateCustomerImplTest {
 	void deveCriarClienteComSucesso() {
 		// Arrange
 		CreateCustomerDto dto = mock(CreateCustomerDto.class);
-		Customer customer = new Customer(new CustomerId("123"), new com.cleancode.ecommerce.shared.kernel.Name("João Silva"), Gender.MALE,
+		Customer customer = new Customer(new CustomerId("123"),
+				new com.cleancode.ecommerce.shared.kernel.Name("João Silva"), Gender.MALE,
 				new Birth(LocalDate.of(1990, 1, 1)), new com.cleancode.ecommerce.shared.kernel.Cpf("123.456.789-01"),
-				new Contact(new Phone("11", "999999999", TypePhone.LANDLINE), new com.cleancode.ecommerce.shared.kernel.Email("joao@email.com")),
-				new Password("senha123"));
+				new Contact(new Phone("11", "999999999", TypePhone.LANDLINE),
+						new com.cleancode.ecommerce.shared.kernel.Email("joao@email.com")),
+				new Password("senha123"),
+				new SystemClientStatus(true));
 
 		when(dto.getPassword()).thenReturn("senha123");
 		when(dto.getConfirmPassword()).thenReturn("senha123");

@@ -4,10 +4,21 @@ package com.cleancode.ecommerce.customer.application.customer.useCase;
 import com.cleancode.ecommerce.customer.application.dtos.address.UpdateAddressDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateChargeImpl;
+import com.cleancode.ecommerce.customer.domain.customer.Birth;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
+import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
+import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
+import com.cleancode.ecommerce.customer.domain.customer.Gender;
+import com.cleancode.ecommerce.customer.domain.customer.Password;
+import com.cleancode.ecommerce.customer.domain.customer.Phone;
+import com.cleancode.ecommerce.customer.domain.customer.SystemClientStatus;
+import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.shared.kernel.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.Name;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,21 +42,21 @@ class UpdateChargeImplTest {
 
     private Customer buildCustomerWithCharge() {
         Customer customer = new Customer(
-                new com.cleancode.ecommerce.customer.domain.customer.CustomerId("123"),
-                new com.cleancode.ecommerce.shared.kernel.Name("John Doe"),
-                com.cleancode.ecommerce.customer.domain.customer.Gender.MALE,
-                new com.cleancode.ecommerce.customer.domain.customer.Birth(LocalDate.of(1990, 1, 1)),
-                new com.cleancode.ecommerce.shared.kernel.Cpf("123.456.789-01"),
-                new com.cleancode.ecommerce.customer.domain.customer.Contact(
-                        new com.cleancode.ecommerce.customer.domain.customer.Phone("11", "999999999", com.cleancode.ecommerce.customer.domain.customer.TypePhone.LANDLINE),
-                        new com.cleancode.ecommerce.shared.kernel.Email("john@example.com")
+                new CustomerId("123"),
+                new Name("John Doe"),
+                Gender.MALE,
+                new Birth(LocalDate.of(1990, 1, 1)),
+                new Cpf("123.456.789-01"),
+                new Contact(
+                        new Phone("11", "999999999", TypePhone.LANDLINE),
+                        new Email("john@example.com")
                 ),
-                new com.cleancode.ecommerce.customer.domain.customer.Password("password123")
+                new Password("password123"),
+                new SystemClientStatus(true)
         );
 
-        // Add a dummy charge
         customer.registerCharge(new Charge(
-                "c1", "Receiver", "Street", "123", "Neighborhood", "12345-678",
+                "c1", "Receiver", "Street", "123", "Neighborhood", "12345678",
                 "Observation", "StreetType", "House", "City", "State", "Country"
         ));
 
@@ -54,7 +65,6 @@ class UpdateChargeImplTest {
 
     @Test
     void shouldUpdateChargeSuccessfully() {
-        // Arrange
         Customer customer = buildCustomerWithCharge();
         when(repository.getCustomerById("123")).thenReturn(java.util.Optional.of(customer));
 
@@ -63,7 +73,7 @@ class UpdateChargeImplTest {
         when(dto.street()).thenReturn("New Street");
         when(dto.number()).thenReturn("456");
         when(dto.neighborhood()).thenReturn("New Neighborhood");
-        when(dto.zipCode()).thenReturn("98765-432");
+        when(dto.zipCode()).thenReturn("98765432");
         when(dto.observation()).thenReturn("New Observation");
         when(dto.streetType()).thenReturn("New StreetType");
         when(dto.typeResidence()).thenReturn("Apartment");
@@ -71,10 +81,8 @@ class UpdateChargeImplTest {
         when(dto.state()).thenReturn("New State");
         when(dto.country()).thenReturn("New Country");
 
-        // Act
         ListCustomerDto result = updateChargeUseCase.execute("123", "c1", dto);
 
-        // Assert
         Charge updatedCharge = customer.findChargeById("c1");
         assertEquals("New Receiver", updatedCharge.getReceiver());
         assertEquals("New Street", updatedCharge.getStreet());
@@ -97,10 +105,8 @@ class UpdateChargeImplTest {
 
     @Test
     void shouldThrowWhenCustomerNotFound() {
-        // Arrange
         when(repository.getCustomerById("999")).thenReturn(java.util.Optional.empty());
 
-        // Act & Assert
         IllegalDomainException exception = assertThrows(
                 IllegalDomainException.class,
                 () -> updateChargeUseCase.execute("999", "c1", mock(UpdateAddressDto.class))
@@ -112,11 +118,9 @@ class UpdateChargeImplTest {
 
     @Test
     void shouldThrowWhenChargeNotFound() {
-        // Arrange
         Customer customer = buildCustomerWithCharge();
         when(repository.getCustomerById("123")).thenReturn(java.util.Optional.of(customer));
 
-        // Act & Assert
         IllegalDomainException exception = assertThrows(
                 IllegalDomainException.class,
                 () -> updateChargeUseCase.execute("123", "nonexistent-charge", mock(UpdateAddressDto.class))
