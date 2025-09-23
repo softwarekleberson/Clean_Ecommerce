@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.cleancode.ecommerce.shared.kernel.TypeCoin;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,8 +34,13 @@ public class StockInputEntity {
 	
 	@Enumerated(EnumType.STRING)
 	private ProductQualityEntity product_quality;	
+	
 	private LocalDateTime entry_time = LocalDateTime.now();
+	
 	private BigDecimal purchase_price;
+	
+	@Enumerated(EnumType.STRING)
+	private TypeCoin coin;
 	private String supplier;
 	
 	@ManyToOne

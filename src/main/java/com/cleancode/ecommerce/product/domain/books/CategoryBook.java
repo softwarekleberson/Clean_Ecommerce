@@ -16,5 +16,8 @@ public enum CategoryBook {
 	YOUNG_ADULT,
 	CHILDREN, 
 	POETRY, 
-	COMICS
+	COMICS,
+	SATIRE,
+	TRAVEL,
+	CLASSIC
 }

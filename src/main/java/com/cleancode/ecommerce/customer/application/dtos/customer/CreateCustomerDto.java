@@ -10,6 +10,7 @@ import com.cleancode.ecommerce.customer.domain.customer.Gender;
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.customer.domain.customer.Phone;
+import com.cleancode.ecommerce.customer.domain.customer.SystemClientStatus;
 import com.cleancode.ecommerce.customer.domain.customer.TypePhone;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
 import com.cleancode.ecommerce.shared.kernel.Email;
@@ -81,6 +82,7 @@ public class CreateCustomerDto {
 			   new Cpf(cpf),
 			   new Contact(new Phone(ddd, phone, typePhone),
 			   new Email(email)),
-			   new Password(password));
+			   new Password(password),
+			   new SystemClientStatus(true));
 	}
 }

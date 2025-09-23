@@ -23,7 +23,7 @@ public class Charge extends Address {
 			this.zipCode = zipCode;
 		if (observation != null)
 			this.observation = observation;
-		if (streetType != null && !streetType.isBlank() && inputSize(observation))
+		if (streetType != null && !streetType.isBlank())
 			this.streetType = streetType;
 		if (typeResidence != null && !typeResidence.isBlank())
 			this.residenceType = typeResidence;

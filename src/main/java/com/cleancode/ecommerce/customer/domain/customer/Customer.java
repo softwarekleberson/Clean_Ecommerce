@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.util.List;
 
+import com.cleancode.ecommerce.customer.domain.card.Card;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
 import com.cleancode.ecommerce.shared.kernel.Email;
@@ -15,6 +16,7 @@ public class Customer {
 
 	private CustomerId id;
 	private boolean active = false;
+	private SystemClientStatus systemClientStatus;
 	private Name name;
 	private Gender gender;
 	private Birth birth;
@@ -23,8 +25,9 @@ public class Customer {
 	private Password password;
 	private List<Delivery> deliveries = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
+	private List<Card> cards = new ArrayList<>();
 
-	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password, SystemClientStatus systemClientStatus) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
@@ -32,6 +35,7 @@ public class Customer {
 		this.cpf = cpf;
 		this.contact = contact;
 		this.password = password;
+		this.systemClientStatus = systemClientStatus;
 	}
 
 	public void assignId(String id) {
@@ -72,18 +76,36 @@ public class Customer {
 	private boolean meetsActivationCriteria() {
 		return !charges.isEmpty() && !deliveries.isEmpty();
 	}
+	
+	public void changeActivationStatusByAdmin() {
+		this.systemClientStatus = SystemClientStatus.changeStatus(this.systemClientStatus.isSystemClientStatus());
+	}
 
 	public boolean checkActivationRequirements() {
 		this.active = meetsActivationCriteria();
 		return this.active;
 	}
 
+	public boolean getSystemClientStatus() {
+		return systemClientStatus.isSystemClientStatus();
+	}
+	
 	public Email getEmail() {
 		return this.contact.getEmail();
 	}
 
 	public Phone getFullPhone() {
 		return this.contact.getFullPhone();
+	}
+
+	public void registerCard(Card newCard) {
+		if (newCard.isMain()) {
+			List<Card> updatedCards = this.cards.stream().map(c -> new Card(false, c.getPrintedName(), c.getCode(),
+					c.getNumberCard(), c.getExpirationDate(), c.getFlag())).toList();
+			this.cards.clear();
+			this.cards.addAll(updatedCards);
+		}
+		this.cards.add(newCard);
 	}
 
 	public void registerDelivery(Delivery delivery) {
@@ -168,5 +190,9 @@ public class Customer {
 
 	public List<Charge> getCharges() {
 		return Collections.unmodifiableList(this.charges);
+	}
+
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(this.cards);
 	}
 }

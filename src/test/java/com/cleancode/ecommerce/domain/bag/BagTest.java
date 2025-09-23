@@ -68,12 +68,10 @@ public class BagTest {
 
 	@Test
 	void shouldUpdateProductFields() {
-		bag.reviseDetails("Nova descrição", "Novo Nome", BigDecimal.valueOf(150), TypeCoin.DOLAR);
+		bag.reviseDetails("Nova descrição", "Novo Nome");
 
 		assertEquals("Nova descrição", bag.getDescription().getDescription());
 		assertEquals("Novo Nome", bag.getName().getName());
-		assertEquals(BigDecimal.valueOf(150), bag.getPrice().getPrice());
-		assertEquals(TypeCoin.DOLAR, bag.getPrice().getCoin());
 	}
 
 	@Test
@@ -81,7 +79,7 @@ public class BagTest {
 		String oldDescription = bag.getDescription().getDescription();
 		BigDecimal oldPrice = bag.getPrice().getPrice();
 
-		bag.reviseDetails(null, "Nome Atualizado", null, null);
+		bag.reviseDetails(null, "Nome Atualizado");
 
 		assertEquals("Nome Atualizado", bag.getName().getName());
 		assertEquals(oldDescription, bag.getDescription().getDescription());

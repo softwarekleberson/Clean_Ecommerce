@@ -20,12 +20,12 @@ public class CreateStockImpl implements CreateStock {
 
 	@Override
 	public ListStockDto execute(CreateStockDto dto) {
-		Product product = productRepository.listProduct(dto.getProductId())
+		Product product = productRepository.findById(dto.getProductId())
 		.orElseThrow(() -> new IllegalDomainException
 		("Product with id : " + dto.getProductId() + "not found"));
 
 		Stock stock = dto.createStock();
-		stockRepository.create(stock);
+		stockRepository.save(stock);
 		
 		return new ListStockDto(stock);
 	}

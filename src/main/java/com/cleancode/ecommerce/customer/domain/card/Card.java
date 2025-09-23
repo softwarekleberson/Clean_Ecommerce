@@ -1,48 +1,51 @@
 package com.cleancode.ecommerce.customer.domain.card;
 
-import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Card {
 
-	private UUID id;
-	private String printedName;
-	private String code;
-	private String numberCard;
-	private LocalDate expirationDate;
+	private CardId cardId;
+	private boolean main;
+	private PrintedName printedName;
+	private Code code;
+	private NumberCard numberCard;
+	private ExpirationDate expirationDate;
 	private Flag flag;
-	private Type type;
-	
-	public Card(String printedName, String code, String numberCard, LocalDate expirationDate, Flag flag,
-			Type type) {
-		
-		this.id = UUID.randomUUID();
+
+	public Card(boolean main, PrintedName printedName,
+			Code code, NumberCard numberCard,
+			ExpirationDate expirationDate, Flag flag) {
+
+		this.cardId = new CardId();
+		this.main = main;
 		this.printedName = printedName;
 		this.code = code;
 		this.numberCard = numberCard;
 		this.expirationDate = expirationDate;
 		this.flag = flag;
-		this.type = type;
 	}
 
-	public UUID getId() {
-		return id;
+	public CardId getCardId() {
+		return cardId;
 	}
 
-	public String getPrintedName() {
+	public boolean isMain() {
+		return main;
+	}
+
+	public PrintedName getPrintedName() {
 		return printedName;
 	}
 
-	public String getCode() {
+	public Code getCode() {
 		return code;
 	}
 
-	public String getNumberCard() {
+	public NumberCard getNumberCard() {
 		return numberCard;
 	}
 
-	public LocalDate getExpirationDate() {
+	public ExpirationDate getExpirationDate() {
 		return expirationDate;
 	}
 
@@ -50,13 +53,9 @@ public class Card {
 		return flag;
 	}
 
-	public Type getType() {
-		return type;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(code, expirationDate, flag, id, numberCard, printedName, type);
+		return Objects.hash(cardId, code, expirationDate, flag, main, numberCard, printedName);
 	}
 
 	@Override
@@ -68,8 +67,8 @@ public class Card {
 		if (getClass() != obj.getClass())
 			return false;
 		Card other = (Card) obj;
-		return Objects.equals(code, other.code) && Objects.equals(expirationDate, other.expirationDate)
-				&& flag == other.flag && Objects.equals(id, other.id) && Objects.equals(numberCard, other.numberCard)
-				&& Objects.equals(printedName, other.printedName) && type == other.type;
+		return Objects.equals(cardId, other.cardId) && Objects.equals(code, other.code)
+				&& Objects.equals(expirationDate, other.expirationDate) && flag == other.flag && main == other.main
+				&& Objects.equals(numberCard, other.numberCard) && Objects.equals(printedName, other.printedName);
 	}
 }

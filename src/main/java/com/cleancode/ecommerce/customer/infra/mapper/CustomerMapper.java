@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.customer.infra.mapper;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.cleancode.ecommerce.customer.domain.card.Card;
 import com.cleancode.ecommerce.customer.domain.customer.*;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.customer.*;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
@@ -28,10 +29,12 @@ public final class CustomerMapper {
 
 		Phone phone = domain.getFullPhone();
 		entity.setPhone(new PhoneEntity(phone.getDdd(), phone.getPhone(), PhoneTypeEntity.valueOf(phone.getTypePhone().name())));
-
+		
 		Email email = domain.getEmail();
 		entity.setEmail(new EmailEntity(email.getEmail()));
 
+		entity.setSystem_client_status(domain.getSystemClientStatus());
+		
 		Set<String> domainDeliveryIds = domain.getDeliverys().stream()
 				.map(Delivery::getPublicId)
 				.collect(Collectors.toSet());
@@ -63,6 +66,21 @@ public final class CustomerMapper {
 							() -> entity.getChargeEntities().add(ChargeMapper.toEntity(charge, entity))
 					);
 		}
+		
+		Set<String> domainCardIds = domain.getCards().stream()
+			    .map(card -> card.getCardId().getCardId()) 
+			    .collect(Collectors.toSet());
+		entity.getCardEntities().removeIf(e -> !domainCardIds.contains(e.getCard_id()));
+
+		for (Card card : domain.getCards()) {
+			entity.getCardEntities().stream()
+					.filter(existing -> existing.getCard_id().equals(card.getCardId().getCardId()))
+					.findFirst()
+					.ifPresentOrElse(
+							existing -> CardMapper.updateEntity(card, existing),
+							() -> entity.getCardEntities().add(CardMapper.toEntity(card, entity))
+					);
+		}
 
 		return entity;
 	}
@@ -82,7 +100,8 @@ public final class CustomerMapper {
 						),
 						new Email(entity.getEmail().getEmail())
 				),
-				new Password(entity.getPassword_hash())
+				new Password(entity.getPassword_hash()),
+				new SystemClientStatus(entity.isSystem_client_status())
 		);
 
 		if (entity.getDeliveryEntities() != null) {
@@ -91,6 +110,10 @@ public final class CustomerMapper {
 
 		if (entity.getChargeEntities() != null) {
 			entity.getChargeEntities().forEach(e -> customer.registerCharge(ChargeMapper.toDomain(e)));
+		}
+		
+		if (entity.getCardEntities() != null) {
+		    entity.getCardEntities().forEach(e -> customer.registerCard(CardMapper.toDomain(e)));
 		}
 
 		return customer;

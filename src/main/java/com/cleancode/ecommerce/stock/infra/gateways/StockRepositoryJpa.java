@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.stock.infra.gateways;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,7 @@ public class StockRepositoryJpa implements StockRepository {
 
 	@Transactional
 	@Override
-	public Stock create(Stock stoke) {
+	public Stock save(Stock stoke) {
 		StockEntity entity = StockMapper.toEntity(stoke);
 		jpa.save(entity);
 		Stock domain = StockMapper.toDomain(entity);
@@ -27,8 +29,12 @@ public class StockRepositoryJpa implements StockRepository {
 	}
 
 	@Override
-	public Stock getStock(String id) {
-		StockEntity entity = jpa.findByProductId(id).orElseThrow(() -> new RuntimeException("Stock not found"));
-		return StockMapper.toDomain(entity);
+	public Optional <Stock> getStock(String id) {
+		return jpa.findByProductId(id).map(StockMapper::toDomain);
+	}
+
+	@Override
+	public Optional<Stock> getStockByCartItem(String cartItemId) {
+		return Optional.empty();
 	}
 }

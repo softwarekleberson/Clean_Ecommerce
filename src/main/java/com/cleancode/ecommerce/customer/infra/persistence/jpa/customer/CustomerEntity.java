@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEntity;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.DeliveryEntity;
+import com.cleancode.ecommerce.customer.infra.persistence.jpa.card.CardEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -33,6 +34,7 @@ public class CustomerEntity {
 
 	@Id
 	private String customer_id = UUID.randomUUID().toString();
+	private boolean system_client_status;
 	private String cpf;
 	private String full_name;
 	private LocalDate birth_date;
@@ -53,6 +55,9 @@ public class CustomerEntity {
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	private Set<ChargeEntity> chargeEntities = new HashSet<>();
 
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	private Set<CardEntity> cardEntities = new HashSet<>();
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(customer_id);

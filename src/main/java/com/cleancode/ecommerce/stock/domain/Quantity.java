@@ -1,6 +1,6 @@
 package com.cleancode.ecommerce.stock.domain;
 
-import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
 public class Quantity {
 
@@ -9,7 +9,7 @@ public class Quantity {
 
 	public Quantity(int quantity) {
 		if(quantity <= MIN_QUANTITY) {
-			throw new IllegalDomainException("quantity must have a value greater than 0");
+			throw new IllegalStockException("quantity must have a value greater than 0");
 		}
 		this.quantity = quantity;
 	}

@@ -7,7 +7,8 @@ import com.cleancode.ecommerce.product.domain.Product;
 
 public interface ProductRepository {
 
-	Product create(Product product);
-	List<Product> listAll();
-	Optional<Product> listProduct(String idProduct);
+	Product save(Product product);
+	List<Product> ListAllProductActive();
+	List<Product> ListAllProductNotActive();
+	Optional<Product> findById(String idProduct);
 }

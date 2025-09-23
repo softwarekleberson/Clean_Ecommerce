@@ -1,6 +1,8 @@
 package com.cleancode.ecommerce.customer.infra.gateways;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
@@ -39,5 +41,14 @@ public class CustomerRepositoryJpa implements CustomerRepository {
 	@Transactional(readOnly = true)
 	public Optional<Customer> getCustomerById(String id) {
 		return jpa.findFullById(id).map(CustomerMapper::toDomain);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Customer> getAllCustomers() {
+		return jpa.findAllCustomer()
+		.stream()
+		.map(CustomerMapper::toDomain)
+		.collect(Collectors.toList());
 	}
 }

@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.cleancode.ecommerce.customer.domain.card.exception.IllegalCardException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalContactException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalCpfException;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.order.domain.cart.exception.IllegalCartException;
+import com.cleancode.ecommerce.product.domain.exception.IllegalDimensionException;
+import com.cleancode.ecommerce.product.domain.exception.IllegalPricingException;
+import com.cleancode.ecommerce.stock.domain.exception.IllegalReservationException;
+import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -23,25 +29,67 @@ public class GlobalExceptionHandler {
 	// Custom exception
 	@ExceptionHandler(IllegalDomainException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalDomainException ex) {
-		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception",
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception customer",
 				ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 	@ExceptionHandler(IllegalCpfException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalCpfException ex) {
-		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception",
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception customer",
 				ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 	@ExceptionHandler(IllegalContactException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalContactException ex) {
-		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception",
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception customer",
 				ex.getMessage());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
-
+	
+	@ExceptionHandler(IllegalPricingException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalPricingException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception product",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalDimensionException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalDimensionException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception product product",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalCartException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalCartException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception product cart",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalReservationException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalReservationException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception product stock",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalStockException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalStockException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception stock",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	@ExceptionHandler(IllegalCardException.class)
+	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalCardException ex) {
+		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception card",
+				ex.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
 	// Invalid argument error (e.g. @Valid)
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<DetailsError> handleValidationException(MethodArgumentNotValidException ex) {

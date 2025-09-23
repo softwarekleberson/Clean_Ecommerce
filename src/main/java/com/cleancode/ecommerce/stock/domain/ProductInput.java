@@ -1,8 +1,9 @@
 package com.cleancode.ecommerce.stock.domain;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import com.cleancode.ecommerce.shared.kernel.Price;
 
 public class ProductInput {
 
@@ -12,10 +13,10 @@ public class ProductInput {
 	private final Price purchasePrice;
 	private final Supplier supplier;
 
-	public ProductInput(int quantity, ProductQuality productQuality, BigDecimal purchasePrice, String supplier) {
+	public ProductInput(int quantity, ProductQuality productQuality, Price purchasePrice, String supplier) {
 		this.quantity = new Quantity(quantity);
 		this.productQuality = productQuality;
-		this.purchasePrice = new Price(purchasePrice);
+		this.purchasePrice = purchasePrice;
 		this.supplier = new Supplier(supplier);
 		this.entryTime = LocalDateTime.now();
 	}

@@ -22,7 +22,7 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional
 	@Override
-	public Product create(Product product) {
+	public Product save(Product product) {
 		ProductEntity entity = ProductMapper.toEntity(product);
 		jpa.save(entity);
 		Product domain = ProductMapper.toDomain(entity);
@@ -31,16 +31,21 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Product> listAll() {
-		List<ProductEntity> entity = jpa.findAll();
-		return entity.stream()
-				   .map(ProductMapper::toDomain)
-				   .toList();
+	public List<Product> ListAllProductActive() {
+		List<ProductEntity> entity = jpa.findByActiveTrue();
+		return entity.stream().map(ProductMapper::toDomain).toList();
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public Optional<Product> listProduct(String idProduct) {
-		return jpa.findById(idProduct).map(ProductMapper::toDomain);  
+	public List<Product> ListAllProductNotActive() {
+		List<ProductEntity> entity = jpa.findByActiveFalse();
+		return entity.stream().map(ProductMapper::toDomain).toList();
+	}
+
+	@Transactional(readOnly = true)
+	@Override
+	public Optional<Product> findById(String productId) {
+		return jpa.findById(productId).map(ProductMapper::toDomain);
 	}
 }

@@ -50,4 +50,10 @@ public abstract class ProductEntity {
 	protected List<MidiaEntity> midias;
 	
 	protected BigDecimal pricing;
+	
+	protected String justification;
+	
+	@Enumerated(EnumType.STRING)
+	protected ProductStatusCategoryEntity product_status;
+
 }
