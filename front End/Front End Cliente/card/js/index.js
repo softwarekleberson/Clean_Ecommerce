@@ -27,14 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const cards = Array.isArray(data.cards) ? data.cards : [];
 
-      if (cards.length === 0) {
-        const empty = document.createElement('div');
-        empty.className = 'card';
-        empty.innerHTML = `<p>No cards found.</p>`;
-        userList.appendChild(empty);
-        return;
-      }
-
       cards.forEach(card => {
         const cardDiv = document.createElement('div');
         cardDiv.className = 'card';

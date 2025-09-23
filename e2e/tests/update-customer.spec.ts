@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('deve atualizar dados de cliente existente sem token', async ({ page }) => {
   // 1. Abre o formulário de update com query param ?id={clientId}
-  const clientId = '449b5c47-93b9-451e-b9f8-cf1f716c54b2';
+  const clientId = '1ce568cf-c16f-4319-a05b-cd505e9bb8cf';
   await page.goto(`http://127.0.0.90:5501/update-customer.html?id=${clientId}`);
 
   // 2. Espera o formulário ser preenchido pelo GET

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('deve atualizar a senha do cliente sem token', async ({ page }) => {
   // 1. ID do cliente presente na URL
-  const clientId = '449b5c47-93b9-451e-b9f8-cf1f716c54b2';
+  const clientId = '1ce568cf-c16f-4319-a05b-cd505e9bb8cf';
 
   // 2. Abre o formulário com query param ?id={clientId}
   await page.goto(`http://127.0.0.90:5501/update-password.html?id=${clientId}`);

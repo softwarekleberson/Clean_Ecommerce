@@ -15,35 +15,63 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             const data = await response.json();
-
             userList.innerHTML = '';
 
+            // Card fixo para adicionar nova entrega
             const cardFixo = document.createElement('div');
             cardFixo.classList.add('card');
-            cardFixo.innerHTML = `
-                <h2>Add Delivery</h2>
-                <div class="actions">
-                    <a class="link" href="create-delivery.html?id=${clienteId}">Add</a>
-                </div>
-            `;
+            const addLink = document.createElement('a');
+            addLink.classList.add('link');
+            addLink.href = `create-delivery.html?id=${clienteId}`;
+            addLink.textContent = 'Add';
+            const actionsDivFixo = document.createElement('div');
+            actionsDivFixo.classList.add('actions');
+            actionsDivFixo.appendChild(addLink);
+            cardFixo.appendChild(document.createElement('h2')).textContent = 'Add Delivery';
+            cardFixo.appendChild(actionsDivFixo);
             userList.appendChild(cardFixo);
 
             if (Array.isArray(data.deliveres)) {
                 data.deliveres.forEach(entrega => {
                     const div = document.createElement('div');
                     div.classList.add('card');
+
+                    // Conteúdo da entrega
                     div.innerHTML = `
                         <h3>${entrega.receiver}</h3>
                         <p>${entrega.street}</p>
                         <p>${entrega.typeResidence} - ${entrega.number} ${entrega.observation ?? ''}</p>
                         <p>${entrega.city}, ${entrega.state} ${entrega.zipCode}</p>
-                        <p>${entrega.country}</p> 
-                        <div class="actions">
-                            <a onclick="excluirEntrega('${entrega.id}', '${clienteId}')" href="#">Delete</a>
-                            <p>|</p>
-                            <a href="update-delivery.html?id=${clienteId}&entregaId=${entrega.id}">Edit</a>
-                        </div>
+                        <p>${entrega.country}</p>
                     `;
+
+                    // Ações
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.classList.add('actions');
+
+                    // Botão Delete
+                    const deleteLink = document.createElement('a');
+                    deleteLink.href = "#";
+                    deleteLink.textContent = "Delete";
+                    deleteLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        excluirEntrega(entrega.id, clienteId);
+                    });
+
+                    // Separador
+                    const separator = document.createElement('span');
+                    separator.textContent = " | ";
+
+                    // Botão Edit
+                    const editLink = document.createElement('a');
+                    editLink.href = `update-delivery.html?id=${clienteId}&entregaId=${entrega.id}`;
+                    editLink.textContent = "Edit";
+
+                    actionsDiv.appendChild(deleteLink);
+                    actionsDiv.appendChild(separator);
+                    actionsDiv.appendChild(editLink);
+
+                    div.appendChild(actionsDiv);
                     userList.appendChild(div);
                 });
             } else {

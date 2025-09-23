@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             userList.innerHTML = '';
 
+            // Card fixo para adicionar nova cobrança
             const cardFixo = document.createElement('div');
             cardFixo.classList.add('card');
             cardFixo.innerHTML = `
@@ -32,18 +33,41 @@ document.addEventListener('DOMContentLoaded', function () {
                 data.charges.forEach(entrega => {
                     const div = document.createElement('div');
                     div.classList.add('card');
+
                     div.innerHTML = `
                         <h3>${entrega.receiver}</h3>
                         <p>${entrega.street}</p>
                         <p>${entrega.typeResidence} - ${entrega.number} ${entrega.observation ?? ''}</p>
                         <p>${entrega.city}, ${entrega.state} ${entrega.zipCode}</p>
-                        <p>${entrega.country}</p> 
-                        <div class="actions">
-                            <a onclick="excluirEntrega('${clienteId}', '${entrega.id}')" href="#">Delete</a>
-                            <p>|</p>
-                            <a href="update-charge.html?id=${clienteId}&entregaId=${entrega.id}">Edit</a>
-                        </div>
+                        <p>${entrega.country}</p>
                     `;
+
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.classList.add('actions');
+
+                    // Botão Delete
+                    const deleteLink = document.createElement('a');
+                    deleteLink.href = "#";
+                    deleteLink.textContent = "Delete";
+                    deleteLink.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        excluirEntrega(clienteId, entrega.id);
+                    });
+
+                    // Separador
+                    const separator = document.createElement('span');
+                    separator.textContent = " | ";
+
+                    // Botão Edit
+                    const editLink = document.createElement('a');
+                    editLink.href = `update-charge.html?id=${clienteId}&entregaId=${entrega.id}`;
+                    editLink.textContent = "Edit";
+
+                    actionsDiv.appendChild(deleteLink);
+                    actionsDiv.appendChild(separator);
+                    actionsDiv.appendChild(editLink);
+
+                    div.appendChild(actionsDiv);
                     userList.appendChild(div);
                 });
             } else {
@@ -65,10 +89,14 @@ async function excluirEntrega(clienteId, idEntrega) {
                 method: 'DELETE'
             });
 
+            if (!response.ok) {
+                throw new Error('Failed to delete billing');
+            }
+
             alert("Billing deleted successfully!");
             location.reload();
         } catch (error) {
-            console.error("Error deleting delivery:", error);
+            console.error("Error deleting billing:", error);
         }
     }
 }
