@@ -20,4 +20,12 @@ public interface StockJpa extends JpaRepository<StockEntity, String> {
 			""")
 	Optional<StockEntity> findByStockIdWithReservations(@Param("stockId") String stockId);
 
+	@Query("""
+			    SELECT s
+			    FROM StockEntity s
+			    JOIN FETCH s.reservations r
+			    WHERE r.reservation_id = :reservationId
+			""")
+	Optional<StockEntity> findStockByReservationId(@Param("reservationId") String reservationId);
+
 }

@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
+import com.cleancode.ecommerce.order.application.service.CancelProductStockReservation;
+import com.cleancode.ecommerce.order.application.service.CancelProductStockReservationImpl;
 import com.cleancode.ecommerce.order.application.service.ValidateProductHasStock;
 import com.cleancode.ecommerce.order.application.service.ValidateProductHasStockServiceImpl;
 import com.cleancode.ecommerce.order.application.useCase.AddProductToCartImpl;
@@ -49,10 +51,15 @@ public class CartConfig {
 	}
 	
 	@Bean
-	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository) {
-		return new DeleteUniqueProductCartImpl(cartRepository);
+	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository, StockRepository stockRepository, CancelProductStockReservation service) {
+		return new DeleteUniqueProductCartImpl(cartRepository, stockRepository, service);
 	}
 
+	@Bean
+	public CancelProductStockReservation cancelProductStockReservation () {
+		return new CancelProductStockReservationImpl();
+	}
+	
 	@Bean
 	public ValidateProductHasStock validateProductHasStock() {
 		return new ValidateProductHasStockServiceImpl();

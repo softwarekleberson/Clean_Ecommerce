@@ -8,5 +8,5 @@ public interface StockRepository {
 
 	Stock save(Stock stoke);
 	Optional <Stock> getStock (String id);
-	Optional <Stock> getStockByCartItem (String cartItemId);
+	Optional <Stock> findStockByReservationId (String reservationId);
 }
