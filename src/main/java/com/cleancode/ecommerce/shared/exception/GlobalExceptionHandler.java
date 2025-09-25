@@ -26,7 +26,6 @@ import jakarta.validation.ConstraintViolationException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	// Custom exception
 	@ExceptionHandler(IllegalDomainException.class)
 	public ResponseEntity<DetailsError> handleExceptionPersonalized(IllegalDomainException ex) {
 		DetailsError error = new DetailsError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), "Custom exception customer",
@@ -127,13 +126,13 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<DetailsError> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
-		String mensagem = "Violação de integridade de dados.";
+		String mensagem = "This email is not available.";
 
 		Throwable causa = ex.getCause();
 		if (causa instanceof ConstraintViolationException) {
 			ConstraintViolationException constraintEx = (ConstraintViolationException) causa;
-			if (constraintEx.getConstraintViolations() != null && constraintEx.getConstraintViolations().contains("customer.cpf")) {
-				mensagem = "There is already a customer registered with this CPF.";
+			if (constraintEx.getConstraintViolations() != null && constraintEx.getConstraintViolations().contains("customer.email")) {
+				mensagem = "There is already a customer registered with this Email.";
 			}
 		}
 
