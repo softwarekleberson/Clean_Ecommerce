@@ -8,7 +8,7 @@ import com.cleancode.ecommerce.stock.infra.persistence.StockEntity;
 
 public class StockProductOutputMapper {
 
-	public static ProductOutput toDoaim(StockOutputEntity entity) {
+	public static ProductOutput toDomain(StockOutputEntity entity) {
 		return new ProductOutput(new OrderId(entity.getOrder_id()), new ProductId(entity.getProduct_id()), entity.getQuantity());
 	}
 

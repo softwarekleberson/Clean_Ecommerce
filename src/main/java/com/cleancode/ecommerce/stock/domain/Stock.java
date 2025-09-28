@@ -17,7 +17,7 @@ public class Stock {
 	private StockId stockId;
 	private ProductId productId;
 	private int totalQuantity;
-	private int quantityAvailable; // sempre recalculado
+	private int quantityAvailable;
 	private List<Reservations> reservations = new ArrayList<>();
 	private List<ProductInput> productInputs = new ArrayList<>();
 	private List<ProductOutput> productOutputs = new ArrayList<>();
@@ -72,9 +72,7 @@ public class Stock {
 	}
 
 	public void cancelReservation(String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
-				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
-
+		Reservations reservation = getReservationId(reservationId);
 		if (reservation.getReserveStatus() == ReserveStatus.CANCELED) {
 			throw new IllegalReservationException("This reservation was previously cancelled");
 		}
@@ -84,25 +82,23 @@ public class Stock {
 	}
 
 	public void confirmOrder(String orderId, String productId, String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
-				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
-
+		Reservations reservation = getReservationId(reservationId);
 		reservation.confirmOrder();
 
-		this.totalQuantity -= reservation.getQuantity().getQuantity();
-		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new ProductId(productId),
-				reservation.getQuantity().getQuantity()));
+		this.totalQuantity -= reservation.getQuantity();
+		this.productOutputs
+				.add(new ProductOutput(new OrderId(orderId), new ProductId(productId), reservation.getQuantity()));
 
 		recalculateQuantityAvailable();
 	}
 
 	private void recalculateQuantityAvailable() {
 		int totalReserved = this.reservations.stream().filter(r -> r.getReserveStatus() == ReserveStatus.ACTIVE)
-				.mapToInt(r -> r.getQuantity().getQuantity()).sum();
+				.mapToInt(r -> r.getQuantity()).sum();
 
 		this.quantityAvailable = this.totalQuantity - totalReserved;
 	}
-
+	
 	public Reservations getReservationId(String reservationId) {
 		return reservations.stream().filter(r -> r.getReservationId().equals(reservationId)).findFirst()
 				.orElseThrow(() -> new IllegalReservationException("Reservation not found"));

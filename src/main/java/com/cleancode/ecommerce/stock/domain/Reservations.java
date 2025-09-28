@@ -25,14 +25,14 @@ public class Reservations {
 		this.reserveStatus = ReserveStatus.ACTIVE;
 	}
 
-	public Reservations(String reservationId, String cartId, String customerId, int quantity) {
+	public Reservations(String reservationId, String cartId, String customerId, int quantity, LocalDateTime reservationTime, ReserveStatus reserveStatus) {
 
 		this.reservationId = new ReservationId(reservationId);
 		this.cartId = new CartId(cartId);
 		this.customerId = new CustomerId(customerId);
 		this.quantity = new Quantity(quantity);
-		this.reservationTime = LocalDateTime.now();
-		this.reserveStatus = ReserveStatus.ACTIVE;
+		this.reservationTime = reservationTime;
+		this.reserveStatus = reserveStatus;
 	}
 	
 	public void cancel() {
@@ -55,8 +55,8 @@ public class Reservations {
 		return customerId;
 	}
 
-	public Quantity getQuantity() {
-		return quantity;
+	public int getQuantity() {
+		return quantity.getQuantity();
 	}
 
 	public LocalDateTime getReservationTime() {
@@ -69,19 +69,15 @@ public class Reservations {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cartId, customerId, quantity, reservationTime, reserveStatus);
+	    return Objects.hash(reservationId);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Reservations other = (Reservations) obj;
-		return Objects.equals(cartId, other.cartId) && Objects.equals(customerId, other.customerId)
-				&& quantity == other.quantity && Objects.equals(reservationTime, other.reservationTime) && reserveStatus == other.reserveStatus;
+	    if (this == obj) return true;
+	    if (obj == null || getClass() != obj.getClass()) return false;
+	    Reservations other = (Reservations) obj;
+	    return Objects.equals(reservationId, other.reservationId);
 	}
+
 }
