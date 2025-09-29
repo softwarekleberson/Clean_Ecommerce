@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.adm.application.dto.adm;
+package com.cleancode.ecommerce.adm.application.dto.voucher;
 
 import com.cleancode.ecommerce.adm.domain.voucher.CodeVoucher;
 import com.cleancode.ecommerce.adm.domain.voucher.Discount;

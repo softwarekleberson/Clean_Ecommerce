@@ -56,6 +56,7 @@ public class BookMapper {
 
 		List<MidiaEntity> imageEntities = domain.getMidia().stream().map(midia -> {
 			MidiaEntity imageEntity = new MidiaEntity();
+			imageEntity.setMidia_id(midia.getId());
 			imageEntity.setUrl(midia.getUrl());
 			imageEntity.setDescription(midia.getDescription());
 			imageEntity.setProduct(entity);

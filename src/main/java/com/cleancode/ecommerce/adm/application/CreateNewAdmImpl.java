@@ -15,7 +15,7 @@ public class CreateNewAdmImpl implements CreateNewAdm {
 	
 	@Override
 	public void execute(CreateAdmDto dto) {
-		Adm adm = dto.createAdm();
+		Adm adm = dto.create();
 		repository.save(adm);
 	}
 }

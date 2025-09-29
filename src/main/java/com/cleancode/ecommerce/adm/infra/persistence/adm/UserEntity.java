@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.adm.infra.persistence;
+package com.cleancode.ecommerce.adm.infra.persistence.adm;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -13,10 +13,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @MappedSuperclass
 public abstract class UserEntity {
-    
-	@Column(name = "email", nullable = false, unique = true, length = 100)
+
+	@Column(name = "email", nullable = false, updatable = false, unique = true, length = 100)
 	protected String email;
-	
-    @Column(name = "password", nullable = false, length = 255)
+
+	@Column(name = "password", nullable = false, length = 255)
 	protected String password;
 }

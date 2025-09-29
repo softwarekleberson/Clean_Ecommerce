@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.adm.application;
 import java.util.Optional;
 
 import com.cleancode.ecommerce.adm.application.contract.CreateVoucherPromotional;
-import com.cleancode.ecommerce.adm.application.dto.adm.CreateVoucherDto;
+import com.cleancode.ecommerce.adm.application.dto.voucher.CreateVoucherDto;
 import com.cleancode.ecommerce.adm.domain.adm.Adm;
 import com.cleancode.ecommerce.adm.domain.adm.repository.AdmRepository;
 import com.cleancode.ecommerce.adm.domain.voucher.Voucher;

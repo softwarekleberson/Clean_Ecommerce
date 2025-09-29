@@ -19,7 +19,7 @@ public class CreateAdmDto {
 		this.password = password;
 	}
 	
-	public Adm createAdm () {
+	public Adm create () {
 		return new Adm(new Email(email), new Password(password));
 	}
 }

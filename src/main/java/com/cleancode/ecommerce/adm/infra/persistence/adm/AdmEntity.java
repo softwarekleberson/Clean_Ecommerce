@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.adm.infra.persistence;
+package com.cleancode.ecommerce.adm.infra.persistence.adm;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
