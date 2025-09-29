@@ -2,20 +2,27 @@ package com.cleancode.ecommerce.adm.domain.voucher;
 
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
 public abstract class Voucher {
 
 	private final VoucherId id;
-	private Message message;
+	private final Message message;
 	private final LocalDate emission;
 	private final TypeVoucher typeVoucher;
-	
+
 	public Voucher(Message message, TypeVoucher typeVoucher) {
-		this.id = new VoucherId(UUID.randomUUID().toString());
-		this.message = message;
-		this.emission = LocalDate.now();
-		this.typeVoucher = typeVoucher;
+		this(new VoucherId(),
+			 Objects.requireNonNull(message),
+			 LocalDate.now(),
+			 Objects.requireNonNull(typeVoucher)
+		);
+	}
+
+	public Voucher(VoucherId id, Message message, LocalDate emission, TypeVoucher typeVoucher) {
+		this.id = Objects.requireNonNull(id);
+		this.message = Objects.requireNonNull(message);
+		this.emission = Objects.requireNonNull(emission);
+		this.typeVoucher = Objects.requireNonNull(typeVoucher);
 	}
 
 	public String getId() {
@@ -36,7 +43,7 @@ public abstract class Voucher {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(emission, id, message, typeVoucher);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -48,7 +55,6 @@ public abstract class Voucher {
 		if (getClass() != obj.getClass())
 			return false;
 		Voucher other = (Voucher) obj;
-		return Objects.equals(emission, other.emission) && Objects.equals(id, other.id)
-				&& Objects.equals(message, other.message) && typeVoucher == other.typeVoucher;
+		return Objects.equals(id, other.id);
 	}
 }

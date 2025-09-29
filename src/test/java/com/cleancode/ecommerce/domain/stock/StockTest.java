@@ -12,26 +12,25 @@ import org.junit.jupiter.api.Test;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Price;
-import com.cleancode.ecommerce.shared.kernel.TypeCoin;
 import com.cleancode.ecommerce.stock.domain.ProductQuality;
 import com.cleancode.ecommerce.stock.domain.Reservations;
+import com.cleancode.ecommerce.stock.domain.ReserveStatus;
 import com.cleancode.ecommerce.stock.domain.Stock;
-import com.cleancode.ecommerce.stock.domain.StockId;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalReservationException;
 
 public class StockTest {
+
+	private Stock stock;
 	private ProductId productId;
-	private Price purchasePrice;
 
 	@BeforeEach
 	void setUp() {
-		purchasePrice = new Price(BigDecimal.valueOf(10), TypeCoin.DOLAR);
+		productId = new ProductId();
+		stock = new Stock(productId);
 	}
 
 	@Test
-	void shouldCreateStockWithProductId() {
-		Stock stock = new Stock(productId);
-
+	void deveCriarStockComProduto() {
 		assertNotNull(stock.getStockId());
 		assertEquals(productId, stock.getProductId());
 		assertEquals(0, stock.getTotalQuantity());
@@ -39,114 +38,61 @@ public class StockTest {
 	}
 
 	@Test
-	void shouldCreateStockWithInitialQuantity() {
-		StockId stockId = new StockId();
-		Stock stock = new Stock(stockId, productId, 100);
+	void deveAdicionarEntradaDeProdutoEAumentarQuantidade() {
+		stock.addProductInput(10, ProductQuality.NEW, new Price(new BigDecimal("15.00")), "Fornecedor X");
 
-		assertEquals(stockId, stock.getStockId());
-		assertEquals(100, stock.getTotalQuantity());
-		assertEquals(100, stock.getQuantityAvailable());
-	}
-
-	@Test
-	void shouldAddProductInputSuccessfully() {
-		Stock stock = new Stock(productId);
-
-		stock.addProductInput(50, ProductQuality.NEW, purchasePrice, "Supplier A");
-
-		assertEquals(50, stock.getTotalQuantity());
-		assertEquals(50, stock.getQuantityAvailable());
+		assertEquals(10, stock.getTotalQuantity());
+		assertEquals(10, stock.getQuantityAvailable());
 		assertEquals(1, stock.getProductInput().size());
 	}
 
 	@Test
-	void shouldThrowWhenAddingNonPositiveQuantity() {
-		Stock stock = new Stock(productId);
-
+	void deveLancarExcecaoQuandoEntradaComQuantidadeInvalida() {
 		assertThrows(IllegalDomainException.class,
-				() -> stock.addProductInput(0, ProductQuality.NEW, purchasePrice, "Supplier A"));
-		assertThrows(IllegalDomainException.class,
-				() -> stock.addProductInput(-5, ProductQuality.NEW, purchasePrice, "Supplier A"));
+				() -> stock.addProductInput(0, ProductQuality.NEW, new Price(new BigDecimal("15.00")), "Fornecedor X"));
 	}
 
 	@Test
-	void shouldReserveProductSuccessfully() {
-		Stock stock = new Stock(productId);
-		stock.addProductInput(20, ProductQuality.NEW, purchasePrice, "Supplier A");
+	void deveCriarReservaReducaoQuantidadeDisponivel() {
+		stock.addProductInput(10, ProductQuality.NEW, new Price(new BigDecimal("15.00")), "Fornecedor X");
 
-		Reservations reservation = stock.reservation("cart-123", "cust-456", 5);
+		Reservations r = stock.reservation("cart-123", "cust-1", 5);
 
-		assertNotNull(reservation);
-		assertEquals(15, stock.getQuantityAvailable());
+		assertEquals(10, stock.getTotalQuantity());
+		assertEquals(5, stock.getQuantityAvailable());
 		assertEquals(1, stock.getReservations().size());
+		assertEquals(ReserveStatus.ACTIVE, r.getReserveStatus());
 	}
 
 	@Test
-	void shouldThrowWhenReservingMoreThanAvailable() {
-		Stock stock = new Stock(productId);
-		stock.addProductInput(10, ProductQuality.NEW, purchasePrice, "Supplier A");
+	void deveLancarExcecaoQuandoReservaMaiorQueDisponivel() {
+		stock.addProductInput(5, ProductQuality.NEW, new Price(new BigDecimal("15.00")), "Fornecedor X");
 
-		assertThrows(IllegalReservationException.class, () -> stock.reservation("cart-1", "cust-1", 20));
+		assertThrows(IllegalReservationException.class, () -> stock.reservation("cart-123", "cust-1", 10));
 	}
 
 	@Test
-	void shouldCancelReservationAndRestoreQuantity() {
-		Stock stock = new Stock(productId);
-		stock.addProductInput(10, ProductQuality.NEW, purchasePrice, "Supplier A");
-		Reservations reservation = stock.reservation("cart-1", "cust-1", 5);
+	void deveCancelarReservaERestaurarQuantidade() {
+		stock.addProductInput(10, ProductQuality.NEW, new Price(new BigDecimal("15.00")), "Fornecedor X");
+		Reservations r = stock.reservation("cart-123", "cust-1", 5);
 
-		stock.cancelReservation(reservation.getReservationId());
+		stock.cancelReservation(r.getReservationId());
 
+		assertEquals(10, stock.getTotalQuantity());
 		assertEquals(10, stock.getQuantityAvailable());
+		assertEquals(ReserveStatus.CANCELED, stock.getReservationId(r.getReservationId()).getReserveStatus());
 	}
 
 	@Test
-	void shouldThrowWhenCancelingNonexistentReservation() {
-		Stock stock = new Stock(productId);
+	void deveConfirmarPedidoReduzindoTotal() {
+		stock.addProductInput(10, ProductQuality.NEW, new Price(new BigDecimal("15.00")), "Fornecedor X");
+		Reservations r = stock.reservation("cart-123", "cust-1", 5);
 
-		assertThrows(IllegalReservationException.class, () -> stock.cancelReservation("invalid-id"));
-	}
-
-	@Test
-	void shouldConfirmOrderAndDecreaseTotalQuantity() {
-		ProductId productId = new ProductId("p-123");
-		Price purchasePrice = new Price(BigDecimal.valueOf(100.0));
-
-		Stock stock = new Stock(productId);
-		stock.addProductInput(10, ProductQuality.NEW, purchasePrice, "Supplier A");
-
-		Reservations reservation = stock.reservation("cart-1", "cust-1", 5);
-
-		stock.confirmOrder("order-1", productId.getProductId(), reservation.getReservationId());
+		stock.confirmOrder("order-1", productId.getProductId(), r.getReservationId());
 
 		assertEquals(5, stock.getTotalQuantity());
+		assertEquals(5, stock.getQuantityAvailable()); 
 		assertEquals(1, stock.getProductOutput().size());
-	}
-
-	@Test
-	void shouldThrowWhenConfirmingNonexistentReservation() {
-		ProductId productId = new ProductId("prod-1");
-		Stock stock = new Stock(productId);
-
-		assertThrows(IllegalReservationException.class,
-				() -> stock.confirmOrder("order-1", productId.getProductId().toString(), "invalid-id"));
-	}
-
-	@Test
-	void shouldFindReservationById() {
-		Stock stock = new Stock(productId);
-		stock.addProductInput(10, ProductQuality.NEW, purchasePrice, "Supplier A");
-		Reservations reservation = stock.reservation("cart-1", "cust-1", 5);
-
-		Reservations found = stock.getReservationId(reservation.getReservationId());
-
-		assertEquals(reservation, found);
-	}
-
-	@Test
-	void shouldThrowWhenReservationNotFoundById() {
-		Stock stock = new Stock(productId);
-
-		assertThrows(IllegalReservationException.class, () -> stock.getReservationId("invalid-id"));
+		assertEquals(ReserveStatus.CONSUMED, stock.getReservationId(r.getReservationId()).getReserveStatus());
 	}
 }

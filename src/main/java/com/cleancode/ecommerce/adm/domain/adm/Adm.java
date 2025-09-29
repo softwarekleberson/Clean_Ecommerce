@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.adm.domain.adm;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import com.cleancode.ecommerce.adm.domain.adm.exception.IllegalAdmException;
 import com.cleancode.ecommerce.adm.domain.voucher.Promotional;
@@ -15,7 +16,7 @@ public class Adm extends User {
 	private Map<String, Voucher> vouchers = new HashMap<>();
 
 	public Adm(Email email, Password password) {
-		super(email, password);
+		super(Objects.requireNonNull(email), Objects.requireNonNull(password));
 	}
 
 	public void addVoucher(Voucher voucher) {
@@ -49,5 +50,15 @@ public class Adm extends User {
 
 	public Map<String, Voucher> getAllVouchers() {
 		return Map.copyOf(vouchers);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 }

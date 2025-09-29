@@ -1,14 +1,18 @@
 package com.cleancode.ecommerce.adm.domain.voucher;
 
-import com.cleancode.ecommerce.adm.domain.adm.exception.IllegalAdmException;
+import java.util.Objects;
+import java.util.UUID;
 
 public class VoucherId {
 
 	private final String voucherId;
 
 	public VoucherId(String voucherId) {
-		if(voucherId == null ) throw new IllegalAdmException("Voucher need to be present");
-		this.voucherId = voucherId;
+		this.voucherId = Objects.requireNonNull(voucherId);
+	}
+	
+	public VoucherId () {
+		this.voucherId = UUID.randomUUID().toString();
 	}
 	
 	public String getVoucherId() {

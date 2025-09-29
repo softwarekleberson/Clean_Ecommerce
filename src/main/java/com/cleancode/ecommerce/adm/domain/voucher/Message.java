@@ -1,16 +1,13 @@
 package com.cleancode.ecommerce.adm.domain.voucher;
 
-import com.cleancode.ecommerce.adm.domain.adm.exception.IllegalAdmException;
+import java.util.Objects;
 
 public class Message {
 
 	private String message;
 
 	public Message(String message) {
-		if (message == null || message.isBlank()) {
-			throw new IllegalAdmException("Message cannot be null or empty");
-		}
-		this.message = message;
+		this.message = Objects.requireNonNull(message);
 	}
 
 	public String getMessage() {

@@ -1,7 +1,10 @@
-package com.cleancode.ecommerce.order.domain.cart;
+package com.cleancode.ecommerce.domain.cart;
 
 import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+import com.cleancode.ecommerce.order.domain.cart.Cart;
+import com.cleancode.ecommerce.order.domain.cart.CartId;
+import com.cleancode.ecommerce.order.domain.cart.CartItemId;
 import com.cleancode.ecommerce.order.domain.cart.exception.IllegalCartException;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
