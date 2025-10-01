@@ -5,17 +5,18 @@ import java.util.Objects;
 import com.cleancode.ecommerce.adm.domain.adm.exception.IllegalAdmException;
 
 public class Discount {
+	
+	private static final double LESS_VALUE_DISCOUNT = 0;
+	private final double discount;
 
-	private final int discount;
-	
-	public Discount(int discount) {
-		if (discount < 0 || discount > 100) {
-            throw new IllegalAdmException("Discount must be between 0% and 100%");
-        }
-        this.discount = discount;
+	public Discount(double discount) {
+		if (discount <= LESS_VALUE_DISCOUNT) {
+			throw new IllegalAdmException("Discount must be between 0% and 100%");
+		}
+		this.discount = discount;
 	}
-	
-	public int getDiscount() {
+
+	public double getDiscount() {
 		return discount;
 	}
 

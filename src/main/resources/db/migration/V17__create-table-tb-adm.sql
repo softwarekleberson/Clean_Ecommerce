@@ -1,6 +1,7 @@
-create table tb_adm (
-    adm_id bigint not null auto_increment,
-    email varchar(100) not null unique,
-    password varchar(255) not null,
-    primary key (adm_id)
+CREATE TABLE tb_adm (
+    user_id VARCHAR(36) PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL
 );
+
+CREATE INDEX idx_adm_email ON tb_adm(email);

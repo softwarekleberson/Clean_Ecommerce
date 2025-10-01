@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.adm.infra.persistence.adm;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,10 @@ import lombok.Setter;
 @MappedSuperclass
 public abstract class UserEntity {
 
+	@Id
+	@Column(name = "user_id", updatable = false, nullable = false)
+	private String user_id;
+	
 	@Column(name = "email", nullable = false, updatable = false, unique = true, length = 100)
 	protected String email;
 

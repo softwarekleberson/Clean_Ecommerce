@@ -26,6 +26,7 @@ public abstract class VoucherEntity {
 	private String message;
 	private LocalDate emission;
 	
+	@Column(name = "type_voucher")
 	@Enumerated(EnumType.STRING)
 	private TypeVoucherEntity typeVoucher;
 }

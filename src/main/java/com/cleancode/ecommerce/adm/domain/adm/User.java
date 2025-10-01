@@ -7,12 +7,24 @@ import com.cleancode.ecommerce.shared.kernel.Email;
 
 public abstract class User {
 	
+	private final UserId userId;
 	private final Email email;
-	private final Password password;
+	private Password password;
 	
 	public User(Email email, Password password) {
+		this.userId = new UserId();
 		this.email = Objects.requireNonNull(email);
 		this.password = Objects.requireNonNull(password);
+	}
+	
+	public User(UserId userId, Email email, Password password) {
+		this.userId = Objects.requireNonNull(userId);
+		this.email = Objects.requireNonNull(email);
+		this.password = Objects.requireNonNull(password);
+	}
+	
+	public String getUserId() {
+		return userId.getUserId();
 	}
 	
 	public String getEmail() {
