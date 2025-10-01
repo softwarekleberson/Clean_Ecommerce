@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.ChargeEntity;
 import com.cleancode.ecommerce.customer.infra.persistence.jpa.address.DeliveryEntity;
@@ -33,7 +32,7 @@ import lombok.Setter;
 public class CustomerEntity {
 
 	@Id
-	private String customer_id = UUID.randomUUID().toString();
+	private String customer_id;
 	private boolean system_client_status;
 	private String cpf;
 	private String full_name;

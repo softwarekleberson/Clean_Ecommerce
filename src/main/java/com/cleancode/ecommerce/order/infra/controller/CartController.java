@@ -66,9 +66,11 @@ public class CartController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	/*
 	@DeleteMapping("/{customerId}/items")
 	public ResponseEntity<Void> deleteAllCart(@PathVariable String customerId) {
 		deleteAllCart.execute(customerId);
 		return ResponseEntity.noContent().build();
 	}
+	*/
 }

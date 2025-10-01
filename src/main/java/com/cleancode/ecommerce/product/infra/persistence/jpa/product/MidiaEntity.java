@@ -1,7 +1,5 @@
 package com.cleancode.ecommerce.product.infra.persistence.jpa.product;
 
-import java.util.UUID;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -21,7 +19,7 @@ import lombok.Setter;
 public class MidiaEntity {
 	
 	@Id
-	private String midia_id = UUID.randomUUID().toString();
+	private String midia_id;
 	private String url;
 	private String description;
 	

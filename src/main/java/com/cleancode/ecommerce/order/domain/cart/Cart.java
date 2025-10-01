@@ -86,7 +86,7 @@ public class Cart {
 			throw new IllegalCartException("Product ID and quantity cannot be null");
 		}
 
-		CartItens item = findItemByCartItem(cartItemId); // lança exceção se não encontrar
+		CartItens item = findItemByCartItem(cartItemId); 
 		item.changeQuantity(newQuantity);
 
 		recalculateTotalPrice();

@@ -36,6 +36,7 @@ public class Stock {
 
 	public void addReservations(List<Reservations> reservations) {
 		this.reservations.addAll(reservations);
+		recalculateQuantityAvailable();
 	}
 
 	public void addProductInput(List<ProductInput> productInput) {
@@ -47,15 +48,15 @@ public class Stock {
 	}
 
 	public void addProductInput(int quantity, ProductQuality productQuality, Price purchasePrice, String supplier) {
-
 		if (quantity <= MIN_QUANTITY) {
-			throw new IllegalDomainException("quntity must be positive");
+			throw new IllegalDomainException("Quantity must be positive");
 		}
 
 		this.totalQuantity += quantity;
-		this.quantityAvailable += quantity;
 		ProductInput entryMovement = new ProductInput(quantity, productQuality, purchasePrice, supplier);
 		this.productInputs.add(entryMovement);
+
+		recalculateQuantityAvailable();
 	}
 
 	public Reservations reservation(String cartId, String customerId, int quantity) {
@@ -64,44 +65,43 @@ public class Stock {
 		}
 
 		Reservations reservation = new Reservations(cartId, customerId, quantity);
-
 		this.reservations.add(reservation);
-		lowQuantityAvailableReserved(quantity);
 
+		recalculateQuantityAvailable();
 		return reservation;
-	}
-
-	private void lowQuantityAvailableReserved(int quantity) {
-		int totalReserved = this.reservations.stream().mapToInt(r -> r.getQuantity().getQuantity()).sum();
-		System.out.println("Total quantity reserved: " + totalReserved);
-
-		this.quantityAvailable -= totalReserved;
 	}
 
 	public void cancelReservation(String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
-				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
+		Reservations reservation = getReservationId(reservationId);
+		if (reservation.getReserveStatus() == ReserveStatus.CANCELED) {
+			throw new IllegalReservationException("This reservation was previously cancelled");
+		}
 
 		reservation.cancel();
-		this.quantityAvailable += reservation.getQuantity().getQuantity();
+		recalculateQuantityAvailable();
 	}
 
 	public void confirmOrder(String orderId, String productId, String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
-				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
-
+		Reservations reservation = getReservationId(reservationId);
 		reservation.confirmOrder();
 
-		this.totalQuantity -= reservation.getQuantity().getQuantity();
-		this.productOutputs.add(new ProductOutput(new OrderId(orderId), new ProductId(productId),
-				reservation.getQuantity().getQuantity()));
+		this.totalQuantity -= reservation.getQuantity();
+		this.productOutputs
+				.add(new ProductOutput(new OrderId(orderId), new ProductId(productId), reservation.getQuantity()));
+
+		recalculateQuantityAvailable();
 	}
 
-	public Reservations getReservationId(String reservationId) {
-		Reservations reservation = reservations.stream().filter(r -> r.getReservationId().equals(reservationId))
-				.findFirst().orElseThrow(() -> new IllegalReservationException("Reservation not found"));
+	private void recalculateQuantityAvailable() {
+		int totalReserved = this.reservations.stream().filter(r -> r.getReserveStatus() == ReserveStatus.ACTIVE)
+				.mapToInt(r -> r.getQuantity()).sum();
 
-		return reservation;
+		this.quantityAvailable = this.totalQuantity - totalReserved;
+	}
+	
+	public Reservations getReservationId(String reservationId) {
+		return reservations.stream().filter(r -> r.getReservationId().equals(reservationId)).findFirst()
+				.orElseThrow(() -> new IllegalReservationException("Reservation not found"));
 	}
 
 	public StockId getStockId() {
@@ -141,14 +141,13 @@ public class Stock {
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
+		if (obj == null || getClass() != obj.getClass())
 			return false;
 		Stock other = (Stock) obj;
-		return Objects.equals(productId, other.productId) && Objects.equals(productInputs, other.productInputs)
-				&& Objects.equals(productOutputs, other.productOutputs) && quantityAvailable == other.quantityAvailable
-				&& Objects.equals(reservations, other.reservations) && totalQuantity == other.totalQuantity;
+		return quantityAvailable == other.quantityAvailable && totalQuantity == other.totalQuantity
+				&& Objects.equals(productId, other.productId) && Objects.equals(productInputs, other.productInputs)
+				&& Objects.equals(productOutputs, other.productOutputs)
+				&& Objects.equals(reservations, other.reservations);
 	}
 
 	@Override

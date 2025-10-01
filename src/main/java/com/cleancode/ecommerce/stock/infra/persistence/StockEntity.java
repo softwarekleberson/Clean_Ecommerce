@@ -1,7 +1,6 @@
 package com.cleancode.ecommerce.stock.infra.persistence;
 
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,7 +25,7 @@ import lombok.ToString;
 public class StockEntity {
 
 	@Id
-	private String stock_id = UUID.randomUUID().toString();
+	private String stock_id;
 	
 	@Column(name = "product_id")
 	private String productId;

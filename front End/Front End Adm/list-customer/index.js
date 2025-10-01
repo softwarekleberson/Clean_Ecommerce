@@ -51,12 +51,12 @@ async function loadCustomers() {
 
 // Filtros
 filterActiveBtn.addEventListener("click", () => {
-    const activeCustomers = allCustomers.filter(c => c.active);
+    const activeCustomers = allCustomers.filter(c => c.systemClientStatus);
     renderCustomers(activeCustomers);
 });
 
 filterInactiveBtn.addEventListener("click", () => {
-    const inactiveCustomers = allCustomers.filter(c => !c.active);
+    const inactiveCustomers = allCustomers.filter(c => !c.systemClientStatus);
     renderCustomers(inactiveCustomers);
 });
 

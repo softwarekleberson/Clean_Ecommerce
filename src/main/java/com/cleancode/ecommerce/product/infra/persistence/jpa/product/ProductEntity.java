@@ -2,7 +2,6 @@ package com.cleancode.ecommerce.product.infra.persistence.jpa.product;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorColumn;
@@ -33,7 +32,7 @@ import lombok.ToString;
 public abstract class ProductEntity {
 
 	@Id
-	protected String product_id = UUID.randomUUID().toString();
+	protected String product_id;
 	protected boolean active;
 	protected String name;
 	protected String description;
