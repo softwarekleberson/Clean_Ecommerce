@@ -51,7 +51,7 @@ class UpdateDeliveryImplTest {
 				new Password("password123"),
 				 new SystemClientStatus(true));
 
-		customer.registerDelivery(new Delivery("d1", "Delivery Phrase", "Receiver", "Street", "123", "Neighborhood",
+		customer.registerDelivery(new Delivery("d1", true, "Delivery Phrase", "Receiver", "Street", "123", "Neighborhood",
 				"12345678", "Observation", "StreetType", "House", "City", "State", "Country"));
 
 		return customer;

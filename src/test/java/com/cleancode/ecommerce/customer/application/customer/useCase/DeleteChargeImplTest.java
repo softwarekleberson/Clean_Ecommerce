@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.customer.application.customer.useCase;
 
 import com.cleancode.ecommerce.customer.application.useCase.DeleteChargeImpl;
 import com.cleancode.ecommerce.customer.domain.customer.Birth;
+import com.cleancode.ecommerce.customer.domain.customer.Charge;
 import com.cleancode.ecommerce.customer.domain.customer.Contact;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
@@ -48,7 +49,7 @@ class DeleteChargeImplTest {
 				new Password("password123"),
 				 new SystemClientStatus(true));
 
-		customer.registerCharge(new com.cleancode.ecommerce.customer.domain.customer.Charge("c1", "Receiver", "Street",
+		customer.registerCharge(new Charge("c1", true, "Receiver", "Street",
 				"123", "Neighborhood", "12345678", "Observation", "StreetType", "House", "City", "State", "Country"));
 
 		return customer;

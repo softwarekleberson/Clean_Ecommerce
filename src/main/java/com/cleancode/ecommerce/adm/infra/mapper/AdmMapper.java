@@ -1,8 +1,6 @@
 package com.cleancode.ecommerce.adm.infra.mapper;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.cleancode.ecommerce.adm.domain.adm.Adm;
 import com.cleancode.ecommerce.adm.domain.adm.UserId;
@@ -23,45 +21,55 @@ public final class AdmMapper {
 		if (entity == null)
 			return null;
 
-		Adm domain = new Adm(new UserId(entity.getUser_id()), new Email(entity.getEmail()), new Password(entity.getPassword()));
+		Adm domain = new Adm(new UserId(entity.getUser_id()), new Email(entity.getEmail()),
+				new Password(entity.getPassword()));
 
 		if (entity.getReplacements() != null) {
-			Map<String, Voucher> vouchers = entity.getReplacements().entrySet().stream()
-					.collect(Collectors.toMap(Map.Entry::getKey, e -> ReplacementMapper.toDomain(e.getValue())));
-
-			vouchers.values().forEach(domain::addVoucher);
+			entity.getReplacements().values().forEach(e -> {
+				domain.addVoucher(ReplacementMapper.toDomain(e));
+			});
 		}
 
 		return domain;
 	}
 
-	// Entity <- Domain
-	public static AdmEntity toEntity(Adm domain) {
-		if (domain == null) return null;
-
-	    AdmEntity entity = new AdmEntity();
-
-	    if (domain.getUserId() != null) {
-	        entity.setUser_id(domain.getUserId());
-	    }
-	    
+	// Entity <- Domain (merge incremental)
+	public static AdmEntity toEntity(Adm domain, AdmEntity entity) {
 		entity.setEmail(domain.getEmail());
 		entity.setPassword(domain.getPassword());
 
-		Map<String, ReplacementEntity> replacements = new HashMap<>();
+		Map<String, ReplacementEntity> existing = entity.getReplacements();
+		Map<String, Voucher> domainVouchers = domain.getAllVouchers();
 
-		if (domain.getAllVouchers() != null) {
-			for (Map.Entry<String, Voucher> entry : domain.getAllVouchers().entrySet()) {
-				Voucher voucher = entry.getValue();
-				if (voucher instanceof Replacement replacement) {
-					ReplacementEntity entityVoucher = ReplacementMapper.toEntity(replacement);
-					entityVoucher.setAdm(entity); // garante referência ao AdmEntity
-					replacements.put(entry.getKey(), entityVoucher);
-				}
+		// Remove vouchers que não existem mais
+		existing.keySet().removeIf(id -> !domainVouchers.containsKey(id));
+
+		// Atualiza ou adiciona novos
+		for (Map.Entry<String, Voucher> entry : domainVouchers.entrySet()) {
+			String id = entry.getKey();
+			Voucher v = entry.getValue();
+
+			if (v instanceof Replacement replacement) {
+				existing.compute(id, (key, oldEntity) -> {
+					if (oldEntity != null) {
+						ReplacementMapper.updateEntity(replacement, oldEntity);
+						return oldEntity;
+					} else {
+						ReplacementEntity newEntity = ReplacementMapper.toEntity(replacement);
+						newEntity.setAdm(entity);
+						return newEntity;
+					}
+				});
 			}
 		}
 
-		entity.setReplacements(replacements);
 		return entity;
+	}
+
+	// Criação de nova entidade (quando não existe)
+	public static AdmEntity toEntity(Adm domain) {
+		AdmEntity entity = new AdmEntity();
+		entity.setUser_id(domain.getUserId());
+		return toEntity(domain, entity);
 	}
 }

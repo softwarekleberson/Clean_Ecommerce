@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdmRepositoryJpa implements AdmRepository {
 
 	private final AdmJpa jpa;
-	
+
 	public AdmRepositoryJpa(AdmJpa jpa) {
 		this.jpa = jpa;
 	}
@@ -22,13 +22,21 @@ public class AdmRepositoryJpa implements AdmRepository {
 	@Override
 	@Transactional
 	public void save(Adm adm) {
-		AdmEntity entity = AdmMapper.toEntity(adm);
+		Optional<AdmEntity> optionalEntity = jpa.findById(adm.getUserId());
+		AdmEntity entity;
+
+		if (optionalEntity.isPresent()) {
+			entity = AdmMapper.toEntity(adm, optionalEntity.get()); // merge incremental
+		} else {
+			entity = AdmMapper.toEntity(adm); // cria nova entidade
+		}
+
 		jpa.save(entity);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Optional<Adm> findAdmByEmail(String email) {
-	    return jpa.findByEmail(email).map(AdmMapper::toDomain);
+		return jpa.findByEmail(email).map(AdmMapper::toDomain);
 	}
 }

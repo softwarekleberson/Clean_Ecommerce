@@ -200,12 +200,12 @@ public class CustomerTest {
 
 	// ---------- Builders auxiliares ----------
 	private Delivery buildDelivery(String id) {
-		return new Delivery(id, "Frase", "João", "Rua A", "10", "Bairro", "12345678", "Obs", "Rua", "Casa", "Cidade",
+		return new Delivery(id, true, "Frase", "João", "Rua A", "10", "Bairro", "12345678", "Obs", "Rua", "Casa", "Cidade",
 				"SP", "Brasil");
 	}
 
 	private Charge buildCharge(String id) {
-		return new Charge(id, "Maria", "Rua B", "20", "Centro", "87654321", "Obs", "Avenida", "Apartamento", "Cidade",
+		return new Charge(id, true, "Maria", "Rua B", "20", "Centro", "87654321", "Obs", "Avenida", "Apartamento", "Cidade",
 				"RJ", "Brasil");
 	}
 

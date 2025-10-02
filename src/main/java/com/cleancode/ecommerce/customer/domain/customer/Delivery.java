@@ -8,19 +8,21 @@ public class Delivery extends Address{
 
 	private String deliveryPhrase; 
 	
-	public Delivery(String id, String deliveryPhrase, String receiver, String street, String number, String neighborhood, String zipCode,
+	public Delivery(String id, Boolean main, String deliveryPhrase, String receiver, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
-		super(id, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city, state, country);
+		super(id, main, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city, state, country);
 		
 		if(isValid(deliveryPhrase)) throw new IllegalDomainException("Delivery Phrase is requerid");
 		this.deliveryPhrase = deliveryPhrase;
 	}
 	
-	public void update(String receiver, String street, String number, String neighborhood, String zipCode,
+	public void update(String receiver, Boolean main, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country, String deliveryPhrase) {
 
 		if (receiver != null && !receiver.isBlank())
 			this.receiver = receiver;
+		if (main != null)
+			this.main = main;
 		if (street != null && !street.isBlank())
 			this.street = street;
 		if (number != null && !number.isBlank())

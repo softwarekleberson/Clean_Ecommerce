@@ -20,7 +20,7 @@ public class UpdateChargeImpl implements UpdateCharge{
 	public ListCustomerDto execute(String clienteId, String id, UpdateAddressDto dto) {
 		Customer customer = repository.getCustomerById(clienteId).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));				
 		Charge charge = customer.findChargeById(id);
-		charge.update(dto.receiver(), dto.street(), dto.number(), dto.neighborhood(), dto.zipCode(), dto.observation(), dto.streetType(), dto.typeResidence(), dto.city(), dto.state(), dto.country());
+		charge.update(dto.receiver(), dto.main() ,dto.street(), dto.number(), dto.neighborhood(), dto.zipCode(), dto.observation(), dto.streetType(), dto.typeResidence(), dto.city(), dto.state(), dto.country());
 		
 		repository.save(customer);
 		return new ListCustomerDto(customer);

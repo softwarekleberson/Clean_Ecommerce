@@ -32,6 +32,7 @@ public abstract class AdrressEntity {
 	protected Long address_id;
 	
 	protected String public_id;
+	protected Boolean main;
 	protected String receiver;
 	protected String street;
 	protected String number;

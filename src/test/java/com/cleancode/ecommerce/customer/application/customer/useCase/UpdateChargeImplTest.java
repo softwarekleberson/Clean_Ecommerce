@@ -56,7 +56,7 @@ class UpdateChargeImplTest {
         );
 
         customer.registerCharge(new Charge(
-                "c1", "Receiver", "Street", "123", "Neighborhood", "12345678",
+                "c1", true, "Receiver", "Street", "123", "Neighborhood", "12345678",
                 "Observation", "StreetType", "House", "City", "State", "Country"
         ));
 

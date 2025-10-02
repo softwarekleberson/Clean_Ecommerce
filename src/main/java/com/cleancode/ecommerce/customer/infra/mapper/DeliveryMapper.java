@@ -12,6 +12,7 @@ public final class DeliveryMapper {
 		DeliveryEntity entity = new DeliveryEntity();
 
 		entity.setPublic_id(delivery.getPublicId().toString());
+		entity.setMain(delivery.isMain());
 		entity.setReceiver(delivery.getReceiver());
 		entity.setStreet(delivery.getStreet());
 		entity.setNumber(delivery.getNumber());
@@ -32,6 +33,7 @@ public final class DeliveryMapper {
 
 	public static void updateEntity(Delivery delivery, DeliveryEntity entity) {
 		entity.setReceiver(delivery.getReceiver());
+		entity.setMain(delivery.isMain());
 		entity.setStreet(delivery.getStreet());
 		entity.setNumber(delivery.getNumber());
 		entity.setNeighborhood(delivery.getNeighborhood());
@@ -49,6 +51,7 @@ public final class DeliveryMapper {
 	public static Delivery toDomain(DeliveryEntity entity) {
 		return new Delivery(
 			entity.getPublic_id(),
+			entity.getMain(),
 			entity.getDelivery_phrase(),
 			entity.getReceiver(),
 			entity.getStreet(),
