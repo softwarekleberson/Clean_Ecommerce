@@ -108,8 +108,28 @@ public class Customer {
 		this.cards.add(newCard);
 	}
 
-	public void registerDelivery(Delivery delivery) {
-		this.deliveries.add(delivery);
+	public void registerDelivery(Delivery newDelivery) {
+		if (newDelivery.isMain()) {
+			List<Delivery> updateDelivery =
+			this.deliveries.stream()
+			.map(d -> new Delivery(d.getPublicId(), false, d.getDeliveryPhrase(), d.getReceiver(), d.getStreet(), d.getNumber(), d.getNeighborhood(), d.getZipCode(), d.getObservation(), d.getStreetType(), d.getResidenceType(), d.getCity(), d.getState(), d.getCountry())).toList();
+		
+			this.deliveries.clear();
+			this.deliveries.addAll(updateDelivery);
+		}
+		this.deliveries.add(newDelivery);
+	}
+	
+	public void registerCharge(Charge newCharge) {
+		if(newCharge.isMain()) {
+			List<Charge> updateCharge =
+			this.charges.stream()
+			.map(c -> new Charge(c.getPublicId(), false, c.getReceiver(), c.getStreet(), c.getNumber(), c.getNeighborhood(), c.getZipCode(), c.getObservation(), c.getStreetType(), c.getResidenceType(), c.getCity(), c.getState(), c.getCountry())).toList();
+		
+			this.charges.clear();
+			this.charges.addAll(updateCharge);
+		}
+		this.charges.add(newCharge);
 	}
 
 	public Delivery findDeliveryById(String id) {
@@ -128,10 +148,6 @@ public class Customer {
 		}
 
 		this.deliveries.removeIf(d -> d.getPublicId().equals(id));
-	}
-
-	public void registerCharge(Charge charge) {
-		this.charges.add(charge);
 	}
 
 	public Charge findChargeById(String id) {

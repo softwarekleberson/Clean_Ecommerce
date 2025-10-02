@@ -126,7 +126,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public ResponseEntity<DetailsError> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
-		String mensagem = "This email is not available.";
+		String mensagem = "Data integrity breach.";
 
 		Throwable causa = ex.getCause();
 		if (causa instanceof ConstraintViolationException) {

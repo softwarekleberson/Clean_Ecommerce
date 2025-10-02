@@ -5,12 +5,16 @@ import java.util.UUID;
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class CreateDeliveryDto {
 
 	private String id;
 
+	@NotNull
+	private Boolean main;
+	
 	@NotBlank
 	private String receiver;
 
@@ -49,11 +53,12 @@ public class CreateDeliveryDto {
 	@Size(max = 255)
 	private String deliveryPhrase;
 
-	public CreateDeliveryDto(String receiver, String street, String number, String neighborhood, String zipCode,
+	public CreateDeliveryDto(String receiver, Boolean main, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country,
 			String deliveryPhrase) {
 
 		this.id = UUID.randomUUID().toString();
+		this.main = main;
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -69,7 +74,7 @@ public class CreateDeliveryDto {
 	}
 
 	public Delivery createDelivery() {
-		return new Delivery(id, deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation,
+		return new Delivery(id, main, deliveryPhrase, receiver, street, number, neighborhood, zipCode, observation,
 				streetType, typeResidence, city, state, country);
 	}
 }

@@ -44,7 +44,7 @@ class CreateCustomerChargeImplTest {
 		when(repository.getCustomerById("123")).thenReturn(Optional.of(customer));
 
 		CreateChargeDto dto = mock(CreateChargeDto.class);
-		Charge charge = new Charge("c1", "Maria", "Rua X", "123", "Centro", "12345678", "Obs", "Rua", "Casa",
+		Charge charge = new Charge("c1", true,"Maria", "Rua X", "123", "Centro", "12345678", "Obs", "Rua", "Casa",
 				"São Paulo", "SP", "Brasil");
 		when(dto.createCharge()).thenReturn(charge);
 

@@ -5,12 +5,16 @@ import java.util.UUID;
 import com.cleancode.ecommerce.customer.domain.customer.Charge;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class CreateChargeDto {
 
 	private String id;
 
+	@NotNull
+	private Boolean main;
+	
 	@NotBlank
 	private String receiver;
 
@@ -46,10 +50,11 @@ public class CreateChargeDto {
 	@NotBlank
 	private String country;
 
-	public CreateChargeDto(String receiver, String street, String number, String neighborhood, String zipCode,
+	public CreateChargeDto(String receiver, Boolean main, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 
 		this.id = UUID.randomUUID().toString();
+		this.main = main;
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -64,7 +69,7 @@ public class CreateChargeDto {
 	}
 
 	public Charge createCharge() {
-		return new Charge(id, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence,
+		return new Charge(id, main, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence,
 				city, state, country);
 	}
 }

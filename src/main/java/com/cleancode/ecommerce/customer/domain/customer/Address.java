@@ -10,6 +10,7 @@ public abstract class Address {
 	protected static final int LENGTH_MAX = 255;
 
 	protected String publicId;
+	protected Boolean main;
 	protected String receiver;
 	protected String street;
 	protected String number;
@@ -23,13 +24,14 @@ public abstract class Address {
 	protected String state;
 	protected String country;
 
-	public Address(String id, String receiver, String street, String number, String neighborhood, String zipCode,
+	public Address(String id, Boolean main, String receiver, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 
 		validateInput(receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city,
 				state, country);
 
 		this.publicId = (id == null || id.isBlank()) ? UUID.randomUUID().toString() : id;
+		this.main = main;
 		this.receiver = receiver;
 		this.street = street;
 		this.number = number;
@@ -70,33 +72,6 @@ public abstract class Address {
 			throw new IllegalDomainException("Country is requerid");
 	}
 
-	protected void validateUpdate(String receiver, String street, String number, String neighborhood, String zipCode,
-			String observation, String streetType, String typeResidence, String city, String state, String country) {
-
-		if (receiver != null && !receiver.isBlank())
-			this.receiver = receiver;
-		if (street != null && !street.isBlank())
-			this.street = street;
-		if (number != null && !number.isBlank())
-			this.number = number;
-		if (neighborhood != null && !neighborhood.isBlank())
-			this.neighborhood = neighborhood;
-		if (zipCode != null && !zipCode.isBlank() && isZipCode(zipCode))
-			this.zipCode = zipCode;
-		if (observation != null && !observation.isBlank())
-			this.observation = observation;
-		if (streetType != null && !streetType.isBlank())
-			this.streetType = streetType;
-		if (typeResidence != null && !typeResidence.isBlank())
-			this.residenceType = typeResidence;
-		if (city != null && !city.isBlank())
-			this.city = city;
-		if (state != null && !state.isBlank())
-			this.state = state;
-		if (country != null && !country.isBlank())
-			this.country = country;
-	}
-
 	protected boolean isZipCode(String zipCode) {
 		String zipCodeRegex = "^\\d{8}$";
 		return !zipCode.matches(zipCodeRegex);
@@ -108,6 +83,10 @@ public abstract class Address {
 
 	public String getPublicId() {
 		return publicId;
+	}
+	
+	public Boolean isMain() {
+		return main;
 	}
 
 	public String getReceiver() {

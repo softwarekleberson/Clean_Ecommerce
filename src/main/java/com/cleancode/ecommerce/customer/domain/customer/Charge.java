@@ -2,17 +2,19 @@ package com.cleancode.ecommerce.customer.domain.customer;
 
 public class Charge extends Address {
 
-	public Charge(String id, String receiver, String street, String number, String neighborhood, String zipCode,
+	public Charge(String id, Boolean main ,String receiver, String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
-		super(id, receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city, state,
+		super(id, main ,receiver, street, number, neighborhood, zipCode, observation, streetType, typeResidence, city, state,
 				country);
 	}
 
-	public void update(String receiver, String street, String number, String neighborhood, String zipCode,
+	public void update(String receiver, Boolean main ,String street, String number, String neighborhood, String zipCode,
 			String observation, String streetType, String typeResidence, String city, String state, String country) {
 
 		if (receiver != null && !receiver.isBlank())
 			this.receiver = receiver;
+		if (main != null)
+			this.main = main;
 		if (street != null && !street.isBlank())
 			this.street = street;
 		if (number != null && !number.isBlank())

@@ -1,5 +1,6 @@
 package com.cleancode.ecommerce.adm.infra.persistence.adm;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.cleancode.ecommerce.adm.infra.persistence.voucher.ReplacementEntity;
@@ -22,6 +23,6 @@ public class AdmEntity extends UserEntity {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "user_id")
 	@MapKey(name = "voucherId") 
-	private Map<String, ReplacementEntity> replacements;
+	private Map<String, ReplacementEntity> replacements = new HashMap<>();;
 
 }

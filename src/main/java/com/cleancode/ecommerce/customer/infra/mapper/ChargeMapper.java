@@ -12,6 +12,7 @@ public final class ChargeMapper {
 		ChargeEntity entity = new ChargeEntity();
 
 		entity.setPublic_id(charge.getPublicId().toString());
+		entity.setMain(charge.isMain());
 		entity.setReceiver(charge.getReceiver());
 		entity.setStreet(charge.getStreet());
 		entity.setNumber(charge.getNumber());
@@ -31,6 +32,7 @@ public final class ChargeMapper {
 
 	public static void updateEntity(Charge charge, ChargeEntity entity) {
 		entity.setReceiver(charge.getReceiver());
+		entity.setMain(charge.isMain());
 		entity.setStreet(charge.getStreet());
 		entity.setNumber(charge.getNumber());
 		entity.setNeighborhood(charge.getNeighborhood());
@@ -46,6 +48,7 @@ public final class ChargeMapper {
 	public static Charge toDomain(ChargeEntity entity) {
 		return new Charge(
 			entity.getPublic_id(),
+			entity.getMain(),
 			entity.getReceiver(),
 			entity.getStreet(),
 			entity.getNumber(),

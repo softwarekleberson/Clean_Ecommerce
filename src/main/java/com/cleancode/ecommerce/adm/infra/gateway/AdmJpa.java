@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cleancode.ecommerce.adm.infra.persistence.adm.AdmEntity;
 
-public interface AdmJpa extends JpaRepository<AdmEntity, Long>{
+public interface AdmJpa extends JpaRepository<AdmEntity, String>{
 
 	Optional<AdmEntity> findByEmail(String email);
 }

@@ -50,7 +50,7 @@ class CreateCustomerDeliveryImplTest {
         when(repository.getCustomerById("123")).thenReturn(Optional.of(customer));
 
         CreateDeliveryDto dto = mock(CreateDeliveryDto.class);
-        Delivery delivery = new Delivery("d1", "Frase Entrega", "Maria", "Rua A", "123",
+        Delivery delivery = new Delivery("d1", true,"Frase Entrega", "Maria", "Rua A", "123",
                 "Centro", "12345678", "Obs", "Rua", "Casa", "São Paulo", "SP", "Brasil");
         when(dto.createDelivery()).thenReturn(delivery);
 

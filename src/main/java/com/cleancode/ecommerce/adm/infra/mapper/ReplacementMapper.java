@@ -14,7 +14,6 @@ public final class ReplacementMapper {
 	private ReplacementMapper() {
 	}
 
-	// Entity <- Domain
 	public static ReplacementEntity toEntity(Replacement replacement) {
 		if (replacement == null)
 			return null;
@@ -27,11 +26,20 @@ public final class ReplacementMapper {
 		entity.setCustomerId(replacement.getCustomerId().getValue());
 		entity.setDiscount(replacement.getDiscount().getDiscount());
 
-		// NÃO seta Adm aqui, é feito no AdmMapper
 		return entity;
 	}
 
-	// Domain <- Entity
+	public static void updateEntity(Replacement replacement, ReplacementEntity entity) {
+		if (replacement == null || entity == null)
+			return;
+
+		entity.setMessage(replacement.getMessage().getMessage());
+		entity.setEmission(replacement.getEmission());
+		entity.setTypeVoucher(TypeVoucherEntity.valueOf(replacement.getTypeVoucher().name()));
+		entity.setCustomerId(replacement.getCustomerId().getValue());
+		entity.setDiscount(replacement.getDiscount().getDiscount());
+	}
+
 	public static Replacement toDomain(ReplacementEntity entity) {
 		if (entity == null)
 			return null;
