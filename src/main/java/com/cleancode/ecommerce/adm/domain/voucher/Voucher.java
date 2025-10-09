@@ -3,30 +3,52 @@ package com.cleancode.ecommerce.adm.domain.voucher;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public abstract class Voucher {
+import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 
-	private final VoucherId id;
+public class Voucher {
+
+	private final VoucherId voucherId;
+	private final CustomerId customerId;
 	private final Message message;
 	private final LocalDate emission;
 	private final TypeVoucher typeVoucher;
+	private final Discount discount;
+	private boolean active;
 
-	public Voucher(Message message, TypeVoucher typeVoucher) {
-		this(new VoucherId(),
-			 Objects.requireNonNull(message),
-			 LocalDate.now(),
-			 Objects.requireNonNull(typeVoucher)
-		);
+	public Voucher(CustomerId customerId, Message message,
+			TypeVoucher typeVoucher, Discount discount) {
+
+		this.voucherId = new VoucherId();
+		this.customerId = customerId;
+		this.message = message;
+		this.emission = LocalDate.now();
+		this.typeVoucher = typeVoucher;
+		this.discount = discount;
+		this.active = true;
+	}
+	
+	public Voucher(VoucherId voucherId, CustomerId customerId, Message message, LocalDate emission,
+			TypeVoucher typeVoucher, Discount discount, boolean active) {
+
+		this.voucherId = voucherId;
+		this.customerId = customerId;
+		this.message = message;
+		this.emission = emission;
+		this.typeVoucher = typeVoucher;
+		this.discount = discount;
+		this.active = active;
+	}
+	
+	public boolean isActive() {
+		return active;
 	}
 
-	public Voucher(VoucherId id, Message message, LocalDate emission, TypeVoucher typeVoucher) {
-		this.id = Objects.requireNonNull(id);
-		this.message = Objects.requireNonNull(message);
-		this.emission = Objects.requireNonNull(emission);
-		this.typeVoucher = Objects.requireNonNull(typeVoucher);
+	public String getVoucherId() {
+		return voucherId.getVoucherId();
 	}
 
-	public String getId() {
-		return id.getVoucherId();
+	public CustomerId getCustomerId() {
+		return customerId;
 	}
 
 	public Message getMessage() {
@@ -41,9 +63,13 @@ public abstract class Voucher {
 		return typeVoucher;
 	}
 
+	public Discount getDiscount() {
+		return discount;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(voucherId);
 	}
 
 	@Override
@@ -55,6 +81,6 @@ public abstract class Voucher {
 		if (getClass() != obj.getClass())
 			return false;
 		Voucher other = (Voucher) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(voucherId, other.voucherId);
 	}
 }

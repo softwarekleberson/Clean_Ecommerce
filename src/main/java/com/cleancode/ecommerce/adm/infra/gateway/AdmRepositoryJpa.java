@@ -28,7 +28,7 @@ public class AdmRepositoryJpa implements AdmRepository {
 		if (optionalEntity.isPresent()) {
 			entity = AdmMapper.toEntity(adm, optionalEntity.get()); // merge incremental
 		} else {
-			entity = AdmMapper.toEntity(adm); // cria nova entidade
+			entity = AdmMapper.toEntity(adm); 
 		}
 
 		jpa.save(entity);

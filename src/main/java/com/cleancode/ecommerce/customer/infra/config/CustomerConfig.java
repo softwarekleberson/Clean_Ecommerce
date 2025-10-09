@@ -42,7 +42,7 @@ public class CustomerConfig {
 			EventPublisher eventPublisher) {
 		return new CreateCustomerImpl(repository, passwordValidation, eventPublisher);
 	}
-	
+		
 	@Bean
 	public CreateCustomerCard createCustomerCard(CustomerRepository repository) {
 		return new CreateCardImpl(repository);

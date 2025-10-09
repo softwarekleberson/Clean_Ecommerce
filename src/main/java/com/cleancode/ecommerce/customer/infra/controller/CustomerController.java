@@ -1,5 +1,7 @@
 package com.cleancode.ecommerce.customer.infra.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +20,7 @@ import com.cleancode.ecommerce.customer.application.dtos.address.UpdateAddressDt
 import com.cleancode.ecommerce.customer.application.dtos.card.CreateCardDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListVoucherDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
@@ -27,6 +30,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.contract.ListVoucherCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateDelivery;
@@ -50,11 +54,13 @@ public class CustomerController {
 	private final UpdateCharge updateCharge;
 	private final UpdateDelivery updateDelivery;
 	private final CreateCustomerCard createCard;
+	private final ListVoucherCustomer listVoucherCustomer;
 
 	public CustomerController(CreateCustomer createCustomer, CreateCustomerDelivery createCustomerDelivery,
 			CreateCustomerCharge createCustomerCharge, ListCustomer listCustomer, UpdateCustomer updateCustomer,
 			UpdatePassword updatePassword, DeleteCharge deleteCharge, DeleteDelivery deleteDelivery,
-			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard) {
+			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard,
+			ListVoucherCustomer listVoucherCustomer) {
 
 		this.createCustomer = createCustomer;
 		this.createCustomerDelivery = createCustomerDelivery;
@@ -67,6 +73,7 @@ public class CustomerController {
 		this.updateCharge = updateCharge;
 		this.updateDelivery = updateDelivery;
 		this.createCard = createCard;
+		this.listVoucherCustomer = listVoucherCustomer;
 	}
 
 	// ----------------------
@@ -82,6 +89,11 @@ public class CustomerController {
 	@GetMapping("/{id}")
 	public ResponseEntity<ListCustomerDto> getCustomer(@PathVariable String id) {
 		return ResponseEntity.ok(listCustomer.execute(id));
+	}
+	
+	@GetMapping("/{id}/voucher")
+	public ResponseEntity<List<ListVoucherDto>> getAllVoucherCustomer(@PathVariable String id) {
+		return ResponseEntity.ok(listVoucherCustomer.execute(id));
 	}
 
 	@PutMapping("/{id}")
