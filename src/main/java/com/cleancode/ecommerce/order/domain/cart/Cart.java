@@ -62,7 +62,7 @@ public class Cart {
 		this.totalPrice = new Price(total, coin);
 	}
 
-	public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, Quantity quantity,
+	public void addProductToCart(CartItemId cartItemId, ProductId productId, Name name, UrlProduct urlProduct ,Quantity quantity,
 			Price unitPrice, ReservationId reservationId) {
 
 		if (productId == null || name == null || quantity == null || unitPrice == null) {
@@ -75,7 +75,7 @@ public class Cart {
 			throw new IllegalCartException("Product already in cart. Use changeProductQuantity instead.");
 		}
 
-		cartItens.add(new CartItens(cartItemId, productId, name, quantity, unitPrice, reservationId));
+		cartItens.add(new CartItens(cartItemId, productId, name, urlProduct, quantity, unitPrice, reservationId));
 
 		recalculateTotalPrice();
 		this.updatedAt = LocalDateTime.now();

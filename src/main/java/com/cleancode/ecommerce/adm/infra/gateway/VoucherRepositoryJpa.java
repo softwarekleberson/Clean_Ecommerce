@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.adm.infra.gateway;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,11 +14,11 @@ import com.cleancode.ecommerce.adm.infra.persistence.voucher.VoucherEntity;
 public class VoucherRepositoryJpa implements VoucherRepository {
 
 	private final VoucherJpa jpa;
-	
+
 	public VoucherRepositoryJpa(VoucherJpa jpa) {
 		this.jpa = jpa;
 	}
-	
+
 	@Override
 	public void save(Voucher voucher) {
 		VoucherEntity entity = VoucherMapper.toEntity(voucher);
@@ -26,10 +27,14 @@ public class VoucherRepositoryJpa implements VoucherRepository {
 
 	@Override
 	public List<Voucher> listAllVoucher(String customerId) {
-		List<VoucherEntity> entities = jpa.findByCustomerId(customerId);
+		List<VoucherEntity> entities = jpa.findByCustomerIdAndActiveTrue(customerId);
 
-	    return entities.stream()
-	                   .map(VoucherMapper::toDomain)
-	                   .toList();
+		return entities.stream().map(VoucherMapper::toDomain).toList();
+	}
+
+	@Override
+	public Optional<Voucher> listSingleVoucher(String voucherId) {
+	    return jpa.findByVoucherId(voucherId)
+	              .map(VoucherMapper::toDomain);
 	}
 }

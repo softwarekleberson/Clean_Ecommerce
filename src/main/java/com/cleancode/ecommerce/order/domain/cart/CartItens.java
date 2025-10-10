@@ -13,18 +13,20 @@ public class CartItens {
 	private final CartItemId cartItemId;
     private final ProductId productId;
     private final Name productName;
+    private final UrlProduct urlProduct;
     private Quantity quantity;  
     private final Price unitPrice;
     private final ReservationId reservationId;
 
-    public CartItens(CartItemId cartItemId, ProductId productId, Name productName, Quantity quantity, Price unitPrice, ReservationId reservationId) {
-        if (cartItemId == null || productId == null || productName == null || quantity == null || unitPrice == null || reservationId == null) {
+    public CartItens(CartItemId cartItemId, ProductId productId, Name productName, UrlProduct urlProduct, Quantity quantity, Price unitPrice, ReservationId reservationId) {
+        if (cartItemId == null || productId == null || productName == null || urlProduct == null || quantity == null || unitPrice == null || reservationId == null) {
             throw new IllegalArgumentException("Product data cannot be null");
         }
 
         this.cartItemId = cartItemId;
         this.productId = productId;
         this.productName = productName;
+        this.urlProduct = urlProduct;
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.reservationId = reservationId;
@@ -65,6 +67,10 @@ public class CartItens {
     public Name getProductName() {
         return productName;
     }
+    
+    public UrlProduct getUrlProduct() {
+		return urlProduct;
+	}
 
     public Quantity getQuantity() {
         return quantity;

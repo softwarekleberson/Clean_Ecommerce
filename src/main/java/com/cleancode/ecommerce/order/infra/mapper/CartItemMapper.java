@@ -2,6 +2,7 @@ package com.cleancode.ecommerce.order.infra.mapper;
 
 import com.cleancode.ecommerce.order.domain.cart.CartItemId;
 import com.cleancode.ecommerce.order.domain.cart.CartItens;
+import com.cleancode.ecommerce.order.domain.cart.UrlProduct;
 import com.cleancode.ecommerce.order.infra.persistence.CartEntity;
 import com.cleancode.ecommerce.order.infra.persistence.CartItemEntity;
 import com.cleancode.ecommerce.order.infra.persistence.TypeCoinEntity;
@@ -20,6 +21,7 @@ public class CartItemMapper {
 		entity.setCart(cartEntity);
 		entity.setProduct_id(item.getProductId().getProductId());
 		entity.setProduct_name(item.getProductName().getName());
+		entity.setUrl_product(item.getUrlProduct().getUrlProduct());
 		entity.setQuantity(item.getQuantity().getQuantity());
 		entity.setUnit_price(item.getUnitPrice().getPrice());
 		entity.setCoin(TypeCoinEntity.valueOf(item.getUnitPrice().getCoin().name()));
@@ -30,7 +32,7 @@ public class CartItemMapper {
 
 	public static CartItens toDomain(CartItemEntity entity) {
 		return new CartItens(new CartItemId(entity.getCart_item_id()), new ProductId(entity.getProduct_id()),
-				new Name(entity.getProduct_name()), new Quantity(entity.getQuantity()),
+				new Name(entity.getProduct_name()), new UrlProduct(entity.getUrl_product()) ,new Quantity(entity.getQuantity()),
 				new Price(entity.getUnit_price(), TypeCoin.valueOf(entity.getCoin().name())),
 				new ReservationId(entity.getReservation_id()));
 	}
