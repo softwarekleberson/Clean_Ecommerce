@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.customer.domain.customer;
 
 import java.util.List;
-import java.util.UUID;
 
+import com.cleancode.ecommerce.customer.domain.card.Card;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
 import com.cleancode.ecommerce.shared.kernel.Cpf;
 import com.cleancode.ecommerce.shared.kernel.Email;
@@ -14,8 +14,9 @@ import java.util.Collections;
 
 public class Customer {
 
-	private Id id;
+	private CustomerId id;
 	private boolean active = false;
+	private SystemClientStatus systemClientStatus;
 	private Name name;
 	private Gender gender;
 	private Birth birth;
@@ -24,8 +25,9 @@ public class Customer {
 	private Password password;
 	private List<Delivery> deliveries = new ArrayList<>();
 	private List<Charge> charges = new ArrayList<>();
+	private List<Card> cards = new ArrayList<>();
 
-	public Customer(Id id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password) {
+	public Customer(CustomerId id, Name name, Gender gender, Birth birth, Cpf cpf, Contact contact, Password password, SystemClientStatus systemClientStatus) {
 		this.id = id;
 		this.name = name;
 		this.gender = gender;
@@ -33,6 +35,11 @@ public class Customer {
 		this.cpf = cpf;
 		this.contact = contact;
 		this.password = password;
+		this.systemClientStatus = systemClientStatus;
+	}
+
+	public void assignId(String id) {
+		this.id = new CustomerId(id);
 	}
 
 	public void updateCustomer(String name, LocalDate birth, String ddd, String phone, TypePhone typePhone) {
@@ -44,29 +51,45 @@ public class Customer {
 			this.birth = new Birth(birth);
 		}
 
-		if (ddd != null && ddd.isBlank()) {
+		if (ddd != null && !ddd.isBlank()) {
 			this.contact = new Contact(new Phone(ddd, this.contact.getPhone(), this.contact.getTypePhone()),
-			contact.getEmail());
+					contact.getEmail());
 		}
-		
-		if(phone != null && phone.isBlank()) {
+
+		if (phone != null && !phone.isBlank()) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), phone, this.getContact().getTypePhone()),
-			contact.getEmail());
+					contact.getEmail());
 		}
-		
-		if(typePhone != null) {
+
+		if (typePhone != null) {
 			this.contact = new Contact(new Phone(this.contact.getDDD(), this.contact.getPhone(), typePhone),
-			contact.getEmail());
+					contact.getEmail());
 		}
 	}
 
-	public void updateActivationStatus() {
-		boolean isCharge = !charges.isEmpty();
-		boolean isDelivery = !deliveries.isEmpty();
-
-		this.active = isCharge && isDelivery;
+	public void updatePassword(String password) {
+		if (password != null && !password.isBlank()) {
+			this.password = new Password(password);
+		}
 	}
 
+	private boolean meetsActivationCriteria() {
+		return !charges.isEmpty() && !deliveries.isEmpty();
+	}
+	
+	public void changeActivationStatusByAdmin() {
+		this.systemClientStatus = SystemClientStatus.changeStatus(this.systemClientStatus.isSystemClientStatus());
+	}
+
+	public boolean checkActivationRequirements() {
+		this.active = meetsActivationCriteria();
+		return this.active;
+	}
+
+	public boolean getSystemClientStatus() {
+		return systemClientStatus.isSystemClientStatus();
+	}
+	
 	public Email getEmail() {
 		return this.contact.getEmail();
 	}
@@ -75,48 +98,90 @@ public class Customer {
 		return this.contact.getFullPhone();
 	}
 
-	public void insertNewDelivery(Delivery delivery) {
-		if (deliveries.stream().anyMatch(d -> d.equals(delivery))) {
-			throw new IllegalDomainException("This address was previously registered");
+	public void registerCard(Card newCard) {
+		if (newCard.isMain()) {
+			List<Card> updatedCards = this.cards.stream().map(c -> new Card(false, c.getPrintedName(), c.getCode(),
+					c.getNumberCard(), c.getExpirationDate(), c.getFlag())).toList();
+			this.cards.clear();
+			this.cards.addAll(updatedCards);
 		}
-		this.deliveries.add(delivery);
+		this.cards.add(newCard);
 	}
 
-	public Delivery getDelivery(UUID id) {
-		return deliveries.stream().filter(d -> d.getId().equals(id)).findFirst()
+	public void registerDelivery(Delivery newDelivery) {
+		if (newDelivery.isMain()) {
+			List<Delivery> updateDelivery =
+			this.deliveries.stream()
+			.map(d -> new Delivery(d.getPublicId(), false, d.getDeliveryPhrase(), d.getReceiver(), d.getStreet(), d.getNumber(), d.getNeighborhood(), d.getZipCode(), d.getObservation(), d.getStreetType(), d.getResidenceType(), d.getCity(), d.getState(), d.getCountry())).toList();
+		
+			this.deliveries.clear();
+			this.deliveries.addAll(updateDelivery);
+		}
+		this.deliveries.add(newDelivery);
+	}
+	
+	public void registerCharge(Charge newCharge) {
+		if(newCharge.isMain()) {
+			List<Charge> updateCharge =
+			this.charges.stream()
+			.map(c -> new Charge(c.getPublicId(), false, c.getReceiver(), c.getStreet(), c.getNumber(), c.getNeighborhood(), c.getZipCode(), c.getObservation(), c.getStreetType(), c.getResidenceType(), c.getCity(), c.getState(), c.getCountry())).toList();
+		
+			this.charges.clear();
+			this.charges.addAll(updateCharge);
+		}
+		this.charges.add(newCharge);
+	}
+
+	public Delivery findDeliveryById(String id) {
+		if (id == null || id.isBlank()) {
+			throw new IllegalDomainException("Delivery ID must not be null or blank");
+		}
+
+		return deliveries.stream().filter(d -> d.getPublicId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Delivery not found"));
 	}
 
-	public void removeDelivery(UUID id) {
-		this.deliveries.removeIf(d -> d.getId().equals(id));
-	}
-
-	public void insertNewCharge(Charge charge) {
-		if (charges.stream().anyMatch(c -> c.equals(charge))) {
-			throw new IllegalDomainException("This address was previously registered");
+	public void removeDeliveryById(String id) {
+		if (id == null || id.isBlank() || this.deliveries == null) {
+			throw new IllegalDomainException(
+					"Cannot remove delivery: id is null/empty or delivery list is not initialized");
 		}
-		this.charges.add(charge);
+
+		this.deliveries.removeIf(d -> d.getPublicId().equals(id));
 	}
 
-	public Charge getCharge(UUID id) {
-		return charges.stream().filter(c -> c.getId().equals(id)).findFirst()
+	public Charge findChargeById(String id) {
+		if (id == null || id.isBlank()) {
+			throw new IllegalDomainException("Charge ID must not be null or blank");
+		}
+
+		return charges.stream().filter(c -> c.getPublicId().equals(id)).findFirst()
 				.orElseThrow(() -> new IllegalDomainException("Id Charge not found"));
 	}
 
-	public void removeCharge(UUID id) {
-		this.charges.removeIf(c -> c.getId().equals(id));
+	public void removeChargeById(String id) {
+		if (id == null || id.isBlank() || this.charges == null) {
+			throw new IllegalDomainException(
+					"Cannot remove charge: id is null/empty or Charge list is not initialized");
+		}
+
+		this.charges.removeIf(c -> id.equals(c.getPublicId()));
 	}
 
 	public boolean isActive() {
 		return active;
 	}
 
-	public Id getId() {
+	public CustomerId getId() {
 		return id;
 	}
 
 	public Name getName() {
 		return name;
+	}
+
+	public Password getPassword() {
+		return password;
 	}
 
 	public Gender getGender() {
@@ -141,5 +206,9 @@ public class Customer {
 
 	public List<Charge> getCharges() {
 		return Collections.unmodifiableList(this.charges);
+	}
+
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(this.cards);
 	}
 }

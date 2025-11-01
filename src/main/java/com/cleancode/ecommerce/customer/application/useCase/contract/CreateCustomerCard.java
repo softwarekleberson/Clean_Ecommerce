@@ -1,0 +1,9 @@
+package com.cleancode.ecommerce.customer.application.useCase.contract;
+
+import com.cleancode.ecommerce.customer.application.dtos.card.CreateCardDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
+
+public interface CreateCustomerCard {
+
+	ListCustomerDto execute(String id, CreateCardDto dto);
+}

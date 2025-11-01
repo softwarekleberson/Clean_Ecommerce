@@ -1,12 +1,14 @@
 package com.cleancode.ecommerce.shared.kernel;
 
+import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
+
 public class Name {
 
-	private String name;
+	private final String name;
 	
 	public Name(String name) {
 		if(name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("Name not be null");
+			throw new IllegalDomainException("Name not be null");
 		}
 		this.name = name;
 	}

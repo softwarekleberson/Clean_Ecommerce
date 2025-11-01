@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.customer.domain.customer;
 
 public enum TypePhone {
 
-	CELULAR,
+	MOBILE,
 	WHATSAPP,
-	FIXO
+	LANDLINE
 }

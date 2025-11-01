@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import java.util.UUID;
-
-import com.cleancode.ecommerce.customer.application.dtos.CreateDeliveryDto;
+import com.cleancode.ecommerce.customer.application.dtos.address.CreateDeliveryDto;
+import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
+import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Delivery;
 import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainException;
@@ -16,11 +16,12 @@ public class CreateCustomerDeliveryImpl implements CreateCustomerDelivery{
 		this.repository = repository;
 	}
 	
-	public void execute(UUID id, CreateDeliveryDto dto) {
-		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));
+	public ListCustomerDto execute(String id, CreateDeliveryDto dto) {
+		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));				
 		Delivery delivery = dto.createDelivery();
 		
-		customer.insertNewDelivery(delivery);
+		customer.registerDelivery(delivery);
 		repository.save(customer);
+		return new ListCustomerDto(customer);
 	}
 }

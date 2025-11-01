@@ -7,14 +7,18 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 public class Birth {
 
 	private LocalDate birth;
-	
+
 	public Birth(LocalDate birth) {
-		if(birth == null || birth.isAfter(LocalDate.now().minusYears(18)))
+		if (birth == null || birth.isAfter(LocalDate.now())) {
+			throw new IllegalDomainException("Date of birth cannot be in the future");
+		}
+
+		if (birth == null || birth.isAfter(LocalDate.now().minusYears(18)))
 			throw new IllegalDomainException("For register you need 18 years");
-			
+
 		this.birth = birth;
 	}
-	
+
 	public LocalDate getBirth() {
 		return birth;
 	}
