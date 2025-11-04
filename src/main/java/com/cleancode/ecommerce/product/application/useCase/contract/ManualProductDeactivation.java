@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.product.application.dto.input.ProductStatusChange
 
 public interface ManualProductDeactivation {
 
-	void execute(String productId, ProductStatusChangeDto dto);
+	void execute(ProductStatusChangeDto dto);
 }

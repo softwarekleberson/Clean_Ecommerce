@@ -87,24 +87,21 @@ public class ProductController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/{productId}/activate")
-	public ResponseEntity<Void> activateProduct(@Valid @RequestBody ProductStatusChangeDto dto,
-			@PathVariable String productId) {
-		manualProductActivation.execute(productId, dto);
+	@PutMapping("/activate")
+	public ResponseEntity<Void> activateProduct(@Valid @RequestBody ProductStatusChangeDto dto) {
+		manualProductActivation.execute(dto);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/{productId}/selling/price")
-	public ResponseEntity<Void> priceAboveProfitMargin(@Valid @RequestBody ModifySellingPriceDto dto,
-			@PathVariable String productId) {
-		increaseSellingPriceAboveProfitMargin.execute(productId, dto);
+	@PutMapping("/selling/price")
+	public ResponseEntity<Void> priceAboveProfitMargin(@Valid @RequestBody ModifySellingPriceDto dto) {
+		increaseSellingPriceAboveProfitMargin.execute(dto);
 		return ResponseEntity.noContent().build();
 	}
 
-	@DeleteMapping("/{productId}/disable")
-	public ResponseEntity<Void> deactivateProduct(@Valid @RequestBody ProductStatusChangeDto dto,
-			@PathVariable String productId) {
-		manualProductDeactivation.execute(productId, dto);
+	@DeleteMapping("/disable")
+	public ResponseEntity<Void> deactivateProduct(@Valid @RequestBody ProductStatusChangeDto dto) {
+		manualProductDeactivation.execute(dto);
 		return ResponseEntity.noContent().build();
 	}
 }

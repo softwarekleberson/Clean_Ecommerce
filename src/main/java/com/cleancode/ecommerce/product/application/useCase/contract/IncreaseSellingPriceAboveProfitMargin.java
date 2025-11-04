@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.product.application.dto.input.ModifySellingPriceD
 
 public interface IncreaseSellingPriceAboveProfitMargin {
 
-	public void execute(String productId, ModifySellingPriceDto dto);
+	public void execute(ModifySellingPriceDto dto);
 }

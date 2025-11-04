@@ -2,7 +2,7 @@ package com.cleancode.ecommerce.product.infra.persistence.jpa.product;
 
 public enum ProductStatusCategoryEntity {
 
-	REACTIVATION, NEW_REGISTRATION,
+	REACTIVATION, PUBLIC_PETITION,
 
 	LOW_SALES, STRATEGIC_WITHDRAWAL, REGISTRATION_ERROR,
 
