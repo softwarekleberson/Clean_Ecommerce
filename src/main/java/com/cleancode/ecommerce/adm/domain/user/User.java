@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.adm.domain.adm;
+package com.cleancode.ecommerce.adm.domain.user;
 
 import java.util.Objects;
 
@@ -21,6 +21,10 @@ public abstract class User {
 		this.userId = Objects.requireNonNull(userId);
 		this.email = Objects.requireNonNull(email);
 		this.password = Objects.requireNonNull(password);
+	}
+	
+	public void updatePassword (String passwordEncode) {
+		this.password = new Password(passwordEncode);
 	}
 	
 	public String getUserId() {

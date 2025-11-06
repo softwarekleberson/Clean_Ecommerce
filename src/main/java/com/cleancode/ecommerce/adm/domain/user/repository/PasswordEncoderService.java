@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.customer.domain.customer.repository;
+package com.cleancode.ecommerce.adm.domain.user.repository;
 
 public interface PasswordEncoderService {
 

@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.adm.infra.mapper;
 
 import com.cleancode.ecommerce.adm.domain.adm.Adm;
-import com.cleancode.ecommerce.adm.domain.adm.UserId;
+import com.cleancode.ecommerce.adm.domain.user.UserId;
 import com.cleancode.ecommerce.adm.infra.persistence.adm.AdmEntity;
 import com.cleancode.ecommerce.customer.domain.customer.Password;
 import com.cleancode.ecommerce.shared.kernel.Email;

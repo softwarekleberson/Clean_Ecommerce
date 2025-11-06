@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.customer.infra.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.cleancode.ecommerce.adm.domain.user.repository.PasswordEncoderService;
 import com.cleancode.ecommerce.customer.application.useCase.ChangeActivationStatusAdmImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCardImpl;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerChargeImpl;
@@ -34,7 +35,6 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassword;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.customer.domain.customer.repository.PasswordEncoderService;
 import com.cleancode.ecommerce.event.EventPublisher;
 
 @Configuration

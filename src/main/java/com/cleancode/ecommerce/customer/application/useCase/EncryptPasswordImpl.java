@@ -1,8 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
+import com.cleancode.ecommerce.adm.domain.user.repository.PasswordEncoderService;
 import com.cleancode.ecommerce.customer.application.useCase.contract.EncryptPassword;
-import com.cleancode.ecommerce.customer.domain.customer.Customer;
-import com.cleancode.ecommerce.customer.domain.customer.repository.PasswordEncoderService;
 
 public class EncryptPasswordImpl implements EncryptPassword {
 
@@ -12,8 +11,8 @@ public class EncryptPasswordImpl implements EncryptPassword {
 		this.passwordEncoderService = passwordEncoderService;
 	}
     
-    public void execute (Customer customer) {
-    	String encodePassword = passwordEncoderService.encode(customer.getPassword().getPassword());
-    	customer.updatePassword(encodePassword);
+    public String execute (String password) {
+    	String encodePassword = passwordEncoderService.encode(password);
+    	return encodePassword;
     }
 }

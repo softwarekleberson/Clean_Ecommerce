@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.adm.domain.adm;
+package com.cleancode.ecommerce.adm.domain.user;
 
 import java.util.Objects;
 import java.util.UUID;

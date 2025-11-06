@@ -7,7 +7,6 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.EncryptPass
 import com.cleancode.ecommerce.customer.application.useCase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
-import com.cleancode.ecommerce.customer.domain.customer.repository.PasswordEncoderService;
 import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.event.NewCustomerEvent;
 
@@ -32,7 +31,8 @@ public class CreateCustomerImpl implements CreateCustomer {
 		passwordValidation.validateAcceptablePasswordFormat(dto.getPassword());
 		
 		Customer customer = dto.createCustomer();
-		encryptPassword.execute(customer);
+		String passwordEncode = encryptPassword.execute(customer.getPassword().getPassword());
+		customer.updatePassword(passwordEncode);
 		
 		repository.save(customer);
 		eventPublisher.publish(new NewCustomerEvent(customer.getName().getName(), customer.getEmail().getEmail()));
