@@ -51,4 +51,12 @@ public class CustomerRepositoryJpa implements CustomerRepository {
 		.map(CustomerMapper::toDomain)
 		.collect(Collectors.toList());
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Customer> findByEmail(String email) {
+	    return jpa.findByEmail_Email(email)
+	              .map(CustomerMapper::toDomain);
+	}
+
 }

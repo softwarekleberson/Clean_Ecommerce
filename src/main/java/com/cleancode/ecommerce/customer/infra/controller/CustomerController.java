@@ -18,12 +18,10 @@ import com.cleancode.ecommerce.customer.application.dtos.address.CreateChargeDto
 import com.cleancode.ecommerce.customer.application.dtos.address.CreateDeliveryDto;
 import com.cleancode.ecommerce.customer.application.dtos.address.UpdateAddressDto;
 import com.cleancode.ecommerce.customer.application.dtos.card.CreateCardDto;
-import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListVoucherDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePasswordDto;
-import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCard;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
@@ -43,7 +41,6 @@ import jakarta.validation.Valid;
 @CrossOrigin(origins = "*")
 public class CustomerController {
 
-	private final CreateCustomer createCustomer;
 	private final CreateCustomerDelivery createCustomerDelivery;
 	private final CreateCustomerCharge createCustomerCharge;
 	private final ListCustomer listCustomer;
@@ -56,13 +53,12 @@ public class CustomerController {
 	private final CreateCustomerCard createCard;
 	private final ListVoucherCustomer listVoucherCustomer;
 
-	public CustomerController(CreateCustomer createCustomer, CreateCustomerDelivery createCustomerDelivery,
+	public CustomerController(CreateCustomerDelivery createCustomerDelivery,
 			CreateCustomerCharge createCustomerCharge, ListCustomer listCustomer, UpdateCustomer updateCustomer,
 			UpdatePassword updatePassword, DeleteCharge deleteCharge, DeleteDelivery deleteDelivery,
 			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard,
 			ListVoucherCustomer listVoucherCustomer) {
 
-		this.createCustomer = createCustomer;
 		this.createCustomerDelivery = createCustomerDelivery;
 		this.createCustomerCharge = createCustomerCharge;
 		this.listCustomer = listCustomer;
@@ -79,12 +75,6 @@ public class CustomerController {
 	// ----------------------
 	// Customers
 	// ----------------------
-
-	@PostMapping
-	public ResponseEntity<ListCustomerDto> createCustomer(@Valid @RequestBody CreateCustomerDto dto) {
-		var created = createCustomer.execute(dto);
-		return ResponseEntity.status(HttpStatus.CREATED).body(created);
-	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<ListCustomerDto> getCustomer(@PathVariable String id) {

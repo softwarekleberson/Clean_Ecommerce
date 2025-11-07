@@ -10,5 +10,6 @@ public interface CustomerRepository {
 	void save (Customer customer);
 	Optional<Customer> getCustomerById(String id);
 	List<Customer> getAllCustomers();
+	Optional<Customer> findByEmail(String email);
 
 }

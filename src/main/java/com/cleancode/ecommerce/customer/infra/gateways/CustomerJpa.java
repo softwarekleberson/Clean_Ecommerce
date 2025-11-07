@@ -25,4 +25,6 @@ public interface CustomerJpa extends JpaRepository<CustomerEntity, String> {
 			    FROM CustomerEntity c
 			""")
 	List<CustomerEntity> findAllCustomer();
+
+    Optional<CustomerEntity> findByEmail_Email(String email);
 }

@@ -2,8 +2,8 @@ package com.cleancode.ecommerce.payment.domain.method;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.adm.domain.adm.repository.AdmRepository;
 import com.cleancode.ecommerce.payment.domain.entity.PaymentMethod;
+import com.cleancode.ecommerce.users.domain.adm.repository.AdmRepository;
 
 public class CouponPayment implements PaymentMethod {
 

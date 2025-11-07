@@ -5,8 +5,8 @@ import java.util.List;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListVoucherDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListVoucherCustomer;
-import com.cleancode.ecommerce.adm.domain.voucher.Voucher;
-import com.cleancode.ecommerce.adm.domain.voucher.repository.VoucherRepository;
+import com.cleancode.ecommerce.users.domain.voucher.Voucher;
+import com.cleancode.ecommerce.users.domain.voucher.repository.VoucherRepository;
 
 public class ListVoucherCustomerImpl implements ListVoucherCustomer {
 

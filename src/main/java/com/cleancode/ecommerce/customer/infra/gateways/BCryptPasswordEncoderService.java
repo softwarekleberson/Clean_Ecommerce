@@ -3,7 +3,7 @@ package com.cleancode.ecommerce.customer.infra.gateways;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.cleancode.ecommerce.adm.domain.user.repository.PasswordEncoderService;
+import com.cleancode.ecommerce.users.domain.user.repository.PasswordEncoderService;
 
 @Service
 public class BCryptPasswordEncoderService implements PasswordEncoderService {

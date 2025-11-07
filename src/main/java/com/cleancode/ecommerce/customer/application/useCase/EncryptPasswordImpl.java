@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import com.cleancode.ecommerce.adm.domain.user.repository.PasswordEncoderService;
 import com.cleancode.ecommerce.customer.application.useCase.contract.EncryptPassword;
+import com.cleancode.ecommerce.users.domain.user.repository.PasswordEncoderService;
 
 public class EncryptPasswordImpl implements EncryptPassword {
 
