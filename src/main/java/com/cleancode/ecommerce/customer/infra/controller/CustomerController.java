@@ -37,7 +37,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassw
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/customer")
 @CrossOrigin(origins = "*")
 public class CustomerController {
 

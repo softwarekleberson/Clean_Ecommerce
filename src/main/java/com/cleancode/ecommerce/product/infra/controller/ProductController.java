@@ -30,13 +30,11 @@ import com.cleancode.ecommerce.product.application.useCase.contract.ReviseDetail
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("adm/product")
 @CrossOrigin(origins = "*")
 public class ProductController {
 
 	private final CreateProduct createProduct;
-	private final ListAllProductActive listAllProduct;
-	private final ListActiveProduct listProduct;
 	private final ReviseDetails reviseDetails;
 	private final ManualProductDeactivation manualProductDeactivation;
 	private final ManualProductActivation manualProductActivation;
@@ -50,8 +48,6 @@ public class ProductController {
 			ListAllProductsInactive listAllProductsInactive) {
 		
 		this.createProduct = createProduct;
-		this.listAllProduct = listAllProduct;
-		this.listProduct = listProduct;
 		this.reviseDetails = reviseDetails;
 		this.manualProductDeactivation = manualProductDeactivation;
 		this.manualProductActivation = manualProductActivation;
@@ -65,16 +61,6 @@ public class ProductController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ListProductDto> getProductById(@PathVariable String id) {
-		return ResponseEntity.ok(listProduct.execute(id));
-	}
-
-	@GetMapping
-	public ResponseEntity<List<ListProductDto>> getAllProducts() {
-		return ResponseEntity.ok(listAllProduct.execute());
-	}
-	
 	@GetMapping("/inactive")
 	public ResponseEntity<List<ListProductDto>> getAllProductsinative() {
 		return ResponseEntity.ok(listAllProductsInactive.execute());

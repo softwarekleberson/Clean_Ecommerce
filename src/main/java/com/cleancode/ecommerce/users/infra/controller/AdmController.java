@@ -21,7 +21,7 @@ import com.cleancode.ecommerce.users.application.dto.voucher.CreateVoucherDto;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/adm/customers")
+@RequestMapping("/adm")
 @CrossOrigin(origins = "*")
 public class AdmController {
 

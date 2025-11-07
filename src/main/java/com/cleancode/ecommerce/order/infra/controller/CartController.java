@@ -25,7 +25,7 @@ import com.cleancode.ecommerce.order.application.useCase.contract.UpdateCart;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/carts")
+@RequestMapping("customer/cart")
 @CrossOrigin(origins = "*")
 public class CartController {
 
@@ -66,11 +66,10 @@ public class CartController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	/*
+	
 	@DeleteMapping("/{customerId}/items")
 	public ResponseEntity<Void> deleteAllCart(@PathVariable String customerId) {
 		deleteAllCart.execute(customerId);
 		return ResponseEntity.noContent().build();
 	}
-	*/
 }
