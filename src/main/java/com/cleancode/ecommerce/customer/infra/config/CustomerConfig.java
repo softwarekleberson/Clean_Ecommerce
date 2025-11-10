@@ -87,8 +87,8 @@ public class CustomerConfig {
 	}
 
 	@Bean
-	public UpdatePassword updatePassword(CustomerRepository repository) {
-		return new UpdatePasswordImpl(repository);
+	public UpdatePassword updatePassword(CustomerRepository repository, EncryptPassword encryptPassword) {
+		return new UpdatePasswordImpl(repository, encryptPassword);
 	}
 
 	@Bean

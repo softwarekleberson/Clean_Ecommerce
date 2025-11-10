@@ -2,6 +2,8 @@ package com.cleancode.ecommerce.customer.infra.controller;
 
 import java.util.List;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -53,11 +55,10 @@ public class CustomerController {
 	private final CreateCustomerCard createCard;
 	private final ListVoucherCustomer listVoucherCustomer;
 
-	public CustomerController(CreateCustomerDelivery createCustomerDelivery,
-			CreateCustomerCharge createCustomerCharge, ListCustomer listCustomer, UpdateCustomer updateCustomer,
-			UpdatePassword updatePassword, DeleteCharge deleteCharge, DeleteDelivery deleteDelivery,
-			UpdateCharge updateCharge, UpdateDelivery updateDelivery, CreateCustomerCard createCard,
-			ListVoucherCustomer listVoucherCustomer) {
+	public CustomerController(CreateCustomerDelivery createCustomerDelivery, CreateCustomerCharge createCustomerCharge,
+			ListCustomer listCustomer, UpdateCustomer updateCustomer, UpdatePassword updatePassword,
+			DeleteCharge deleteCharge, DeleteDelivery deleteDelivery, UpdateCharge updateCharge,
+			UpdateDelivery updateDelivery, CreateCustomerCard createCard, ListVoucherCustomer listVoucherCustomer) {
 
 		this.createCustomerDelivery = createCustomerDelivery;
 		this.createCustomerCharge = createCustomerCharge;
@@ -76,11 +77,18 @@ public class CustomerController {
 	// Customers
 	// ----------------------
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ListCustomerDto> getCustomer(@PathVariable String id) {
-		return ResponseEntity.ok(listCustomer.execute(id));
+	@GetMapping("/me")
+	public ResponseEntity<ListCustomerDto> getCurrentCustomer(Authentication authentication) {
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		String email = authentication.getName();
+		ListCustomerDto customer = listCustomer.execute(email);
+		return ResponseEntity.ok(customer);
 	}
-	
+
 	@GetMapping("/{id}/voucher")
 	public ResponseEntity<List<ListVoucherDto>> getAllVoucherCustomer(@PathVariable String id) {
 		return ResponseEntity.ok(listVoucherCustomer.execute(id));
@@ -91,9 +99,15 @@ public class CustomerController {
 		return ResponseEntity.ok(updateCustomer.execute(id, dto));
 	}
 
-	@PutMapping("/{id}/password")
-	public ResponseEntity<Void> updatePassword(@PathVariable String id, @Valid @RequestBody UpdatePasswordDto dto) {
-		updatePassword.execute(id, dto);
+	@PutMapping("/password")
+	public ResponseEntity<Void> updatePassword(Authentication authentication, @Valid @RequestBody UpdatePasswordDto dto) {
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		updatePassword.execute(email, dto);
 		return ResponseEntity.noContent().build();
 	}
 
