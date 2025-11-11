@@ -28,6 +28,7 @@ public class CartItemEntity {
 
 	private String product_id;
 	private String product_name;
+	private String url_product;
 	private int quantity;
 	private BigDecimal unit_price;
 

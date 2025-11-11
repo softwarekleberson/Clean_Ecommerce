@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDt
 
 public interface ListCustomer {
 
-	public ListCustomerDto execute(String customerId);
+	public ListCustomerDto execute(String email);
 }

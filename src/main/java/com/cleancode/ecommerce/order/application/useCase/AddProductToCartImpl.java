@@ -14,6 +14,7 @@ import com.cleancode.ecommerce.order.application.useCase.contract.AddProductToCa
 import com.cleancode.ecommerce.order.domain.cart.Cart;
 import com.cleancode.ecommerce.order.domain.cart.CartId;
 import com.cleancode.ecommerce.order.domain.cart.CartItemId;
+import com.cleancode.ecommerce.order.domain.cart.UrlProduct;
 import com.cleancode.ecommerce.order.domain.cart.repository.CartRepository;
 import com.cleancode.ecommerce.product.domain.Product;
 import com.cleancode.ecommerce.product.domain.ProductId;
@@ -59,6 +60,7 @@ public class AddProductToCartImpl implements AddProductToCart {
 				new CartItemId(),
 				new ProductId(product.getProductId().getProductId()),
 				new Name(product.getName().getName()),
+				new UrlProduct(product.getMidia().get(0).getUrl()),
 				new Quantity(dto.getQuantity()),
 				new Price(product.getPrice().getPrice(), product.getPrice().getCoin()),
 				new ReservationId(stockAfterReservation.reservationId()));

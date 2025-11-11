@@ -19,12 +19,12 @@ public class ManualProductDeactivationImpl implements ManualProductDeactivation{
 	}
 	
 	@Override
-	public void execute(String productId, ProductStatusChangeDto dto) {
-		Product product = productRepository.findById(productId)
-	    .orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
+	public void execute(ProductStatusChangeDto dto) {
+		Product product = productRepository.findById(dto.productId())
+	    .orElseThrow(() -> new IllegalDomainException("Product with id : " + dto.productId() + "not found"));
 		product.productStatusPolicyManualDeactivation(dto.justification(), dto.category());
 		
-		eventPublisher.publish(new ProductDeactivatedEvent(productId, product.isActive()));
+		eventPublisher.publish(new ProductDeactivatedEvent(dto.productId(), product.isActive()));
 		productRepository.save(product);
 	}
 }

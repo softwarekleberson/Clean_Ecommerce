@@ -27,7 +27,7 @@ public class CreateDeliveryDto {
 	@NotBlank
 	private String neighborhood;
 
-	@NotBlank(message = "The Zip Code needs this format : xxxxx-xx ")
+	@NotBlank(message = "The Zip Code needs this format : xxxxxxx ")
 	private String zipCode;
 
 	@NotBlank

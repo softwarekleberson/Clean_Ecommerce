@@ -3,6 +3,7 @@ package com.cleancode.ecommerce.customer.application.customer.useCase;
 import com.cleancode.ecommerce.customer.application.dtos.customer.CreateCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDto;
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
+import com.cleancode.ecommerce.customer.application.useCase.EncryptPasswordImpl;
 import com.cleancode.ecommerce.customer.application.useCase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.customer.domain.customer.Customer;
 import com.cleancode.ecommerce.customer.domain.customer.Gender;
@@ -16,6 +17,9 @@ import com.cleancode.ecommerce.customer.domain.customer.CustomerId;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.event.NewCustomerEvent;
+import com.cleancode.ecommerce.shared.kernel.Cpf;
+import com.cleancode.ecommerce.shared.kernel.Email;
+import com.cleancode.ecommerce.shared.kernel.Name;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,13 +36,14 @@ class CreateCustomerImplTest {
 	private PasswordValidationCheck passwordValidation;
 	private EventPublisher eventPublisher;
 	private CreateCustomerImpl useCase;
+    private EncryptPasswordImpl encryptPassword;
 
 	@BeforeEach
 	void setUp() {
 		repository = mock(CustomerRepository.class);
 		passwordValidation = mock(PasswordValidationCheck.class);
 		eventPublisher = mock(EventPublisher.class);
-		useCase = new CreateCustomerImpl(repository, passwordValidation, eventPublisher);
+		useCase = new CreateCustomerImpl(repository, passwordValidation, eventPublisher, encryptPassword);
 	}
 
 	@Test
@@ -46,10 +51,10 @@ class CreateCustomerImplTest {
 		// Arrange
 		CreateCustomerDto dto = mock(CreateCustomerDto.class);
 		Customer customer = new Customer(new CustomerId("123"),
-				new com.cleancode.ecommerce.shared.kernel.Name("João Silva"), Gender.MALE,
-				new Birth(LocalDate.of(1990, 1, 1)), new com.cleancode.ecommerce.shared.kernel.Cpf("123.456.789-01"),
+				new Name("João Silva"), Gender.MALE,
+				new Birth(LocalDate.of(1990, 1, 1)), new Cpf("123.456.789-01"),
 				new Contact(new Phone("11", "999999999", TypePhone.LANDLINE),
-						new com.cleancode.ecommerce.shared.kernel.Email("joao@email.com")),
+						new Email("joao@email.com")),
 				new Password("senha123"),
 				new SystemClientStatus(true));
 

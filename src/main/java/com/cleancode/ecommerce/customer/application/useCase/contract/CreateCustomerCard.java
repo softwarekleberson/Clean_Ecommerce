@@ -5,5 +5,5 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDt
 
 public interface CreateCustomerCard {
 
-	ListCustomerDto execute(String id, CreateCardDto dto);
+	ListCustomerDto execute(String email, CreateCardDto dto);
 }
