@@ -6,5 +6,5 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.ListVoucherDto
 
 public interface ListVoucherCustomer {
 
-	public List<ListVoucherDto> execute (String customerId);
+	public List<ListVoucherDto> execute (String email);
 }

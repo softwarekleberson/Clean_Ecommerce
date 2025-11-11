@@ -9,7 +9,7 @@ import com.cleancode.ecommerce.users.infra.persistence.voucher.VoucherEntity;
 
 public interface VoucherJpa extends JpaRepository<VoucherEntity, String>{
 
-    List<VoucherEntity> findByCustomerIdAndActiveTrue(String customerId);
+    List<VoucherEntity> findByCustomerIdAndActiveTrue(String email);
 
     Optional<VoucherEntity> findByVoucherId(String voucherId);
 }

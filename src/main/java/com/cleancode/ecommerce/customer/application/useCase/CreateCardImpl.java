@@ -17,9 +17,9 @@ public class CreateCardImpl implements CreateCustomerCard {
 	}
 
 	@Override
-	public ListCustomerDto execute(String id, CreateCardDto dto) {
-		Customer customer = repository.getCustomerById(id)
-				.orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));
+	public ListCustomerDto execute(String email, CreateCardDto dto) {
+		Customer customer = repository.findByEmail(email)
+				.orElseThrow(() -> new IllegalDomainException("Customer not found"));
 		Card card = dto.createCard();
 
 		customer.registerCard(card);

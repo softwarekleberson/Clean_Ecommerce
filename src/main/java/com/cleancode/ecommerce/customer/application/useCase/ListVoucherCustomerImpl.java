@@ -17,8 +17,8 @@ public class ListVoucherCustomerImpl implements ListVoucherCustomer {
 	}
 
 	@Override
-	public List<ListVoucherDto> execute(String customerId) {
-		List<Voucher> vouchers = repository.listAllVoucher(customerId);
+	public List<ListVoucherDto> execute(String email) {
+		List<Voucher> vouchers = repository.listAllVoucher(email);
 
 	    if (vouchers == null || vouchers.isEmpty()) {
 	        return Collections.emptyList();

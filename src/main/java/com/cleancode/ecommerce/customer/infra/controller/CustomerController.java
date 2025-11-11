@@ -89,14 +89,28 @@ public class CustomerController {
 		return ResponseEntity.ok(customer);
 	}
 
-	@GetMapping("/{id}/voucher")
-	public ResponseEntity<List<ListVoucherDto>> getAllVoucherCustomer(@PathVariable String id) {
-		return ResponseEntity.ok(listVoucherCustomer.execute(id));
+	@GetMapping("/voucher")
+	public ResponseEntity<List<ListVoucherDto>> getAllVoucherCustomer(Authentication authentication) {
+		
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		String email = authentication.getName();
+		
+		return ResponseEntity.ok(listVoucherCustomer.execute(email));
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<ListCustomerDto> updateCustomer(@PathVariable String id, @RequestBody UpdateCustomerDto dto) {
-		return ResponseEntity.ok(updateCustomer.execute(id, dto));
+	@PutMapping("/me")
+	public ResponseEntity<ListCustomerDto> updateCustomer(Authentication authentication, @Valid @RequestBody UpdateCustomerDto dto) {
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		return ResponseEntity.ok(updateCustomer.execute(email, dto));
 	}
 
 	@PutMapping("/password")
@@ -115,23 +129,47 @@ public class CustomerController {
 	// Deliveries
 	// ----------------------
 
-	@PostMapping("/{customerId}/deliveries")
-	public ResponseEntity<ListCustomerDto> addDelivery(@PathVariable String customerId,
+	@PostMapping("/delivery")
+	public ResponseEntity<ListCustomerDto> addDelivery(Authentication authentication,
 			@Valid @RequestBody CreateDeliveryDto dto) {
-		var updatedCustomer = createCustomerDelivery.execute(customerId, dto);
+		
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		var updatedCustomer = createCustomerDelivery.execute(email, dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(updatedCustomer);
 	}
 
-	@PutMapping("/{customerId}/deliveries/{deliveryId}")
-	public ResponseEntity<ListCustomerDto> updateDelivery(@PathVariable String customerId,
+	@PutMapping("/delivery/{deliveryId}")
+	public ResponseEntity<ListCustomerDto> updateDelivery(Authentication authentication,
 			@PathVariable String deliveryId, @Valid @RequestBody UpdateAddressDto dto) {
-		var updateCustomer = updateDelivery.execute(customerId, deliveryId, dto);
+		
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		
+		var updateCustomer = updateDelivery.execute(email, deliveryId, dto);
 		return ResponseEntity.ok(updateCustomer);
 	}
 
-	@DeleteMapping("/{customerId}/deliveries/{deliveryId}")
-	public ResponseEntity<Void> deleteDelivery(@PathVariable String customerId, @PathVariable String deliveryId) {
-		deleteDelivery.execute(customerId, deliveryId);
+	@DeleteMapping("/delivery/{deliveryId}")
+	public ResponseEntity<Void> deleteDelivery(Authentication authentication, @PathVariable String deliveryId) {
+		
+
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		
+		deleteDelivery.execute(email, deliveryId);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -139,23 +177,48 @@ public class CustomerController {
 	// Charges
 	// ----------------------
 
-	@PostMapping("/{customerId}/charges")
-	public ResponseEntity<ListCustomerDto> addCharge(@PathVariable String customerId,
+	@PostMapping("/charge")
+	public ResponseEntity<ListCustomerDto> addCharge(Authentication authentication,
 			@Valid @RequestBody CreateChargeDto dto) {
-		var updatedCustomer = createCustomerCharge.execute(customerId, dto);
+		
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		
+		var updatedCustomer = createCustomerCharge.execute(email, dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(updatedCustomer);
 	}
 
-	@PutMapping("/{customerId}/charges/{chargeId}")
-	public ResponseEntity<ListCustomerDto> updateCharge(@PathVariable String customerId, @PathVariable String chargeId,
+	@PutMapping("/charge/{chargeId}")
+	public ResponseEntity<ListCustomerDto> updateCharge(Authentication authentication, @PathVariable String chargeId,
 			@Valid @RequestBody UpdateAddressDto dto) {
-		var updateCustomer = updateCharge.execute(customerId, chargeId, dto);
+		
+
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		
+		var updateCustomer = updateCharge.execute(email, chargeId, dto);
 		return ResponseEntity.ok(updateCustomer);
 	}
 
-	@DeleteMapping("/{customerId}/charges/{chargeId}")
-	public ResponseEntity<Void> deleteCharge(@PathVariable String customerId, @PathVariable String chargeId) {
-		deleteCharge.execute(customerId, chargeId);
+	@DeleteMapping("/charge/{chargeId}")
+	public ResponseEntity<Void> deleteCharge(Authentication authentication, @PathVariable String chargeId) {
+		
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		
+		deleteCharge.execute(email, chargeId);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -163,10 +226,19 @@ public class CustomerController {
 	// Cards
 	// ----------------------
 
-	@PostMapping("/{customerId}/cards")
-	public ResponseEntity<ListCustomerDto> addCard(@PathVariable String customerId,
+	@PostMapping("/card")
+	public ResponseEntity<ListCustomerDto> addCard(Authentication authentication,
 			@Valid @RequestBody CreateCardDto dto) {
-		var createNewCard = createCard.execute(customerId, dto);
+		
+
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		String email = authentication.getName();
+		
+		var createNewCard = createCard.execute(email, dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(createNewCard);
 	}
 }
