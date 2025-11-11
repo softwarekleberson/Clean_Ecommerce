@@ -2,6 +2,8 @@ package com.cleancode.ecommerce.order.infra.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,28 +46,57 @@ public class CartController {
 	}
 
 	@PostMapping
-	public ResponseEntity<CartDto> createCart(@Valid @RequestBody CreateCartDto dto) {
+	public ResponseEntity<CartDto> createCart(Authentication authentication, @Valid @RequestBody CreateCartDto dto) {
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		String email = authentication.getName();
+		dto.setEmail(email);
+		
 		var create = addProductToCart.execute(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(create);
 	}
 
-	@GetMapping("/{customerId}")
-	public ResponseEntity<CartDto> getCart(@PathVariable String customerId) {
-		return ResponseEntity.ok(listCart.execute(customerId));
+	@GetMapping
+	public ResponseEntity<CartDto> getCart(Authentication authentication) {
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		String email = authentication.getName();
+		
+		return ResponseEntity.ok(listCart.execute(email));
 	}
 
-	@PutMapping("/{customerId}")
-	public ResponseEntity<CartDto> updateCart(@PathVariable String customerId, @Valid @RequestBody UpdateCartDto dto) {
-		var update = updateCart.execute(customerId, dto);
+	@PutMapping
+	public ResponseEntity<CartDto> updateCart(Authentication authentication, @Valid @RequestBody UpdateCartDto dto) {
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		String email = authentication.getName();
+		
+		var update = updateCart.execute(email, dto);
 		return ResponseEntity.ok(update);
 	}
 	
-	@DeleteMapping("/{customerId}/item")
-	public ResponseEntity<Void> deleteProductCart(@PathVariable String customerId, @Valid @RequestBody DeleteUniqueProductToCartDto dto) {
-		deleteUniqueProductCart.execute(customerId, dto);
+	@DeleteMapping("/item")
+	public ResponseEntity<Void> deleteProductCart(Authentication authentication, @Valid @RequestBody DeleteUniqueProductToCartDto dto) {
+		
+		if (authentication == null || !authentication.isAuthenticated()
+				|| authentication instanceof AnonymousAuthenticationToken) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+
+		String email = authentication.getName();
+		
+		deleteUniqueProductCart.execute(email, dto);
 		return ResponseEntity.noContent().build();
 	}
-	
 	
 	@DeleteMapping("/{customerId}/items")
 	public ResponseEntity<Void> deleteAllCart(@PathVariable String customerId) {

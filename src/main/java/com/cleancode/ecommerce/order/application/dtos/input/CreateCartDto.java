@@ -5,8 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class CreateCartDto {
 
-	@NotBlank(message = "Customer id not found")
-	private String customerId;
+	private String email;
 	
 	@NotBlank(message = "Product id not found")
 	private String productId;
@@ -14,14 +13,17 @@ public class CreateCartDto {
 	@Min(1)
 	private int quantity;
 	
-	public CreateCartDto(String customerId, String productId, int quantity) {
-		this.customerId = customerId;
+	public CreateCartDto(String productId, int quantity) {
 		this.productId = productId;
 		this.quantity = quantity;
 	}
-
-	public String getCustomerId() {
-		return customerId;
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 
 	public String getProductId() {

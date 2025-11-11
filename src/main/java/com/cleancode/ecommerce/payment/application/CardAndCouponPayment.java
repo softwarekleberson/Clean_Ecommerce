@@ -1,8 +1,8 @@
-package com.cleancode.ecommerce.payment.domain.method;
+package com.cleancode.ecommerce.payment.application;
 
 import java.math.BigDecimal;
 
-import com.cleancode.ecommerce.payment.domain.entity.PaymentMethod;
+import com.cleancode.ecommerce.payment.domain.PaymentMethod;
 
 public class CardAndCouponPayment implements PaymentMethod {
 

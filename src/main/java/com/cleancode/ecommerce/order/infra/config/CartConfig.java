@@ -38,13 +38,13 @@ public class CartConfig {
 	}
 
 	@Bean
-	public ListCart listCart(CartRepository cartRepository) {
-		return new ListCartImpl(cartRepository);
+	public ListCart listCart(CartRepository cartRepository, CustomerRepository customerRepository) {
+		return new ListCartImpl(cartRepository, customerRepository);
 	}
 	
 	@Bean
-	public UpdateCart updateCart (CartRepository cartRepository, StockRepository stockRepository, CancelProductStockReservation service, UpdateNewReservation updateNewReservation) {
-		return new UpdateCartImpl(cartRepository, stockRepository, service, updateNewReservation);
+	public UpdateCart updateCart (CartRepository cartRepository, StockRepository stockRepository, CancelProductStockReservation service, UpdateNewReservation updateNewReservation, CustomerRepository customerRepository) {
+		return new UpdateCartImpl(cartRepository, stockRepository, service, updateNewReservation, customerRepository);
 	}
 	
 	@Bean
@@ -58,8 +58,8 @@ public class CartConfig {
 	}
 	
 	@Bean
-	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository, StockRepository stockRepository, CancelProductStockReservation service) {
-		return new DeleteUniqueProductCartImpl(cartRepository, stockRepository, service);
+	public DeleteUniqueProductCart deleteUniqueProductCart (CartRepository cartRepository, StockRepository stockRepository, CancelProductStockReservation service, CustomerRepository customerRepository) {
+		return new DeleteUniqueProductCartImpl(cartRepository, stockRepository, service, customerRepository);
 	}
 
 	@Bean

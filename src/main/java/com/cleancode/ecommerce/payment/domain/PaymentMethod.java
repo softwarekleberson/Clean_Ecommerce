@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.payment.domain.entity;
+package com.cleancode.ecommerce.payment.domain;
 
 import java.math.BigDecimal;
 

@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.order.application.dtos.input.DeleteUniqueProductT
 
 public interface DeleteUniqueProductCart {
 
-	void execute(String customerId, DeleteUniqueProductToCartDto dto);
+	void execute(String email, DeleteUniqueProductToCartDto dto);
 }
