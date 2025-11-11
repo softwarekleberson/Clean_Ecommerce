@@ -26,8 +26,8 @@ public class VoucherRepositoryJpa implements VoucherRepository {
 	}
 
 	@Override
-	public List<Voucher> listAllVoucher(String email) {
-		List<VoucherEntity> entities = jpa.findByCustomerIdAndActiveTrue(email);
+	public List<Voucher> listAllVouche(String id) {
+		List<VoucherEntity> entities = jpa.findByCustomerIdAndActiveTrue(id);
 
 		return entities.stream().map(VoucherMapper::toDomain).toList();
 	}

@@ -8,6 +8,6 @@ import com.cleancode.ecommerce.users.domain.voucher.Voucher;
 public interface VoucherRepository {
 
 	void save (Voucher voucher);
-	List <Voucher> listAllVoucher (String customerId);
+	List <Voucher> listAllVouche (String id);
 	Optional<Voucher> listSingleVoucher(String voucherId);
 }
