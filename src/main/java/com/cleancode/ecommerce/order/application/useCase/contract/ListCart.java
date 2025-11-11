@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.order.application.dtos.output.CartDto;
 
 public interface ListCart {
 
-	CartDto execute (String customerId);
+	CartDto execute (String email);
 }

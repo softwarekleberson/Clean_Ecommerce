@@ -46,10 +46,10 @@ public class AddProductToCartImpl implements AddProductToCart {
 	@Override
 	public CartDto execute(CreateCartDto dto) {
 
-		Customer customer = findCustomer(dto);
-		Product product = findProduct(dto);
+		Customer customer = findCustomer(dto.getEmail());
+		Product product = findProduct(dto.getProductId());
 		Stock stock = findStock(dto, product);
-		Cart cart = getCartOrCreate(dto);
+		Cart cart = getCartOrCreate(dto.getEmail());
 
 		ReservationResultDto stockAfterReservation = 
 		validateProduct.reserve(stock, dto.getQuantity(),
@@ -70,9 +70,12 @@ public class AddProductToCartImpl implements AddProductToCart {
 		return new CartDto(cart);
 	}
 
-	private Cart getCartOrCreate(CreateCartDto dto) {
-		Cart cart = cartRepository.getCartCustomer(dto.getCustomerId()).orElseGet(() -> {
-			Cart newCart = new Cart(new CartId(UUID.randomUUID().toString()), new CustomerId(dto.getCustomerId()));
+	private Cart getCartOrCreate(String email) {
+		var customerId = findCustomer(email);
+		
+		Cart cart = cartRepository.getCartCustomer(customerId.getId().getValue()).orElseGet(() -> {
+			
+			Cart newCart = new Cart(new CartId(UUID.randomUUID().toString()), new CustomerId(customerId.getId().getValue()));
 			cartRepository.save(newCart);
 			return newCart;
 		});
@@ -85,15 +88,15 @@ public class AddProductToCartImpl implements AddProductToCart {
 		return stock;
 	}
 
-	private Product findProduct(CreateCartDto dto) {
-		Product product = productRepository.findById(dto.getProductId()).orElseThrow(
-				() -> new IllegalArgumentException("Product with id : " + dto.getProductId() + " not found"));
+	private Product findProduct(String productId) {
+		Product product = productRepository.findById(productId).orElseThrow(
+				() -> new IllegalArgumentException("Product with id : " + productId + " not found"));
 		return product;
 	}
 
-	private Customer findCustomer(CreateCartDto dto) {
-		Customer customer = customerRepository.getCustomerById(dto.getCustomerId()).orElseThrow(
-				() -> new IllegalArgumentException("Customer with id : " + dto.getCustomerId() + " not found"));
+	private Customer findCustomer(String email) {
+		Customer customer = customerRepository.findByEmail(email).orElseThrow(
+				() -> new IllegalArgumentException("Customer with email : " + email + " not found"));
 		return customer;
 	}
 }

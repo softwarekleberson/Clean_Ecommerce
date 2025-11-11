@@ -5,5 +5,5 @@ import com.cleancode.ecommerce.order.application.dtos.output.CartDto;
 
 public interface UpdateCart {
 
-	CartDto execute(String customerId, UpdateCartDto dto);
+	CartDto execute(String email, UpdateCartDto dto);
 }

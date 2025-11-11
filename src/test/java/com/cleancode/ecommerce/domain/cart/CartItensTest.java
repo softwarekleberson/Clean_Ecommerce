@@ -1,4 +1,4 @@
-package com.cleancode.ecommerce.order.domain.cart;
+package com.cleancode.ecommerce.domain.cart;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.cleancode.ecommerce.order.domain.cart.CartItemId;
+import com.cleancode.ecommerce.order.domain.cart.CartItens;
+import com.cleancode.ecommerce.order.domain.cart.UrlProduct;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
