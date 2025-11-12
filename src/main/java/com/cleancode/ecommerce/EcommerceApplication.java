@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "E-commerce", description = "E-commerce with Clean Arc and DDD", version = "1"))
+@OpenAPIDefinition(info = @Info(title = "E-commerce", description = "Api E-commerce with Clean Arc and DDD", version = "1"))
 public class EcommerceApplication {
 
 	public static void main(String[] args) {

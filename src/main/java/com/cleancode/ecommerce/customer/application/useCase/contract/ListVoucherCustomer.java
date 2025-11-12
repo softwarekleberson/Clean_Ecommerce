@@ -1,10 +1,11 @@
 package com.cleancode.ecommerce.customer.application.useCase.contract;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListVoucherDto;
 
 public interface ListVoucherCustomer {
 
-	public List<ListVoucherDto> execute (String email);
+	public Page<ListVoucherDto> execute(String email, Pageable pageable);
 }

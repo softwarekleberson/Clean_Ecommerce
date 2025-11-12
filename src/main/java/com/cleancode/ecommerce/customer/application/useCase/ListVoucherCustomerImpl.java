@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import java.util.Collections;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListVoucherDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListVoucherCustomer;
@@ -22,18 +22,12 @@ public class ListVoucherCustomerImpl implements ListVoucherCustomer {
 	}
 
 	@Override
-	public List<ListVoucherDto> execute(String email) {
+	public Page<ListVoucherDto> execute(String email, Pageable pageable) {
 		Customer customer = customerRepository.findByEmail(email)
 				.orElseThrow(() -> new IllegalDomainException("Customer not found"));
-		
-		List<Voucher> vouchers = repository.listAllVouche(customer.getId().getValue());
-		
-	    if (vouchers == null || vouchers.isEmpty()) {
-	        return Collections.emptyList();
-	    }
 
-	    return vouchers.stream()
-	                   .map(ListVoucherDto::new)
-	                   .toList();
-	}	
+		Page<Voucher> vouchers = repository.listAllVouche(customer.getId().getValue(), pageable);
+
+		return vouchers.map(ListVoucherDto::new);
+	}
 }
