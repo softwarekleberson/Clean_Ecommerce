@@ -1,8 +1,9 @@
 package com.cleancode.ecommerce.users.infra.gateway;
 
-import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.cleancode.ecommerce.users.domain.voucher.Voucher;
@@ -26,10 +27,10 @@ public class VoucherRepositoryJpa implements VoucherRepository {
 	}
 
 	@Override
-	public List<Voucher> listAllVouche(String id) {
-		List<VoucherEntity> entities = jpa.findByCustomerIdAndActiveTrue(id);
+	public Page<Voucher> listAllVouche(String id, Pageable pageable) {
+	    Page<VoucherEntity> entities = jpa.findByCustomerIdAndActiveTrue(id, pageable);
 
-		return entities.stream().map(VoucherMapper::toDomain).toList();
+	    return entities.map(VoucherMapper::toDomain);
 	}
 
 	@Override

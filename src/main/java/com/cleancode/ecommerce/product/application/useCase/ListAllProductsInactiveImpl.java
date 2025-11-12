@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.product.application.useCase;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cleancode.ecommerce.product.application.dto.output.ListProductDto;
 import com.cleancode.ecommerce.product.application.dto.output.ProductDtoFactory;
@@ -17,10 +18,8 @@ public class ListAllProductsInactiveImpl implements ListAllProductsInactive {
 	}
 	
 	@Override
-	public List<ListProductDto> execute() {
-		List<Product> products = this.repository.ListAllProductNotActive();
-		return products.stream()
-			.map(ProductDtoFactory::listAllProduct)
-            .toList();
+	public Page<ListProductDto> execute(Pageable pageable) {
+		Page<Product> products = repository.listAllProductNotActive(pageable);
+		return products.map(ProductDtoFactory::listAllProduct);
 	}
 }

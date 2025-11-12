@@ -1,11 +1,11 @@
 package com.cleancode.ecommerce.customer.application.useCase.contract;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListAllCustomersDto;
 
 public interface ListAllCustomers {
 
-	public List<ListAllCustomersDto> execute();
-
+	Page<ListAllCustomersDto> execute(Pageable pageable);
 }

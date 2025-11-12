@@ -35,6 +35,18 @@ public class CreateVoucherDto {
 		return customerId;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public TypeVoucher getTypeVoucher() {
+		return typeVoucher;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
 	public Voucher execute() {
 		return new Voucher(new CustomerId(customerId), new Message(message), typeVoucher, new Discount(discount));
 	}

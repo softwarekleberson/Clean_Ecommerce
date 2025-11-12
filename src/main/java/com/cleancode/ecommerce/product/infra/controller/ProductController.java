@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.product.application.dto.input.CreateProductDto;
@@ -26,6 +27,7 @@ import com.cleancode.ecommerce.product.application.useCase.contract.ListAllProdu
 import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductActivation;
 import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductDeactivation;
 import com.cleancode.ecommerce.product.application.useCase.contract.ReviseDetails;
+import com.cleancode.ecommerce.shared.dto.PageResponse;
 
 import jakarta.validation.Valid;
 
@@ -62,8 +64,13 @@ public class ProductController {
 	}
 
 	@GetMapping("/inactive")
-	public ResponseEntity<List<ListProductDto>> getAllProductsinative() {
-		return ResponseEntity.ok(listAllProductsInactive.execute());
+	public ResponseEntity<PageResponse<ListProductDto>> getAllProductsInactive(
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size) {
+
+	    Pageable pageable = PageRequest.of(page, size);
+	    var result = listAllProductsInactive.execute(pageable);
+	    return ResponseEntity.ok(PageResponse.from(result));
 	}
 
 	@PutMapping("/{productId}")

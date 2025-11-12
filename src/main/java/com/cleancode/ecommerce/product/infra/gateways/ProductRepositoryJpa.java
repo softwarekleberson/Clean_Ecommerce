@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.gateways;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.cleancode.ecommerce.product.domain.Product;
@@ -8,6 +7,8 @@ import com.cleancode.ecommerce.product.domain.repository.ProductRepository;
 import com.cleancode.ecommerce.product.infra.mapper.ProductMapper;
 import com.cleancode.ecommerce.product.infra.persistence.jpa.product.ProductEntity;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,16 +32,16 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Product> ListAllProductActive() {
-		List<ProductEntity> entity = jpa.findByActiveTrue();
-		return entity.stream().map(ProductMapper::toDomain).toList();
+	public Page<Product> ListAllProductActive(Pageable pageable) {
+	    Page<ProductEntity> entities = jpa.findByActiveTrue(pageable);
+	    return entities.map(ProductMapper::toDomain);
 	}
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Product> ListAllProductNotActive() {
-		List<ProductEntity> entity = jpa.findByActiveFalse();
-		return entity.stream().map(ProductMapper::toDomain).toList();
+	public Page<Product> listAllProductNotActive(Pageable pageable) {
+	    Page<ProductEntity> entities = jpa.findByActiveFalse(pageable);
+	    return entities.map(ProductMapper::toDomain);
 	}
 
 	@Transactional(readOnly = true)
