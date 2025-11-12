@@ -1,6 +1,7 @@
 package com.cleancode.ecommerce.customer.application.useCase;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListAllCustomersDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListAllCustomers;
@@ -17,13 +18,12 @@ public class ListAllCustomersImpl implements ListAllCustomers {
 	}
 
 	@Override
-	public List<ListAllCustomersDto> execute() {
-		List<Customer> customers = repository.getAllCustomers();
+	public Page<ListAllCustomersDto> execute(Pageable pageable) {
+		Page<Customer> customers = repository.getAllCustomers(pageable);
 		if (customers.isEmpty()) {
 			throw new IllegalDomainException("No registered customers");
 		}
 
-		return customers.stream().map(ListAllCustomersDto::new) 
-				.toList(); 
+		return customers.map(ListAllCustomersDto::new);
 	}
 }

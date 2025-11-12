@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.users.infra.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.customer.application.dtos.customer.ChangeStatusCustomerDto;
 import com.cleancode.ecommerce.customer.application.dtos.customer.ListAllCustomersDto;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ChangeActivationStatusAdm;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListAllCustomers;
+import com.cleancode.ecommerce.shared.dto.PageResponse;
 import com.cleancode.ecommerce.users.application.contract.CreateVoucher;
 import com.cleancode.ecommerce.users.application.dto.voucher.CreateVoucherDto;
 
@@ -27,12 +29,11 @@ public class AdmController {
 
 	private final ListAllCustomers listAllCustomers;
 	private final ChangeActivationStatusAdm changeActivationStatusAdm;
-	private final CreateVoucher createVoucher; 
-	
-	public AdmController(ListAllCustomers listAllCustomers,
-			ChangeActivationStatusAdm changeActivationStatusAdm,
+	private final CreateVoucher createVoucher;
+
+	public AdmController(ListAllCustomers listAllCustomers, ChangeActivationStatusAdm changeActivationStatusAdm,
 			CreateVoucher createVoucher) {
-		
+
 		this.listAllCustomers = listAllCustomers;
 		this.changeActivationStatusAdm = changeActivationStatusAdm;
 		this.createVoucher = createVoucher;
@@ -45,8 +46,12 @@ public class AdmController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ListAllCustomersDto>> listAllCustomers() {
-		return ResponseEntity.ok(listAllCustomers.execute());
+	public ResponseEntity<PageResponse<ListAllCustomersDto>> listAllCustomers(
+			@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+
+		Pageable pageable = PageRequest.of(page, size);
+		var result = listAllCustomers.execute(pageable);
+		return ResponseEntity.ok(PageResponse.from(result));
 	}
 
 	@PutMapping("/change-status")
