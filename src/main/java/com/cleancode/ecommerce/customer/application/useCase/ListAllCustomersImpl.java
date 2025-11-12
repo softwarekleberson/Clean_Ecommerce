@@ -26,5 +26,4 @@ public class ListAllCustomersImpl implements ListAllCustomers {
 		return customers.stream().map(ListAllCustomersDto::new) 
 				.toList(); 
 	}
-
 }
