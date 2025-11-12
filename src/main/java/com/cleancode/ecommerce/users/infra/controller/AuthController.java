@@ -22,6 +22,7 @@ import com.cleancode.ecommerce.users.application.dto.adm.CreateAdmDto;
 import com.cleancode.ecommerce.users.application.dto.user.JwtResponse;
 import com.cleancode.ecommerce.users.application.dto.user.LoginRequest;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
 @RestController
@@ -44,6 +45,7 @@ public class AuthController {
 		this.createCustomer = createCustomer;
 	}
 
+    @Operation(summary = "Authenticates a user and generates the JWT token.", security = {}) 
 	@PostMapping("/login")
 	public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest request) {
 		Authentication authentication = authenticationManager
@@ -55,12 +57,14 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtResponse(jwtToken));
 	}
 
+    @Operation(summary = "Create new Adm.", security = {}) 
 	@PostMapping("/adm")
 	public ResponseEntity<Void> createAdm(@Valid @RequestBody CreateAdmDto dto) {
 		createNewAdm.execute(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 
+    @Operation(summary = "Create new Customer.", security = {}) 
 	@PostMapping("/custumer")
 	public ResponseEntity<ListCustomerDto> createCustomer(@Valid @RequestBody CreateCustomerDto dto) {
 		var created = createCustomer.execute(dto);

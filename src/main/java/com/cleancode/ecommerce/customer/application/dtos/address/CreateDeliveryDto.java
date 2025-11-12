@@ -14,7 +14,7 @@ public class CreateDeliveryDto {
 
 	@NotNull
 	private Boolean main;
-	
+
 	@NotBlank
 	private String receiver;
 
@@ -53,9 +53,9 @@ public class CreateDeliveryDto {
 	@Size(max = 255)
 	private String deliveryPhrase;
 
-	public CreateDeliveryDto(String receiver, Boolean main, String street, String number, String neighborhood, String zipCode,
-			String observation, String streetType, String typeResidence, String city, String state, String country,
-			String deliveryPhrase) {
+	public CreateDeliveryDto(String receiver, Boolean main, String street, String number, String neighborhood,
+			String zipCode, String observation, String streetType, String typeResidence, String city, String state,
+			String country, String deliveryPhrase) {
 
 		this.id = UUID.randomUUID().toString();
 		this.main = main;
@@ -71,6 +71,62 @@ public class CreateDeliveryDto {
 		this.state = state;
 		this.country = country;
 		this.deliveryPhrase = deliveryPhrase;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public Boolean getMain() {
+		return main;
+	}
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public String getStreet() {
+		return street;
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public String getNeighborhood() {
+		return neighborhood;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public String getStreetType() {
+		return streetType;
+	}
+
+	public String getTypeResidence() {
+		return typeResidence;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public String getDeliveryPhrase() {
+		return deliveryPhrase;
 	}
 
 	public Delivery createDelivery() {

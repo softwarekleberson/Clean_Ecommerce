@@ -15,6 +15,8 @@ import com.cleancode.ecommerce.product.application.useCase.contract.ListActivePr
 import com.cleancode.ecommerce.product.application.useCase.contract.ListAllProductActive;
 import com.cleancode.ecommerce.shared.dto.PageResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("public/product")
 @CrossOrigin(origins = "*")
@@ -28,11 +30,13 @@ public class ProductListController {
 		this.listProduct = listProduct;
 	}
 
+    @Operation(summary = "Create new Adm.", security = {}) 
 	@GetMapping("/{id}")
 	public ResponseEntity<ListProductDto> getProductById(@PathVariable String id) {
 		return ResponseEntity.ok(listProduct.execute(id));
 	}
 
+    @Operation(summary = "Create new Adm.", security = {}) 
 	@GetMapping
 	public ResponseEntity<PageResponse<ListProductDto>> getAllProducts(
 	        @RequestParam(defaultValue = "0") int page,
