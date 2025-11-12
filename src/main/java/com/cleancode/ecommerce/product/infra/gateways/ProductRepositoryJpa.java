@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.gateways;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.cleancode.ecommerce.product.domain.Product;
@@ -40,9 +39,9 @@ public class ProductRepositoryJpa implements ProductRepository {
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<Product> ListAllProductNotActive() {
-		List<ProductEntity> entity = jpa.findByActiveFalse();
-		return entity.stream().map(ProductMapper::toDomain).toList();
+	public Page<Product> listAllProductNotActive(Pageable pageable) {
+	    Page<ProductEntity> entities = jpa.findByActiveFalse(pageable);
+	    return entities.map(ProductMapper::toDomain);
 	}
 
 	@Transactional(readOnly = true)

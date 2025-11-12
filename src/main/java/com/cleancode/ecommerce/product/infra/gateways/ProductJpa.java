@@ -1,6 +1,5 @@
 package com.cleancode.ecommerce.product.infra.gateways;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -13,8 +12,8 @@ public interface ProductJpa extends JpaRepository<ProductEntity, String> {
 
 	Page<ProductEntity> findByActiveTrue(Pageable pageable);
 
-	List<ProductEntity> findByActiveFalse();
-	
+	Page<ProductEntity> findByActiveFalse(Pageable pageable);
+
 	Optional<ProductEntity> findById(String productId);
 
 }
