@@ -17,7 +17,7 @@ import com.cleancode.ecommerce.stock.application.usecase.CreateStock;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/stock")
+@RequestMapping("adm/stock")
 @CrossOrigin(origins = "*")
 public class StockController {
 

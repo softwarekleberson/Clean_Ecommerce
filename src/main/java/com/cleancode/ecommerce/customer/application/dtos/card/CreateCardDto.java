@@ -48,6 +48,30 @@ public class CreateCardDto {
 		this.flag = flag;
 	}
 
+	public boolean isMain() {
+		return main;
+	}
+
+	public String getPrintedName() {
+		return printedName;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getNumberCard() {
+		return numberCard;
+	}
+
+	public LocalDate getExpirationDate() {
+		return expirationDate;
+	}
+
+	public Flag getFlag() {
+		return flag;
+	}
+
 	public Card createCard() {
 		return new Card(main, new PrintedName(printedName), new Code(code), new NumberCard(numberCard),
 				new ExpirationDate(expirationDate), flag);

@@ -10,6 +10,7 @@ import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerDelive
 import com.cleancode.ecommerce.customer.application.useCase.CreateCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.DeleteChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.DeleteDeliveryImpl;
+import com.cleancode.ecommerce.customer.application.useCase.EncryptPasswordImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListAllCustomersImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.PasswordValidationCheckImpl;
@@ -24,6 +25,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCusto
 import com.cleancode.ecommerce.customer.application.useCase.contract.CreateCustomerDelivery;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDelivery;
+import com.cleancode.ecommerce.customer.application.useCase.contract.EncryptPassword;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListAllCustomers;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.PasswordValidationCheck;
@@ -33,16 +35,22 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateDeliv
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassword;
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.event.EventPublisher;
+import com.cleancode.ecommerce.users.domain.user.repository.PasswordEncoderService;
 
 @Configuration
 public class CustomerConfig {
 
 	@Bean
 	public CreateCustomer createCustomer(CustomerRepository repository, PasswordValidationCheck passwordValidation,
-			EventPublisher eventPublisher) {
-		return new CreateCustomerImpl(repository, passwordValidation, eventPublisher);
+			EventPublisher eventPublisher, EncryptPassword encryptPassword) {
+		return new CreateCustomerImpl(repository, passwordValidation, eventPublisher, encryptPassword);
 	}
 	
+	@Bean
+	public EncryptPassword encryptPassword (PasswordEncoderService passwordEncoderService) {
+		return new EncryptPasswordImpl(passwordEncoderService);
+	}
+		
 	@Bean
 	public CreateCustomerCard createCustomerCard(CustomerRepository repository) {
 		return new CreateCardImpl(repository);
@@ -79,8 +87,8 @@ public class CustomerConfig {
 	}
 
 	@Bean
-	public UpdatePassword updatePassword(CustomerRepository repository) {
-		return new UpdatePasswordImpl(repository);
+	public UpdatePassword updatePassword(CustomerRepository repository, EncryptPassword encryptPassword) {
+		return new UpdatePasswordImpl(repository, encryptPassword);
 	}
 
 	@Bean

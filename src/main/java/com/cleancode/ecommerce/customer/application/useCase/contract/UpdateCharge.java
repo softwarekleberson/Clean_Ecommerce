@@ -5,5 +5,5 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.ListCustomerDt
 
 public interface UpdateCharge {
 
-	public ListCustomerDto execute(String clienteId, String id, UpdateAddressDto dto);
+	public ListCustomerDto execute(String email, String id, UpdateAddressDto dto);
 }

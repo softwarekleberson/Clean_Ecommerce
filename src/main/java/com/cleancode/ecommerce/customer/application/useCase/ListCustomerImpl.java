@@ -14,7 +14,7 @@ public class ListCustomerImpl implements ListCustomer {
 	}
 	
 	@Override
-	public ListCustomerDto execute(String customerId) {
-		return new ListCustomerDto(repository.getCustomerById(customerId).orElseThrow(()-> new IllegalDomainException("Customer with id : " + customerId + " not found"))); 
+	public ListCustomerDto execute(String email) {
+		return new ListCustomerDto(repository.findByEmail(email).orElseThrow(()-> new IllegalDomainException("Customer with not found"))); 
 	}
 }

@@ -16,8 +16,8 @@ public class CreateCustomerChargeImpl implements CreateCustomerCharge{
 		this.repository = repository;
 	}
 	
-	public ListCustomerDto execute(String id, CreateChargeDto dto) {
-		Customer customer = repository.getCustomerById(id).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));
+	public ListCustomerDto execute(String email, CreateChargeDto dto) {
+		Customer customer = repository.findByEmail(email).orElseThrow(() -> new IllegalDomainException("Customer not found"));
 		Charge charge = dto.createCharge();
 		
 		customer.registerCharge(charge);

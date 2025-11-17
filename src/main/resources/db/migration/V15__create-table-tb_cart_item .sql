@@ -2,6 +2,7 @@ CREATE TABLE tb_cart_item (
     cart_item_id VARCHAR(36) PRIMARY KEY COMMENT 'Unique identifier for this cart item',
     product_id VARCHAR(36) NOT NULL COMMENT 'Identifier of the product added to the cart',
     product_name VARCHAR(255) NOT NULL COMMENT 'Name of the product',
+    url_product VARCHAR(255) NOT NULL COMMENT 'URL of the product image',
     quantity INT NOT NULL COMMENT 'Quantity of the product in the cart',
     unit_price DECIMAL(19, 2) NOT NULL COMMENT 'Price of one unit of the product',
     coin VARCHAR(20) NOT NULL COMMENT 'Currency type for the unit price',

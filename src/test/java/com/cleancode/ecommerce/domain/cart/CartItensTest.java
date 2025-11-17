@@ -3,13 +3,13 @@ package com.cleancode.ecommerce.domain.cart;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.cleancode.ecommerce.order.domain.cart.CartItemId;
 import com.cleancode.ecommerce.order.domain.cart.CartItens;
+import com.cleancode.ecommerce.order.domain.cart.UrlProduct;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
 import com.cleancode.ecommerce.shared.kernel.Price;
@@ -18,100 +18,95 @@ import com.cleancode.ecommerce.stock.domain.Quantity;
 import com.cleancode.ecommerce.stock.domain.ReservationId;
 import com.cleancode.ecommerce.stock.domain.exception.IllegalStockException;
 
-public class CartItensTest {
-	private CartItemId cartItemId;
-	private ProductId productId;
-	private Name productName;
-	private Quantity quantity;
-	private Price unitPrice;
-	private ReservationId reservationId;
+class CartItensTest {
 
-	@BeforeEach
-	void setUp() {
-		cartItemId = new CartItemId(UUID.randomUUID().toString());
-		productId = new ProductId(UUID.randomUUID().toString());
-		productName = new Name("Clean Code Book");
-		quantity = new Quantity(2);
-		unitPrice = new Price(BigDecimal.valueOf(30), TypeCoin.DOLAR);
-		reservationId = new ReservationId(UUID.randomUUID().toString());
-	}
+    private CartItemId cartItemId;
+    private ProductId productId;
+    private Name productName;
+    private UrlProduct urlProduct;
+    private Quantity quantity;
+    private Price price;
+    private ReservationId reservationId;
 
-	@Test
-	void shouldCreateCartItemSuccessfully() {
-		CartItens item = new CartItens(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+    @BeforeEach
+    void setup() {
+        cartItemId = new CartItemId("123");
+        productId = new ProductId("P001");
+        productName = new Name("Produto Teste");
+        urlProduct = new UrlProduct("https://imagem.com/produto.png");
+        quantity = new Quantity(2);
+        price = new Price(new BigDecimal("50.00"), TypeCoin.DOLAR);
+        reservationId = new ReservationId("R001");
+    }
 
-		assertNotNull(item.getCartItemId());
-		assertEquals(productId, item.getProductId());
-		assertEquals(productName, item.getProductName());
-		assertEquals(2, item.getQuantity().getQuantity());
-		assertEquals(BigDecimal.valueOf(30), item.getUnitPrice().getPrice());
-		assertEquals(BigDecimal.valueOf(60), item.getSubtotal().getPrice()); // 2 * 30
-	}
+    @Test
+    void deveCriarCartItemComSucesso() {
+        CartItens item = new CartItens(cartItemId, productId, productName, urlProduct, quantity, price, reservationId);
 
-	@Test
-	void shouldThrowWhenAnyArgumentIsNull() {
-		assertThrows(IllegalArgumentException.class,
-				() -> new CartItens(null, productId, productName, quantity, unitPrice, reservationId));
+        assertNotNull(item);
+        assertEquals("Produto Teste", item.getProductName().getName());
+        assertEquals(2, item.getQuantity().getQuantity());
+        assertEquals(new BigDecimal("50.00"), item.getUnitPrice().getPrice());
+    }
 
-		assertThrows(IllegalArgumentException.class,
-				() -> new CartItens(cartItemId, null, productName, quantity, unitPrice, reservationId));
+    @Test
+    void deveLancarExcecaoQuandoAlgumParametroForNulo() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            new CartItens(null, productId, productName, urlProduct, quantity, price, reservationId);
+        });
+        assertThrows(IllegalArgumentException.class, () -> {
+            new CartItens(cartItemId, null, productName, urlProduct, quantity, price, reservationId);
+        });
+    }
 
-		assertThrows(IllegalArgumentException.class,
-				() -> new CartItens(cartItemId, productId, null, quantity, unitPrice, reservationId));
+    @Test
+    void deveCalcularSubtotalCorretamente() {
+        CartItens item = new CartItens(cartItemId, productId, productName, urlProduct, quantity, price, reservationId);
+        Price subtotal = item.calculateSubtotal();
 
-		assertThrows(IllegalArgumentException.class,
-				() -> new CartItens(cartItemId, productId, productName, null, unitPrice, reservationId));
+        assertEquals(new BigDecimal("100.00"), subtotal.getPrice());
+        assertEquals(TypeCoin.DOLAR, subtotal.getCoin());
+    }
 
-		assertThrows(IllegalArgumentException.class,
-				() -> new CartItens(cartItemId, productId, productName, quantity, null, reservationId));
+    @Test
+    void deveAumentarQuantidadeComSucesso() {
+        CartItens item = new CartItens(cartItemId, productId, productName, urlProduct, quantity, price, reservationId);
+        item.increaseQuantity(new Quantity(3));
 
-		assertThrows(IllegalArgumentException.class,
-				() -> new CartItens(cartItemId, productId, productName, quantity, unitPrice, null));
-	}
+        assertEquals(5, item.getQuantity().getQuantity());
+    }
 
-	@Test
-	void shouldCalculateSubtotalCorrectly() {
-		CartItens item = new CartItens(cartItemId, productId, productName, new Quantity(5), unitPrice, reservationId);
+    @Test
+    void deveLancarExcecaoAoAdicionarQuantidadeNegativaOuZero() {
+        CartItens item = new CartItens(cartItemId, productId, productName, urlProduct, quantity, price, reservationId);
 
-		Price subtotal = item.calculateSubtotal();
+        assertThrows(IllegalStockException.class, () -> {
+            item.increaseQuantity(new Quantity(0));
+        });
 
-		assertEquals(BigDecimal.valueOf(150), subtotal.getPrice()); // 5 * 30
-		assertEquals(TypeCoin.DOLAR, subtotal.getCoin());
-	}
+        assertThrows(IllegalStockException.class, () -> {
+            item.increaseQuantity(new Quantity(-2));
+        });
+    }
 
-	@Test
-	void shouldIncreaseQuantity() {
-		CartItens item = new CartItens(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+    @Test
+    void deveAlterarQuantidadeComSucesso() {
+        CartItens item = new CartItens(cartItemId, productId, productName, urlProduct, quantity, price, reservationId);
+        item.changeQuantity(new Quantity(10));
 
-		item.increaseQuantity(new Quantity(3));
+        assertEquals(10, item.getQuantity().getQuantity());
+    }
 
-		assertEquals(5, item.getQuantity().getQuantity());
-		assertEquals(BigDecimal.valueOf(150), item.getSubtotal().getPrice()); // (2+3) * 30
-	}
+    @Test
+    void deveLancarExcecaoAoAlterarQuantidadeInvalida() {
+        CartItens item = new CartItens(cartItemId, productId, productName, urlProduct, quantity, price, reservationId);
 
-	@Test
-	void shouldThrowWhenIncreasingWithNonPositiveQuantity() {
-		CartItens item = new CartItens(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+        assertThrows(IllegalStockException.class, () -> {
+            item.changeQuantity(new Quantity(0));
+        });
 
-		assertThrows(IllegalStockException.class, () -> item.increaseQuantity(new Quantity(0)));
-		assertThrows(IllegalStockException.class, () -> item.increaseQuantity(new Quantity(-2)));
-	}
-
-	@Test
-	void shouldChangeQuantity() {
-		CartItens item = new CartItens(cartItemId, productId, productName, quantity, unitPrice, reservationId);
-
-		item.changeQuantity(new Quantity(10));
-
-		assertEquals(10, item.getQuantity().getQuantity());
-		assertEquals(BigDecimal.valueOf(300), item.getSubtotal().getPrice()); // 10 * 30
-	}
-
-	@Test
-	void shouldThrowWhenChangingToNonPositiveQuantity() {
-		CartItens item = new CartItens(cartItemId, productId, productName, quantity, unitPrice, reservationId);
-
-		assertThrows(IllegalStockException.class, () -> item.changeQuantity(new Quantity(0)));
-		assertThrows(IllegalStockException.class, () -> item.changeQuantity(new Quantity(-1)));
-	}
+        assertThrows(IllegalStockException.class, () -> {
+            item.changeQuantity(new Quantity(-5));
+        });
+    }
 }

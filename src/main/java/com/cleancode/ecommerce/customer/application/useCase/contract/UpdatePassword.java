@@ -4,5 +4,5 @@ import com.cleancode.ecommerce.customer.application.dtos.customer.UpdatePassword
 
 public interface UpdatePassword {
 
-	public void execute (String customerId, UpdatePasswordDto dto);
+	public void execute (String email, UpdatePasswordDto dto);
 }

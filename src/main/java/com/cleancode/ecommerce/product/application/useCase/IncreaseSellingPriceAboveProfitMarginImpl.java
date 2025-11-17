@@ -15,9 +15,9 @@ public class IncreaseSellingPriceAboveProfitMarginImpl implements IncreaseSellin
 	}
 
 	@Override
-	public void execute(String productId, ModifySellingPriceDto dto) {
-		Product product = repository.findById(productId)
-				.orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
+	public void execute(ModifySellingPriceDto dto) {
+		Product product = repository.findById(dto.productId())
+				.orElseThrow(() -> new IllegalDomainException("Product with id : " + dto.productId() + "not found"));
 		
 		product.aboveMarginSalesPricePolicy(dto.newPrice());
 		repository.save(product);

@@ -93,6 +93,10 @@ public class Customer {
 	public Email getEmail() {
 		return this.contact.getEmail();
 	}
+	
+	public String getEmailAuth() {
+		return this.contact.getEmail().getEmail();
+	}
 
 	public Phone getFullPhone() {
 		return this.contact.getFullPhone();

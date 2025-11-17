@@ -15,9 +15,9 @@ public class ManualProductActivationImpl implements ManualProductActivation {
 	}
 
 	@Override
-	public void execute(String productId, ProductStatusChangeDto dto) {
-		Product product = productRepository.findById(productId)
-				.orElseThrow(() -> new IllegalDomainException("Product with id : " + productId + "not found"));
+	public void execute(ProductStatusChangeDto dto) {
+		Product product = productRepository.findById(dto.productId())
+				.orElseThrow(() -> new IllegalDomainException("Product with id : " + dto.productId() + "not found"));
 		product.productStatusPolicyActivation(dto.justification(), dto.category());
 
 		productRepository.save(product);

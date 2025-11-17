@@ -5,6 +5,7 @@ import com.cleancode.ecommerce.customer.domain.customer.exception.IllegalDomainE
 import com.cleancode.ecommerce.order.domain.cart.Cart;
 import com.cleancode.ecommerce.order.domain.cart.CartId;
 import com.cleancode.ecommerce.order.domain.cart.CartItemId;
+import com.cleancode.ecommerce.order.domain.cart.UrlProduct;
 import com.cleancode.ecommerce.order.domain.cart.exception.IllegalCartException;
 import com.cleancode.ecommerce.product.domain.ProductId;
 import com.cleancode.ecommerce.shared.kernel.Name;
@@ -30,6 +31,7 @@ class CartTest {
 	private Price unitPrice;
 	private Quantity quantity;
 	private ReservationId reservationId;
+	private UrlProduct urlProduct;
 
 	@BeforeEach
 	void setUp() {
@@ -38,6 +40,7 @@ class CartTest {
 		productId = new ProductId();
 		cartItemId = new CartItemId();
 		productName = new Name("Notebook Gamer");
+		urlProduct = new UrlProduct("url-nice"); 
 		unitPrice = new Price(BigDecimal.valueOf(2000), TypeCoin.DOLAR);
 		quantity = new Quantity(2);
 		reservationId = new ReservationId();
@@ -60,7 +63,7 @@ class CartTest {
 	@Test
 	void shouldAddProductToCartSuccessfully() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+		cart.addProductToCart(cartItemId, productId, productName, urlProduct, quantity, unitPrice, reservationId);
 
 		assertEquals(1, cart.getCartItens().size());
 		assertEquals(BigDecimal.valueOf(4000), cart.getTotalPrice().getPrice()); // 2000 * 2
@@ -69,16 +72,16 @@ class CartTest {
 	@Test
 	void shouldNotAllowAddingSameProductTwice() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+		cart.addProductToCart(cartItemId, productId, productName, urlProduct , quantity, unitPrice, reservationId);
 
 		assertThrows(IllegalCartException.class,
-				() -> cart.addProductToCart(cartItemId, productId, productName, quantity, unitPrice, reservationId));
+				() -> cart.addProductToCart(cartItemId, productId, productName, urlProduct ,quantity, unitPrice, reservationId));
 	}
 
 	@Test
 	void shouldChangeProductQuantitySuccessfully() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+		cart.addProductToCart(cartItemId, productId, productName, urlProduct,quantity, unitPrice, reservationId);
 
 		cart.changeProductQuantity(cartItemId, new Quantity(3));
 
@@ -95,7 +98,7 @@ class CartTest {
 	@Test
 	void shouldRemoveProductSuccessfully() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+		cart.addProductToCart(cartItemId, productId, productName, urlProduct,quantity, unitPrice, reservationId);
 
 		cart.removeProductFromCart(cartItemId);
 
@@ -113,7 +116,7 @@ class CartTest {
 	@Test
 	void shouldRemoveAllProducts() {
 		Cart cart = new Cart(cartId, customerId);
-		cart.addProductToCart(cartItemId, productId, productName, quantity, unitPrice, reservationId);
+		cart.addProductToCart(cartItemId, productId, productName, urlProduct, quantity, unitPrice, reservationId);
 
 		cart.removeAllProducts();
 

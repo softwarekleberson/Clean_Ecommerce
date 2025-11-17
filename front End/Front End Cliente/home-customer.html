@@ -19,8 +19,8 @@
     <header>
         <div class="header-layote">
             <div class="account">
-                <a href="login-cliente.html"><span>Login</span></a>
-                <a href="login-cliente.html"><i class="fa-solid fa-user"></i></a>
+                <a href="login.html"><span>Login</span></a>
+                <a href="login.html"><i class="fa-solid fa-user"></i></a>
             </div>
 
             <div class="logo">
@@ -62,49 +62,49 @@
     <main>
         <section class="container">
             <div>
-                <a href="update-customer.html" class="dynamic-id">
+                <a href="update-customer.html">
                     <h3>My Profile</h3>
                     <p>Basic Information</p>
                 </a>
             </div>
             <div>
-                <a href="update-password.html" class="dynamic-id">
+                <a href="update-password.html">
                     <h3>Change Password</h3>
                     <p>Update Your Password</p>
                 </a>
             </div>
             <div>
-                <a href="list-deliveries.html" class="dynamic-id">
+                <a href="list-deliveries.html">
                     <h3>Delivery Addresses</h3>
                     <p>Manage Delivery Addresses</p>
                 </a>
             </div>
             <div>
-                <a href="list-charges.html" class="dynamic-id">
+                <a href="list-charges.html">
                     <h3>Billing Addresses</h3>
                     <p>Manage Billing Addresses</p>
                 </a>
             </div>
             <div>
-                <a href="list-card.html" class="dynamic-id">
+                <a href="list-card.html">
                     <h3>Payment Methods</h3>
                     <p>Manage Your Cards</p>
                 </a>
             </div>
             <div>
-                <a href="cupom.html" class="dynamic-id">
+                <a href="voucher.html">
                     <h3>My Vouchers</h3>
                     <p>Exchange & Return Vouchers</p>
                 </a>
             </div>
             <div>
-                <a href="pedidos.html" class="dynamic-id">
+                <a href="pedidos.html">
                     <h3>My Orders</h3>
                     <p>Track Your Orders</p>
                 </a>
             </div>
             <div>
-                <a href="home.html" onclick="sair()" class="dynamic-id">
+                <a href="index.html" onclick="sair()">
                     <h3>Log Out</h3>
                     <p>See You Soon!</p>
                 </a>
@@ -148,20 +148,6 @@
     function sair() {
         localStorage.clear();
         alert("Nós vemos na próxima página");
-    }
-
-    // Atualiza todos os links que precisam do ID dinamicamente
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = urlParams.get('id');
-
-    if (id) {
-        const links = document.querySelectorAll('a.dynamic-id');
-        links.forEach(link => {
-            const currentHref = link.getAttribute('href');
-            // Evita duplicar ?id caso já exista
-            const separator = currentHref.includes('?') ? '&' : '?';
-            link.href = `${currentHref}${separator}id=${id}`;
-        });
     }
 </script>
 

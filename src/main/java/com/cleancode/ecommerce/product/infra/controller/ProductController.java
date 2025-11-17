@@ -1,7 +1,7 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cleancode.ecommerce.product.application.dto.input.CreateProductDto;
@@ -26,17 +27,16 @@ import com.cleancode.ecommerce.product.application.useCase.contract.ListAllProdu
 import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductActivation;
 import com.cleancode.ecommerce.product.application.useCase.contract.ManualProductDeactivation;
 import com.cleancode.ecommerce.product.application.useCase.contract.ReviseDetails;
+import com.cleancode.ecommerce.shared.dto.PageResponse;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("adm/product")
 @CrossOrigin(origins = "*")
 public class ProductController {
 
 	private final CreateProduct createProduct;
-	private final ListAllProductActive listAllProduct;
-	private final ListActiveProduct listProduct;
 	private final ReviseDetails reviseDetails;
 	private final ManualProductDeactivation manualProductDeactivation;
 	private final ManualProductActivation manualProductActivation;
@@ -50,8 +50,6 @@ public class ProductController {
 			ListAllProductsInactive listAllProductsInactive) {
 		
 		this.createProduct = createProduct;
-		this.listAllProduct = listAllProduct;
-		this.listProduct = listProduct;
 		this.reviseDetails = reviseDetails;
 		this.manualProductDeactivation = manualProductDeactivation;
 		this.manualProductActivation = manualProductActivation;
@@ -65,19 +63,14 @@ public class ProductController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<ListProductDto> getProductById(@PathVariable String id) {
-		return ResponseEntity.ok(listProduct.execute(id));
-	}
-
-	@GetMapping
-	public ResponseEntity<List<ListProductDto>> getAllProducts() {
-		return ResponseEntity.ok(listAllProduct.execute());
-	}
-	
 	@GetMapping("/inactive")
-	public ResponseEntity<List<ListProductDto>> getAllProductsinative() {
-		return ResponseEntity.ok(listAllProductsInactive.execute());
+	public ResponseEntity<PageResponse<ListProductDto>> getAllProductsInactive(
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size) {
+
+	    Pageable pageable = PageRequest.of(page, size);
+	    var result = listAllProductsInactive.execute(pageable);
+	    return ResponseEntity.ok(PageResponse.from(result));
 	}
 
 	@PutMapping("/{productId}")
@@ -87,24 +80,21 @@ public class ProductController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/{productId}/activate")
-	public ResponseEntity<Void> activateProduct(@Valid @RequestBody ProductStatusChangeDto dto,
-			@PathVariable String productId) {
-		manualProductActivation.execute(productId, dto);
+	@PutMapping("/activate")
+	public ResponseEntity<Void> activateProduct(@Valid @RequestBody ProductStatusChangeDto dto) {
+		manualProductActivation.execute(dto);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping("/{productId}/selling/price")
-	public ResponseEntity<Void> priceAboveProfitMargin(@Valid @RequestBody ModifySellingPriceDto dto,
-			@PathVariable String productId) {
-		increaseSellingPriceAboveProfitMargin.execute(productId, dto);
+	@PutMapping("/selling/price")
+	public ResponseEntity<Void> priceAboveProfitMargin(@Valid @RequestBody ModifySellingPriceDto dto) {
+		increaseSellingPriceAboveProfitMargin.execute(dto);
 		return ResponseEntity.noContent().build();
 	}
 
-	@DeleteMapping("/{productId}/disable")
-	public ResponseEntity<Void> deactivateProduct(@Valid @RequestBody ProductStatusChangeDto dto,
-			@PathVariable String productId) {
-		manualProductDeactivation.execute(productId, dto);
+	@DeleteMapping("/disable")
+	public ResponseEntity<Void> deactivateProduct(@Valid @RequestBody ProductStatusChangeDto dto) {
+		manualProductDeactivation.execute(dto);
 		return ResponseEntity.noContent().build();
 	}
 }

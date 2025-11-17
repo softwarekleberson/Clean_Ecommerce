@@ -11,6 +11,7 @@ public class Card {
 	private NumberCard numberCard;
 	private ExpirationDate expirationDate;
 	private Flag flag;
+	private Credit credit;
 
 	public Card(boolean main, PrintedName printedName,
 			Code code, NumberCard numberCard,
@@ -23,6 +24,7 @@ public class Card {
 		this.numberCard = numberCard;
 		this.expirationDate = expirationDate;
 		this.flag = flag;
+		this.credit = new Credit();
 	}
 
 	public CardId getCardId() {
@@ -51,6 +53,10 @@ public class Card {
 
 	public Flag getFlag() {
 		return flag;
+	}
+	
+	public Credit getCredit() {
+		return credit;
 	}
 
 	@Override

@@ -17,8 +17,8 @@ public class UpdateDeliveryImpl implements UpdateDelivery{
 	}
 
 	@Override
-	public ListCustomerDto execute(String clienteId, String id, UpdateAddressDto dto) {
-		Customer customer = repository.getCustomerById(clienteId).orElseThrow(() -> new IllegalDomainException("Customer with id : " + id + " not found"));				
+	public ListCustomerDto execute(String email, String id, UpdateAddressDto dto) {
+		Customer customer = repository.findByEmail(email).orElseThrow(() -> new IllegalDomainException("Customer not found"));				
 		Delivery delivery = customer.findDeliveryById(id);
 		delivery.update(dto.receiver(), dto.main(), dto.street(), dto.number(), dto.neighborhood(), dto.zipCode(), dto.observation(), dto.streetType(), dto.typeResidence(), dto.city(), dto.state(), dto.country(), dto.deliveryPhrase());
 		
