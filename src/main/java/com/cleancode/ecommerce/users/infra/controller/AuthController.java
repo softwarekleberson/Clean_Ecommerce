@@ -65,7 +65,7 @@ public class AuthController {
 	}
 
     @Operation(summary = "Create new Customer.", security = {}) 
-	@PostMapping("/custumer")
+	@PostMapping("/customer")
 	public ResponseEntity<ListCustomerDto> createCustomer(@Valid @RequestBody CreateCustomerDto dto) {
 		var created = createCustomer.execute(dto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(created);
