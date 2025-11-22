@@ -1,7 +1,10 @@
 package com.cleancode.ecommerce.product.application.dto.output;
 
-public class ListBagDto extends ListProductDto {
+import java.io.Serializable;
 
+public class ListBagDto extends ListProductDto implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 	private String color;
 	private double volume;
 	

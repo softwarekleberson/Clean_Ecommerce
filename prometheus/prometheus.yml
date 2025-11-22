@@ -2,6 +2,7 @@ global:
   scrape_interval: 5s
 
 scrape_configs:
+
   - job_name: 'prometheus'
     static_configs:
       - targets: ['prometheus:9090']
@@ -13,4 +14,12 @@ scrape_configs:
   - job_name: 'spring-boot'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['192.168.0.10:8080']
+      - targets: ['172.17.0.1:8080']
+
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['mysql_exporter:9104']
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis_exporter:9121']

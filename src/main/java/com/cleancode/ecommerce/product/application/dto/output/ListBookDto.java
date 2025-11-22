@@ -1,11 +1,13 @@
 package com.cleancode.ecommerce.product.application.dto.output;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import com.cleancode.ecommerce.product.domain.books.CategoryBook;
 
-public class ListBookDto extends ListProductDto {
+public class ListBookDto extends ListProductDto implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private String synopsis;
 	private int page;
 	private String author;

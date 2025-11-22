@@ -1,7 +1,10 @@
 package com.cleancode.ecommerce.product.application.dto.output;
 
-public class MidiaOutputDto {
+import java.io.Serializable;
 
+public class MidiaOutputDto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String url;
 	private String description;

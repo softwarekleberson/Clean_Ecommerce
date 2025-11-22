@@ -3,11 +3,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const response = await fetch("http://localhost:8080/public/product");
     if (!response.ok) throw new Error(`Erro: ${response.status}`);
 
-    const produtos = await response.json();
+    const data = await response.json();
+    const produtos = data.content; // <-- LISTA REAL
 
     // Separar por tipo
     const books = produtos.filter(p => p.type === "book");
-    const bags = produtos.filter(p => p.type === "bag");
+    const bags = produtos.filter(p => p.category === "BAG");
 
     // Containers
     const booksContainer = document.getElementById("books-container");
@@ -29,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
       booksContainer.appendChild(card);
 
-      // Evento para Detalhes - Redireciona para página específica de livros
       card.querySelector('.btn-details').addEventListener('click', () => {
         window.location.href = `book-details.html?id=${book.id}`;
       });
@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       `;
       bagsContainer.appendChild(card);
 
-      // Evento para Detalhes - Redireciona para página específica de bolsas
       card.querySelector('.btn-details').addEventListener('click', () => {
         window.location.href = `bag-details.html?id=${bag.id}`;
       });

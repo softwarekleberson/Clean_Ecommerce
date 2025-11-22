@@ -10,6 +10,8 @@ public class PageResponse <T> {
     private long totalElements;
     private int totalPages;
 
+    public PageResponse() {}
+    
     public PageResponse(List<T> content, int page, int size, long totalElements, int totalPages) {
         this.content = content;
         this.page = page;

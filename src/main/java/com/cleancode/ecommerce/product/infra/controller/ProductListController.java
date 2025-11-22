@@ -1,8 +1,8 @@
 package com.cleancode.ecommerce.product.infra.controller;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,28 +22,31 @@ import io.swagger.v3.oas.annotations.Operation;
 @CrossOrigin(origins = "*")
 public class ProductListController {
 
-	private final ListAllProductActive listAllProduct;
-	private final ListActiveProduct listProduct;
-	
-	public ProductListController(ListAllProductActive listAllProduct, ListActiveProduct listProduct) {
-		this.listAllProduct = listAllProduct;
-		this.listProduct = listProduct;
-	}
 
-    @Operation(summary = "Create new Adm.", security = {}) 
-	@GetMapping("/{id}")
-	public ResponseEntity<ListProductDto> getProductById(@PathVariable String id) {
-		return ResponseEntity.ok(listProduct.execute(id));
-	}
+    private final ListAllProductActive listAllProduct;
+    private final ListActiveProduct listProduct;
 
-    @Operation(summary = "Create new Adm.", security = {}) 
-	@GetMapping
-	public ResponseEntity<PageResponse<ListProductDto>> getAllProducts(
-	        @RequestParam(defaultValue = "0") int page,
-	        @RequestParam(defaultValue = "50") int size) {
+    public ProductListController(ListAllProductActive listAllProduct, ListActiveProduct listProduct) {
+        this.listAllProduct = listAllProduct;
+        this.listProduct = listProduct;
+    }
 
-	    Pageable pageable = PageRequest.of(page, size);
-	    var result = listAllProduct.execute(pageable);
-	    return ResponseEntity.ok(PageResponse.from(result));
-	}
+    @Operation(summary = "Get product by id", security = {})
+    @GetMapping("/{id}")
+    public ListProductDto getProductById(@PathVariable String id) {
+        return listProduct.execute(id);
+    }
+
+    @Operation(summary = "Get all products", security = {})
+    @Cacheable(value = "list-all-products", key = "{#page, #size}")
+    @GetMapping
+    public PageResponse<ListProductDto> getAllProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        var result = listAllProduct.execute(pageable);
+
+        return PageResponse.from(result);
+    }
 }

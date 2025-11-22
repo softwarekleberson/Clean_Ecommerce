@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mysql:
     image: mysql:8.0
@@ -12,6 +14,8 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - monitor_network
 
   redis:
     image: redis:7
@@ -22,6 +26,32 @@ services:
     command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis_data:/data
+    networks:
+      - monitor_network
+
+  mysql_exporter:
+    image: prom/mysqld-exporter:v0.14.0
+    container_name: mysql_exporter
+    environment:
+      DATA_SOURCE_NAME: "user:user123@tcp(mysql:3306)/"
+    ports:
+      - "9104:9104"
+    depends_on:
+      - mysql
+    networks:
+      - monitor_network
+
+  redis_exporter:
+    image: oliver006/redis_exporter:latest
+    container_name: redis_exporter
+    environment:
+      - REDIS_ADDR=redis:6379
+    ports:
+      - "9121:9121"
+    depends_on:
+      - redis
+    networks:
+      - monitor_network
 
   prometheus:
     image: prom/prometheus:latest
@@ -34,6 +64,10 @@ services:
       - prometheus_data:/prometheus
     depends_on:
       - node_exporter
+      - mysql_exporter
+      - redis_exporter
+    networks:
+      - monitor_network
 
   node_exporter:
     image: prom/node-exporter:latest
@@ -41,6 +75,17 @@ services:
     restart: always
     ports:
       - "9100:9100"
+    pid: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    networks:
+      - monitor_network
 
   grafana:
     image: grafana/grafana:latest
@@ -55,9 +100,26 @@ services:
       - grafana_data:/var/lib/grafana
     depends_on:
       - prometheus
+    networks:
+      - monitor_network
+
+  adminer:
+    image: adminer
+    container_name: adminer_container
+    restart: always
+    ports:
+      - "8085:8080"
+    depends_on:
+      - mysql
+    networks:
+      - monitor_network
 
 volumes:
   mysql_data:
   redis_data:
   prometheus_data:
   grafana_data:
+
+networks:
+  monitor_network:
+    name: monitor_network
