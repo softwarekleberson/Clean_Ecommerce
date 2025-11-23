@@ -13,6 +13,7 @@ import com.cleancode.ecommerce.customer.application.useCase.DeleteDeliveryImpl;
 import com.cleancode.ecommerce.customer.application.useCase.EncryptPasswordImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListAllCustomersImpl;
 import com.cleancode.ecommerce.customer.application.useCase.ListCustomerImpl;
+import com.cleancode.ecommerce.customer.application.useCase.ListVoucherCustomerImpl;
 import com.cleancode.ecommerce.customer.application.useCase.PasswordValidationCheckImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateChargeImpl;
 import com.cleancode.ecommerce.customer.application.useCase.UpdateCustomerImpl;
@@ -28,6 +29,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.DeleteDeliv
 import com.cleancode.ecommerce.customer.application.useCase.contract.EncryptPassword;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListAllCustomers;
 import com.cleancode.ecommerce.customer.application.useCase.contract.ListCustomer;
+import com.cleancode.ecommerce.customer.application.useCase.contract.ListVoucherCustomer;
 import com.cleancode.ecommerce.customer.application.useCase.contract.PasswordValidationCheck;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCharge;
 import com.cleancode.ecommerce.customer.application.useCase.contract.UpdateCustomer;
@@ -36,6 +38,7 @@ import com.cleancode.ecommerce.customer.application.useCase.contract.UpdatePassw
 import com.cleancode.ecommerce.customer.domain.customer.repository.CustomerRepository;
 import com.cleancode.ecommerce.event.EventPublisher;
 import com.cleancode.ecommerce.users.domain.user.repository.PasswordEncoderService;
+import com.cleancode.ecommerce.users.domain.voucher.repository.VoucherRepository;
 
 @Configuration
 public class CustomerConfig {

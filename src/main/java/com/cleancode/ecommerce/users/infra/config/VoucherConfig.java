@@ -19,7 +19,10 @@ public class VoucherConfig {
 	}
 	
 	@Bean
-	public ListVoucherCustomer listVoucherCustomer (VoucherRepository repository, CustomerRepository customerRepository) {
-		return new ListVoucherCustomerImpl(repository, customerRepository); 
-	}
+    public ListVoucherCustomer listVoucherCustomerUseCase(
+            VoucherRepository voucherRepository,
+            CustomerRepository customerRepository) {
+
+        return new ListVoucherCustomerImpl(voucherRepository, customerRepository);
+    }
 }
